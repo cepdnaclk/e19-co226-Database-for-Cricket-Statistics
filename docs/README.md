@@ -9,7 +9,7 @@ title: CricLive
 
 [comment]: # "This is the standard layout for the project, but you can clean this and use your own template"
 
-# CricLive
+# CricLive - Database for Cricket Statistics
 ---
 
 ## Team
@@ -26,7 +26,6 @@ title: CricLive
 
 ---
 ## Introduction
-### Database for Cricket Statistics
 
 * Cricket is a popular sport played worldwide, with a rich history and a passionate fan
 base. The game has evolved significantly, introducing new formats and rules to make it
