@@ -1,6 +1,4 @@
 ---
-layout: home
-permalink: index.html
 
 # Please update this with your repository name and title
 repository-name: e19-co226-criclive
@@ -9,8 +7,7 @@ title: CricLive
 
 [comment]: # "This is the standard layout for the project, but you can clean this and use your own template"
 
-# Project CricLive
-
+# CricLive
 ---
 
 <!-- 
@@ -20,9 +17,10 @@ This is a sample image, to show how to add images to your page. To learn more op
  -->
 
 ## Team
--  E/19/129 Gunawardana K.H. [email](mailto:e19129@eng.pdn.ac.lk)
--  eNumber, Name, [email](mailto:name@email.com)
--  eNumber, Name, [email](mailto:name@email.com)
+-  E/19/129 Kanishka Gunawardana [email](mailto:e19129@email.com)
+-  E/19/372 Kaushitha Silva [email](mailto:e19372@email.com)
+-  E/19/408 Sanduni Ubayasiri [email](mailto:e19408@email.com)
+
 
 ## Table of Contents
 1. [Introduction](#introduction)
