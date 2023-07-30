@@ -1,4 +1,6 @@
 ---
+layout: home
+permalink: index.html
 
 # Please update this with your repository name and title
 repository-name: e19-co226-criclive
