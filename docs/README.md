@@ -11,9 +11,9 @@ title: CricLive
 
 
 ## Team
--  E/19/129 Kanishka Gunawardana [email](mailto:e19129@email.com)
--  E/19/372 Kaushitha Silva [email](mailto:e19372@email.com)
--  E/19/408 Sanduni Ubayasiri [email](mailto:e19408@email.com)
+-  E/19/129 Gunawardana K.H. [email](mailto:e19129@email.com)
+-  E/19/372 Silva A.K.M. [email](mailto:e19372@email.com)
+-  E/19/408 Ubayasiri S.J. [email](mailto:e19408@email.com)
 
 
 ## Table of Contents
