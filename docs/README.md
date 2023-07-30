@@ -3,7 +3,7 @@ layout: home
 permalink: index.html
 
 # Please update this with your repository name and title
-repository-name: e19-co226-criclive
+repository-name: e19-co226-Database-for-Cricket-Statistics
 title: CricLive
 ---
 
@@ -89,7 +89,7 @@ match object.
 ---
 ## Links
 
-- [Project Repository](https://github.com/cepdnaclk/e19-co226-criclive)
+- [Project Repository](https://github.com/cepdnaclk/e19-co226-Database-for-Cricket-Statistics)
 - [Project Page](https://cepdnaclk.github.io/e19-co226-criclive/)
 - [Department of Computer Engineering](http://www.ce.pdn.ac.lk/)
 - [University of Peradeniya](https://eng.pdn.ac.lk/)
