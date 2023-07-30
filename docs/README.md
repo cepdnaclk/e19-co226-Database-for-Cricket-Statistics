@@ -8,13 +8,7 @@ title: CricLive
 [comment]: # "This is the standard layout for the project, but you can clean this and use your own template"
 
 # CricLive
----
 
-<!-- 
-This is a sample image, to show how to add images to your page. To learn more options, please refer [this](https://projects.ce.pdn.ac.lk/docs/faq/how-to-add-an-image/)
-
-![Sample Image](./images/sample.png)
- -->
 
 ## Team
 -  E/19/129 Kanishka Gunawardana [email](mailto:e19129@email.com)
@@ -27,14 +21,11 @@ This is a sample image, to show how to add images to your page. To learn more op
 2. [Other Sub Topics](#other-sub-topics)
 3. [Links](#links)
 
----
-
 ## Introduction
 
 
 ## Other Sub Topics
 
-.....
 
 ## Links
 
