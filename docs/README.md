@@ -61,7 +61,7 @@ A well-designed database can help users to perform various tasks, such as:
 * Tracking historical records and trends in the sport
 * Generating reports and visualizations based on the data
 * Making predictions and forecasting for upcoming matches
-* Identify emerging talents, practical strategies, and tactics in the sport
+* Identify emerging talents, practical strategies, and tactics in the sport.
 
 Overall, a cricket database can be a valuable resource for anyone who is interested in the
 sport and wants to gain a deeper understanding of its players, teams, and history.
