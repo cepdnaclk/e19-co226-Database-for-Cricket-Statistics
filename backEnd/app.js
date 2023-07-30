@@ -1,9 +1,10 @@
 // import modules
 const express = require("express");
 const bodyParser = require("body-parser");
-const cors = require("cors");
-const app = express();
 require("dotenv").config();
+const cors = require("cors");
+
+const app = express();
 
 // port
 const PORT = process.env.PORT || 5000;
