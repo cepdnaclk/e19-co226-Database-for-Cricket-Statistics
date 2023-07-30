@@ -2,7 +2,7 @@
 
 # Please update this with your repository name and title
 repository-name: e19-co226-criclive
-title: CricLive
+title: criclive
 ---
 
 [comment]: # "This is the standard layout for the project, but you can clean this and use your own template"
