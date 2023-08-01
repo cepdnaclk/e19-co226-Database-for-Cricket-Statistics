@@ -8,6 +8,7 @@ const dbConn = mysql.createConnection({
   database: "e19129lab7",
 });
 
+// connect db
 dbConn.connect(function (err) {
   if (err) throw err;
   console.log("Database Connected!");
