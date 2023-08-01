@@ -26,8 +26,8 @@ const io = createSocket(server);
 const mainController = require("./src/controller/mainController");
 
 function intervalFunc() {
-  console.log("Sending data...");
   mainController(io);
+  console.log("Sending data...");
 }
 
 setInterval(intervalFunc, 1000);
