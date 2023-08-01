@@ -5,6 +5,8 @@ require("dotenv").config();
 const http = require("http");
 const { Server } = require("socket.io");
 const cors = require("cors");
+const topics = require("./src/util/topics");
+const createSocket = require("./src/socket/socket");
 
 // config port
 const PORT = process.env.PORT || 5000;
@@ -20,28 +22,15 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 // socket config
-const io = new Server(server, {
-  cors: {
-    origin: "http://localhost:3000",
-    methods: ["GET", "POST"],
-  },
-});
+const io = createSocket(server);
+const mainController = require("./src/controller/mainController");
 
-// import socket functions
-const {connected, disconnected} = require("./src/socket/connectDisconnect");
+function intervalFunc() {
+  console.log("Sending data...");
+  mainController(io);
+}
 
-// socket
-io.on("connection", (socket) => {
-
-  connected(socket);
-  disconnected(socket);
-
-  socket.on("join_room", (data) => {
-    socket.join(data);
-    console.log(`User with ID: ${socket.id} joined room: ${data}`);
-  });
-
-});
+setInterval(intervalFunc, 1000);
 
 // server 
 server.listen(PORT, () => {
