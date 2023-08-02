@@ -1,5 +1,6 @@
 import MatchHeader from "./components/MatchHeader";
 import Menu from "./components/Menu";
+import Scorecard from "./components/Scorecard";
 import styles from "./styles/App.module.scss";
 import { useState } from "react";
 const App = () => {
@@ -18,6 +19,7 @@ const App = () => {
         setSelected={setSelected}
         isMatchOver={isMatchOver}
       />
+      <Scorecard />
     </div>
   );
 };
