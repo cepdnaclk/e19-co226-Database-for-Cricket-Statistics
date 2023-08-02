@@ -5,6 +5,11 @@ const FLAG_SIZE = 65;
 function MatchHeader() {
   return (
     <div className={styles.header}>
+      <img
+        className={styles.logo}
+        src="./CricLive-Dark.svg"
+        alt="cricLive Logo"
+      />
       <div className={styles.scores}>
         <div className={styles.home}>
           <div className={styles.flagAndName}>
