@@ -1,0 +1,49 @@
+.header {
+  height: max-content;
+  padding: 1em 5em;
+  margin-top: 3em;
+}
+
+.scores {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6em;
+
+  .home,
+  .away {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 4em;
+    .flagAndName {
+      text-align: center;
+    }
+
+    .score {
+      font-size: 1em;
+      text-align: center;
+      .overs {
+        font-size: 0.9em;
+        color: hsl(0, 0%, 80%);
+      }
+    }
+  }
+
+  .away {
+    flex-direction: row-reverse;
+  }
+}
+
+.status {
+  margin-top: 1em;
+  text-align: center;
+  font-size: 0.9em;
+  line-height: 1.6em;
+
+  .matchInfo {
+    color: hsl(0, 0%, 70%);
+  }
+}
