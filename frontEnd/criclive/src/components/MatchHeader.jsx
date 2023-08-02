@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "../styles/MatchHeader.module.scss";
 import Flag from "react-flagkit";
+import classNames from "classnames";
 const FLAG_SIZE = 65;
 function MatchHeader() {
   return (
@@ -11,7 +12,7 @@ function MatchHeader() {
         alt="cricLive Logo"
       />
       <div className={styles.scores}>
-        <div className={styles.home}>
+        <div className={classNames(styles.home)}>
           <div className={styles.flagAndName}>
             <Flag country="LK" size={FLAG_SIZE} />
             <p>Sri Lanka</p>
@@ -21,7 +22,7 @@ function MatchHeader() {
             <p className={styles.overs}>(49.5)</p>
           </div>
         </div>
-        <div className={styles.away}>
+        <div className={classNames(styles.away, styles.batting)}>
           <div className={styles.flagAndName}>
             <Flag country="IN" size={FLAG_SIZE} />
             <p>India</p>

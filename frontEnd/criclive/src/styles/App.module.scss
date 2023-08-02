@@ -1,3 +1,4 @@
+@use "variables" as *;
 .container {
   height: auto;
   width: 42dvw;
@@ -6,4 +7,14 @@
   left: 50%;
   transform: translate(-50%, 0);
   //background-color: rgb(37, 37, 37);
+}
+
+.matchMeta {
+  padding: 2em 1.4em;
+  line-height: 1.8em;
+  font-size: 0.9em;
+  color: hsl(0, 0%, 80%);
+  span {
+    color: $cricLiveRed;
+  }
 }

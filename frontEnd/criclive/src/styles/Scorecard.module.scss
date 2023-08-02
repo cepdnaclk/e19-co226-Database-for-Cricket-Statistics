@@ -45,6 +45,8 @@
   width: 100%;
   border-radius: 0 0 1em 1em;
 
+  @include boxGradient;
+
   table {
     border-collapse: collapse;
     width: 100%;
