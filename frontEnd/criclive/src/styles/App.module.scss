@@ -6,4 +6,12 @@
   left: 50%;
   transform: translate(-50%, 0);
   background-color: rgb(37, 37, 37);
+
+  .logo {
+    position: relative;
+    height: 2em;
+    top: 2em;
+    left: 50%;
+    transform: translateX(-50%);
+  }
 }
