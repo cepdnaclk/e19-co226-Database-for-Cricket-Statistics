@@ -22,15 +22,20 @@ app.use(express.json());
 // socket config
 const io = createSocket(server);
 const mainController = require("./src/controller/mainController");
+const matchInfo = require("./src/routes/matchInfo");
 
-function intervalFunc() {
-  mainController(io);
-  console.log("Sending data...");
-}
+// routing
+app.use("/matchInfo", matchInfo);
 
-setInterval(intervalFunc, 1000);
 
 // server 
 server.listen(PORT, () => {
-    console.log("SERVER RUNNING");
+  console.log("SERVER RUNNING");
 });
+
+// trigger and send data
+function intervalFunc() {
+  mainController(io);
+  // console.log("Sending data...");
+}
+setInterval(intervalFunc, 1000);
