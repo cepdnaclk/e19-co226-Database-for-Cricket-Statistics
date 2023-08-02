@@ -6,14 +6,9 @@
   box-sizing: border-box;
 }
 
-* {
-  all: unset;
-  display: revert;
-}
-
 body {
   background-color: rgb(24, 24, 24);
-  color: white;
+  color: hsl(0, 0%, 95%);
   font-family: "Open Sans", sans-serif;
   position: relative;
 }

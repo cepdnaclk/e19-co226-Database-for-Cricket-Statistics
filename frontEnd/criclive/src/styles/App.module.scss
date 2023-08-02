@@ -1,20 +1,9 @@
 .container {
   height: auto;
-  width: 45dvw;
+  width: 42dvw;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, 0);
   background-color: rgb(37, 37, 37);
-}
-
-.scores {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-
-  .home,
-  .away {
-  }
 }
