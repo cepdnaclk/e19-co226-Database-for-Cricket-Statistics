@@ -13,7 +13,7 @@ function createSocket(server){
       
       // socket
       io.on(topics.CONNECTION, (socket) => {
-        connected(socket);
+        connected(socket, io);
         disconnected(socket);
         
       });

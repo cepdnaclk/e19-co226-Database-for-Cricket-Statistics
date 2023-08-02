@@ -3,9 +3,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 require("dotenv").config();
 const http = require("http");
-const { Server } = require("socket.io");
 const cors = require("cors");
-const topics = require("./src/util/topics");
 const createSocket = require("./src/socket/socket");
 
 // config port
@@ -26,8 +24,8 @@ const io = createSocket(server);
 const mainController = require("./src/controller/mainController");
 
 function intervalFunc() {
-  console.log("Sending data...");
   mainController(io);
+  console.log("Sending data...");
 }
 
 setInterval(intervalFunc, 1000);
