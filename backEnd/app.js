@@ -22,6 +22,17 @@ app.use(express.json());
 // socket config
 const io = createSocket(server);
 const mainController = require("./src/controller/mainController");
+const matchInfo = require("./src/routes/matchInfo");
+
+// routing
+app.use("/matchInfo", matchInfo);
+
+
+// server 
+server.listen(PORT, () => {
+  console.log("SERVER RUNNING");
+});
+
 
 function intervalFunc() {
   mainController(io);
@@ -29,8 +40,3 @@ function intervalFunc() {
 }
 
 setInterval(intervalFunc, 1000);
-
-// server 
-server.listen(PORT, () => {
-    console.log("SERVER RUNNING");
-});
