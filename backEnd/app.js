@@ -3,9 +3,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 require("dotenv").config();
 const http = require("http");
-const { Server } = require("socket.io");
 const cors = require("cors");
-const topics = require("./src/util/topics");
 const createSocket = require("./src/socket/socket");
 
 // config port
@@ -24,15 +22,20 @@ app.use(express.json());
 // socket config
 const io = createSocket(server);
 const mainController = require("./src/controller/mainController");
+const matchInfo = require("./src/routes/matchInfo");
 
-function intervalFunc() {
-  console.log("Sending data...");
-  mainController(io);
-}
+// routing
+app.use("/matchInfo", matchInfo);
 
-setInterval(intervalFunc, 1000);
 
 // server 
 server.listen(PORT, () => {
-    console.log("SERVER RUNNING");
+  console.log("SERVER RUNNING");
 });
+
+// trigger and send data
+function intervalFunc() {
+  mainController(io);
+  // console.log("Sending data...");
+}
+setInterval(intervalFunc, 1000);
