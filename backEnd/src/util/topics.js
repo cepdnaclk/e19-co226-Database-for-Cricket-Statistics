@@ -5,5 +5,7 @@ module.exports = {
     MATCHSCORE: "match-score",
     MATCHSTATUS:"match-status",
     BATTING: "batting",
-    BALLING: "balling"
+    BALLING: "balling",
+    EXTRA: "extra",
+    PLAYINGTEAM: "playing-team"
 }

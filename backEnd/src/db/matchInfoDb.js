@@ -1,7 +1,12 @@
 const db = require("../../dbConfig/dbConfig")
 
 const sql_matchDetails = "SELECT * FROM CURRENTMATCH";
-const sql_teamDetails = "SELECT TeamID, TeamName, Country, Coach, CaptainID FROM CURRENTMATCH INNER JOIN TEAM ON TEAM.TeamID = CURRENTMATCH.Team1_ID UNION SELECT TeamID, TeamName, Country, Coach, CaptainID FROM CURRENTMATCH INNER JOIN TEAM ON TEAM.TeamID = CURRENTMATCH.Team2_ID";
+const sql_teamDetails = `
+select * from TEAM
+Where TeamID = (Select Team1_ID from CURRENTMATCH)
+UNION
+select * from TEAM
+Where TeamID = (Select Team2_ID from CURRENTMATCH);`;
 const sql_playerDetails = "SELECT * FROM PLAYER INNER JOIN TEAMPLAYERS ON PLAYER.PlayerID = TEAMPLAYERS.PlayerID WHERE TeamID = ";
 const sql_teamCaptain = "SELECT CaptainID FROM TEAM WHERE TeamID = ";
 

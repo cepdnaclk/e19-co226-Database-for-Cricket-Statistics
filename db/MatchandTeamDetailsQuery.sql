@@ -4,7 +4,13 @@
 select TeamName as Team1 from TEAM
 Where TeamID = (Select Team1_ID from CURRENTMATCH);
 
+select * from TEAM
+Where TeamID = (Select Team1_ID from CURRENTMATCH);
+
 select TeamName as Team2 from TEAM
+Where TeamID = (Select Team2_ID from CURRENTMATCH);
+
+select * from TEAM
 Where TeamID = (Select Team2_ID from CURRENTMATCH);
 
 --other details
