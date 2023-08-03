@@ -1,0 +1,40 @@
+@use "variables" as *;
+
+.container {
+  background-color: $bg-color;
+  padding: 1.6em 1.6em;
+
+  border-top: 1px solid hsl(0, 0%, 30%);
+  border-radius: 1em;
+  display: grid;
+  grid-template-columns: 1fr 8fr;
+  row-gap: 1.2em;
+  @include boxGradient;
+  .ball {
+    background-color: rgb(224, 224, 224);
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    border-radius: 0.4em;
+    margin: 0 2em 0 1em;
+    height: 2em;
+    aspect-ratio: 1;
+    color: hsl(0, 0%, 10%);
+
+    &.green {
+      background-color: rgb(23, 128, 75);
+      color: white;
+    }
+
+    &.red {
+      background-color: rgb(175, 28, 28);
+      color: white;
+    }
+  }
+
+  .comment {
+    font-size: 0.9em;
+    color: hsl(0, 0%, 90%);
+  }
+}

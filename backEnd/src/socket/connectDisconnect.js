@@ -1,5 +1,7 @@
+const mainController = require("../controller/mainController");
 
-function connected(socket){
+function connected(socket,io){
+    mainController(io);
     console.log(`User Connected: ${socket.id}`);
 };
 
