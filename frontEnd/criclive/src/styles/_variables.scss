@@ -1,0 +1,6 @@
+$bg-color: rgb(47, 47, 47);
+$cricLiveRed: #ce483a;
+@mixin boxGradient {
+  background: linear-gradient(145deg, #252525, #161616);
+  box-shadow: 20px 20px 40px #0a0a0a;
+}
