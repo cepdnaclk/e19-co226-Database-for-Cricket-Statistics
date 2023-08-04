@@ -12,4 +12,3 @@ function ballingScoreSend(io, data1, data2){
 
 
 module.exports = {battingScoreSend, ballingScoreSend};
-

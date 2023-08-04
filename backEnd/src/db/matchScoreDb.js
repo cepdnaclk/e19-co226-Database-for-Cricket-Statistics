@@ -1,7 +1,8 @@
 const db = require("../../dbConfig/dbConfig")
 const getStatus = require("../model/matchStatus");
 
-const sql_getScore = `SELECT SUM(TotalRuns) AS TotalRuns, 1 AS innings, (SELECT SUM(ExtraRuns) AS TotalRuns FROM EXTRAINNINGS1) as Extra
+const sql_getScore = `
+SELECT SUM(TotalRuns) AS TotalRuns, 1 AS innings, (SELECT SUM(ExtraRuns) AS TotalRuns FROM EXTRAINNINGS1) as Extra
 FROM (
     SELECT SUM(RunsScored) AS TotalRuns FROM INNINGS1
     UNION ALL
@@ -14,10 +15,14 @@ FROM (
     UNION ALL
     SELECT SUM(ExtraRuns) AS TotalRuns FROM EXTRAINNINGS2
 ) AS SubqueryAlias`;
-const sql_wickets = `SELECT COUNT(Ball_ID) AS wickets, 1 AS innings  FROM DISMISSALINNINGS1
+
+const sql_wickets = `
+SELECT COUNT(Ball_ID) AS wickets, 1 AS innings  FROM DISMISSALINNINGS1
 UNION
-SELECT COUNT(Ball_ID) AS wickets, 2 AS innings  FROM DISMISSALINNINGS2;`
-const sql_over = `SELECT OverNum, BallNumber, 1 AS innings FROM INNINGS1 WHERE Ball_ID = (SELECT MAX(Ball_ID) FROM  INNINGS1)
+SELECT COUNT(Ball_ID) AS wickets, 2 AS innings  FROM DISMISSALINNINGS2;`;
+
+const sql_over = `
+SELECT OverNum, BallNumber, 1 AS innings FROM INNINGS1 WHERE Ball_ID = (SELECT MAX(Ball_ID) FROM  INNINGS1)
 UNION
 SELECT OverNum, BallNumber, 2 AS innings FROM INNINGS2 WHERE Ball_ID = (SELECT MAX(Ball_ID) FROM  INNINGS2);`;
 

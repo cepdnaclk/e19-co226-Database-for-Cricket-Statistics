@@ -1,8 +1,8 @@
 const db = require("../../dbConfig/dbConfig")
 const {batting, balling} = require("../model/score");
 
-const sql_batting = "SELECT * FROM BALL";
-const sql_balling = "SELECT * FROM BALL";
+const sql_batting = "SELECT * FROM BatsmanScores";
+const sql_balling = "SELECT * FROM BatsmanScores";
 
 function getBattingScore(io, result){
     db.query(sql_batting,(err, one) => {
@@ -11,6 +11,7 @@ function getBattingScore(io, result){
         });
     });
 }
+
 
 function getBallingScore(io, result){
     db.query(sql_balling,(err, one) => {
