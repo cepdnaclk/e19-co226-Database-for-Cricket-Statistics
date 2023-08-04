@@ -1,5 +1,4 @@
 const db = require("../../dbConfig/dbConfig")
-const getStatus = require("../model/matchStatus");
 
 const sql_getScore = `
 SELECT SUM(TotalRuns) AS TotalRuns, 1 AS innings, (SELECT Team1_ID FROM CURRENTMATCH) as teamId
