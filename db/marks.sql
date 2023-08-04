@@ -13,3 +13,6 @@ SELECT COUNT(Ball_ID) FROM DISMISSALINNINGS1;
 
 --wickets innings 2
 SELECT COUNT(Ball_ID) FROM DISMISSALINNINGS2;
+
+--overs and balls
+SELECT OverNum, BallNumber FROM INNINGS1;
