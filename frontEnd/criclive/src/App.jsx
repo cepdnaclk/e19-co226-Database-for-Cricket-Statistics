@@ -19,11 +19,9 @@ const App = () => {
       {selected === "commentary" && <Commentary />}
       <div className={styles.matchMeta}>
         <p>
-          {" "}
-          <span>Toss: </span>IND won the toss and opted to bowl first{" "}
+          <span>Toss: </span>IND won the toss and opted to bowl first
         </p>
         <p>
-          {" "}
           <span>Stadium: </span> R Premadasa Stadium, Colombo
         </p>
       </div>

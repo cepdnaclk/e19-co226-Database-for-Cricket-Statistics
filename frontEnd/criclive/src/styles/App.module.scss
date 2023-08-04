@@ -2,6 +2,7 @@
 .container {
   height: auto;
   width: 42dvw;
+
   position: absolute;
 
   left: 50%;
@@ -16,5 +17,11 @@
   color: hsl(0, 0%, 80%);
   span {
     color: $cricLiveRed;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .container {
+    width: 90dvw;
   }
 }

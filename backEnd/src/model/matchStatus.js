@@ -1,8 +1,6 @@
-function getStatus(res){
+function getStatus(data){
+    console.log(data);
     let matchStatus = new Object();
-
-    matchStatus.status = "win";
-    matchStatus.win = "player1";
 
     return matchStatus;
 }

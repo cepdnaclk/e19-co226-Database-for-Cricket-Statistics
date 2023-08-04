@@ -1,7 +1,7 @@
 @use "variables" as *;
 .header {
   height: max-content;
-  padding: 1em 5em 2em 5em;
+  padding: 1dvh 5dvw 2dvh 5dvw;
   margin-top: 2em;
   background-color: $bg-color;
   border-top: 1px solid hsl(0, 0%, 30%);
@@ -23,7 +23,7 @@
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  gap: 6em;
+  gap: 5dvw;
 
   .home,
   .away {
@@ -31,7 +31,7 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    gap: 4em;
+    gap: 4dvw;
     .flagAndName {
       text-align: center;
     }

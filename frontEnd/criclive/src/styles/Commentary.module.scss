@@ -21,6 +21,7 @@
     height: 2em;
     aspect-ratio: 1;
     color: hsl(0, 0%, 10%);
+    box-shadow: 7px 14px 20px -7px rgba(0, 0, 0, 0.7);
 
     &.green {
       background-color: rgb(23, 128, 75);

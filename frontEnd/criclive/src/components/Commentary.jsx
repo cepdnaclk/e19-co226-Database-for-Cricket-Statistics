@@ -1,5 +1,13 @@
 import classNames from "classnames";
 import styles from "../styles/Commentary.module.scss";
+const comments = [
+  {
+    ball: "4",
+    comment:
+      "23.2: J. Bumrah to Pathum Nissanka, FOUR! Nice and fine! On the pads, this is worked down towards the fine leg fence for a boundary.",
+  },
+];
+
 const Commentary = () => {
   return (
     <div className={styles.container}>
@@ -10,7 +18,12 @@ const Commentary = () => {
 
       <BallComment
         ball="W"
-        comment="23.2: J. Bumrah to Pathum Nissanka, FOUR! Nice and fine! On the pads, this is worked down towards the fine leg fence for a boundary."
+        comment="23.1: J. Bumrah to Pathum Nissanka, FOUR! Nice and fine! On the pads, this is worked down towards the fine leg fence for a boundary."
+      />
+
+      <BallComment
+        ball="2"
+        comment="22.6 H. Pandya to Kusal Mendis, Easy Couple"
       />
     </div>
   );
