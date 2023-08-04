@@ -23,10 +23,9 @@ function getTeamInfo(res){
 }
 
 function getPlayerInfo(teamId, res){
-
     db.query(sql_playerDetails + teamId,(err, players) => {
         db.query(sql_teamCaptain + teamId,(err, captainPlayer) => {
-            data = players.map(player => (player.PlayerID === captainPlayer[0].CaptainID) ? {captain:true, ...player}:{captain:false, ...player});
+            const data = players.map(player => (player.PlayerID === captainPlayer[0].CaptainID) ? {captain:true, ...player}:{captain:false, ...player});
             res.status(200).json(data);
         });
     });

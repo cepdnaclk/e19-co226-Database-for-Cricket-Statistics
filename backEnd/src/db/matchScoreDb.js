@@ -31,7 +31,6 @@ function getScoreWicketOver(io, result, resultStatus){
                 const data = runs.map((run) => {return {...run, ...(run.innings===wicket[0].innings)?wicket[0]:wicket[1], ...(run.innings===over[0].innings)?over[0]:over[1]}});
                 result(io, data);
                 resultStatus(io, getStatus(data));
-
             });
         });
     });
