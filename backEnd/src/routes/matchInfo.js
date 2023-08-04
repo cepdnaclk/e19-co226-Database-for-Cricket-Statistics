@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const {getMatchInfo, getTeamInfo} = require("../db/matchInfoDb");
+const {getMatchInfo, getTeamInfo, getPlayerInfo} = require("../db/matchInfoDb");
 
 router.get("/", async (req, res) => {
     getMatchInfo(res);
@@ -8,7 +8,11 @@ router.get("/", async (req, res) => {
 
 router.post("/teams", async (req, res) => {
     const {teamId} = req.body;
-    getTeamInfo(teamId ,res);
+    getPlayerInfo(teamId ,res);
+});
+
+router.get("/teams", async (req, res) => {
+    getTeamInfo(res);
 });
   
 module.exports = router;

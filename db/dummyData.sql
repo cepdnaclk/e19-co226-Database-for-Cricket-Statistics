@@ -97,3 +97,68 @@ INSERT INTO `EXTRA` (`Ball_ID`, `Type`, `ExtraRuns`) VALUES
 -- Dumping data for table `PLAYER`
 --
 
+///////////////////////////////////////////////////////////////////////////
+
+-- Insert data into PLAYER table
+INSERT INTO PLAYER (PlayerID, PlayerName, PlayerType, DateofBirth) VALUES
+(1, 'John Doe', 'Batsman', '1990-05-15'),
+(2, 'Jane Smith', 'Bowler', '1988-10-21'),
+(3, 'Michael Johnson', 'All-rounder', '1992-03-08'),
+(4, 'Sarah Williams', 'Batsman', '1995-07-04'),
+(5, 'Robert Lee', 'Bowler', '1985-12-30');
+
+-- Insert data into TEAM table
+INSERT INTO TEAM (TeamID, TeamName, Country, Coach, CaptainID) VALUES
+(1, 'TeamA', 'Australia', 'David Smith', 1),
+(2, 'TeamB', 'India', 'Raj Singh', 2),
+(3, 'TeamC', 'England', 'Andrew Brown', 3),
+
+-- Insert data into TEAMPLAYERS table
+INSERT INTO TEAMPLAYERS (PlayerID, TeamID) VALUES
+(1, 1),
+(5, 1),
+(2, 2),
+(4, 2),
+(3, 3);
+
+-- Insert data into CURRENTMATCH table
+INSERT INTO CURRENTMATCH (Team1_ID, Team2_ID, Date, Time, Venue, Toss, MatchName, TossIsBatting) VALUES
+(1, 2, '2023-08-10', '15:00:00', 'Melbourne Stadium', 1, 'Australia vs India', TRUE),
+
+-- Insert data into INNINGS1 table
+INSERT INTO INNINGS1 (Ball_ID, OverNum, BallNumber, RunsScored, OnStrikeID, NonStrikeID, CurrentBowlerID) VALUES
+(1, 1, 1, 4, 1, 5, 2),
+(2, 1, 2, 1, 1, 5, 2),
+(3, 1, 3, 0, 5, 1, 2),
+(4, 2, 1, 2, 5, 1, 4),
+(5, 2, 2, 6, 5, 1, 4),
+(6, 2, 3, 0, 1, 5, 1);
+
+-- Insert data into INNINGS2 table
+INSERT INTO INNINGS2 (Ball_ID, OverNum, BallNumber, RunsScored, OnStrikeID, NonStrikeID, CurrentBowlerID) VALUES
+(1, 1, 1, 2, 2, 4, 1),
+(2, 1, 2, 1, 2, 4, 1),
+(3, 1, 3, 4, 2, 4, 2),
+(4, 2, 1, 6, 4, 2, 5),
+(5, 2, 2, 0, 4, 2, 5),
+(6, 2, 3, 1, 4, 2, 5);
+
+-- Insert data into EXTRAINNINGS1 table
+INSERT INTO EXTRAINNINGS1 (Ball_ID, Type, ExtraRuns) VALUES
+(4, 'Leg Bye', 1),
+(6, 'No Ball', 2);
+
+-- Insert data into EXTRAINNINGS2 table
+INSERT INTO EXTRAINNINGS2 (Ball_ID, Type, ExtraRuns) VALUES
+(1, 'No Ball', 2),
+(5, 'Wide', 1);
+
+-- Insert data into DISMISSALINNINGS1 table
+INSERT INTO DISMISSALINNINGS1 (Ball_ID, DismissType, CaughtBy, FieldedBy, Dismissed) VALUES
+(3, 'Run Out', NULL, 5, 1),
+(6, 'Caught', 4, NULL, 2);
+
+-- Insert data into DISMISSALINNINGS2 table
+INSERT INTO DISMISSALINNINGS2 (Ball_ID, DismissType, CaughtBy, FieldedBy, Dismissed) VALUES
+(2, 'Caught', 5, NULL, 3),
+(3, 'Bowled', NULL, NULL, 5);

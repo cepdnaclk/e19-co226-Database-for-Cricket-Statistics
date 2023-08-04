@@ -4,6 +4,10 @@ module.exports = {
     CONNECTION :"connection",
     MATCHSCORE: "match-score",
     MATCHSTATUS:"match-status",
-    BATTING: "batting",
-    BALLING: "balling"
+    ONEBATTING: "team-one-batting",
+    TWOBATTING: "team-two-batting",
+    ONEBALLING: "team-one-balling",
+    TWOBALLING: "team-one-balling",
+    EXTRA: "extra",
+    PLAYINGTEAM: "playing-team"
 }
