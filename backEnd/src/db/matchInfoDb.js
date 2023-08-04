@@ -16,8 +16,8 @@ const sql_teamCaptain = "SELECT CaptainID FROM TEAM WHERE TeamID = ";
 function getMatchInfo(res){
     db.query(sql_matchDetails,(err, data) => {
         res.status(200).json({
-            Team1Id:data[0].Team1_ID,
-            Team2Id:data[0].Team1_ID,
+            team1Id:data[0].Team1_ID,
+            team2Id:data[0].Team1_ID,
             date:data[0].Date,
             time:data[0].Time,
             venue:data[0].Venue,
