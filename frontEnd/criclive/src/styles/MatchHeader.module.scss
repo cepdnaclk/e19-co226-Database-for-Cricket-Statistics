@@ -1,15 +1,29 @@
+@use "variables" as *;
 .header {
   height: max-content;
-  padding: 1em 5em;
-  margin-top: 3em;
+  padding: 1dvh 5dvw 2dvh 5dvw;
+  margin-top: 2em;
+  background-color: $bg-color;
+  border-top: 1px solid hsl(0, 0%, 30%);
+  border-radius: 1em;
+
+  @include boxGradient;
 }
 
+.logo {
+  position: relative;
+  height: 2em;
+
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 1.4em 0;
+}
 .scores {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  gap: 6em;
+  gap: 5dvw;
 
   .home,
   .away {
@@ -17,7 +31,7 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    gap: 4em;
+    gap: 4dvw;
     .flagAndName {
       text-align: center;
     }
@@ -35,8 +49,24 @@
   .away {
     flex-direction: row-reverse;
   }
-}
 
+  .batting {
+    .score {
+      position: relative;
+    }
+    .score::after {
+      content: " ";
+      width: 100%;
+      position: absolute;
+      height: 0.2em;
+      bottom: -10px;
+      left: 2%;
+      border-radius: 1em;
+      background-color: $cricLiveRed;
+      animation: shrinkAndExpand 2.5s cubic-bezier(0.86, 0, 0.07, 1) infinite;
+    }
+  }
+}
 .status {
   margin-top: 1em;
   text-align: center;
@@ -45,5 +75,36 @@
 
   .matchInfo {
     color: hsl(0, 0%, 70%);
+  }
+}
+
+@keyframes shrinkAndExpand {
+  0% {
+    transform: scaleX(0);
+    transform-origin: 0%;
+  }
+  25% {
+    transform: scaleX(1);
+    transform-origin: 0%;
+  }
+
+  25.001% {
+    transform-origin: 100%;
+  }
+  50% {
+    transform: scaleX(0);
+    transform-origin: 100%;
+  }
+  75% {
+    transform: scaleX(1);
+    transform-origin: 100%;
+  }
+
+  75.001% {
+    transform-origin: 0%;
+  }
+  100% {
+    transform: scaleX(0);
+    transform-origin: 0%;
   }
 }

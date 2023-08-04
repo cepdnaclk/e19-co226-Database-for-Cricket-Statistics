@@ -38,4 +38,4 @@ function intervalFunc() {
   mainController(io);
   // console.log("Sending data...");
 }
-setInterval(intervalFunc, 1000);
+setInterval(intervalFunc, 2000);
