@@ -9,6 +9,7 @@
   font-size: 0.8em;
   border-radius: 1em 1em 0 0;
   overflow: hidden;
+  border-top: 1px solid hsl(0, 0%, 30%);
 }
 
 .inningsItem {
@@ -47,6 +48,9 @@
 
   @include boxGradient;
 
+  .yetToBat {
+    font-size: 0.9em;
+  }
   table {
     border-collapse: collapse;
     width: 100%;
@@ -61,7 +65,7 @@
       padding: 1em 0;
       color: hsl(0, 0%, 70%);
     }
-    .batsmanInfo {
+    .tableTopic {
       width: 60%;
       text-align: left;
     }
@@ -73,11 +77,23 @@
       .batsmanName {
         text-align: left;
       }
+      &.alignLeft {
+        text-align: left;
+      }
       .howOut {
         font-size: 0.8em;
         color: hsl(0, 0%, 70%);
         text-align: left;
       }
     }
+  }
+}
+
+ul {
+  li {
+    display: inline-block;
+    margin-right: 1em;
+    margin-top: 0.4em;
+    color: hsl(0, 0%, 80%);
   }
 }
