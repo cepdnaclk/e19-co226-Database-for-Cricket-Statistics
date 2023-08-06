@@ -49,7 +49,9 @@ const TeamInfoAndScore = ({ scoreObj, teamName }) => {
       </div>
       <div className={styles.score}>
         <p className={styles.runsWickets}>
-          {scoreObj.totalRuns}/{scoreObj.wickets}
+          {scoreObj.totalRuns === null
+            ? "Yet to Bat"
+            : scoreObj.totalRuns + "/" + scoreObj.wickets}
         </p>
         <p
           className={styles.overs}
