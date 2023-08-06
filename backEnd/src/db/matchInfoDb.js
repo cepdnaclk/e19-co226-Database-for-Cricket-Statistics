@@ -21,7 +21,7 @@ function getMatchInfo(res){
             date:data[0].Date,
             time:data[0].Time,
             venue:data[0].Venue,
-            toss:(data[0].Toss===1)?true:false,
+            tossWinningTeamId:data[0].Toss,
             matchName:data[0].MatchName,
             tossIsBatting:(data[0].TossIsBatting===1)?true:false
         });
