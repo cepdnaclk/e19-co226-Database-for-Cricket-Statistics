@@ -7,5 +7,6 @@ module.exports = {
     ONEBATTING: "innings-one-batting",
     TWOBATTING: "innings-two-batting",
     ONEBALLING: "innings-one-balling",
-    TWOBALLING: "innings-one-balling",
+    TWOBALLING: "innings-two-balling",
+    ONPLAYING: "on-playing",
 }
