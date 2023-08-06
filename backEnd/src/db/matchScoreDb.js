@@ -51,21 +51,26 @@ function getScoreWicketOver(io, result, resultStatus){
 
                     const extraInning1 = extra.filter(e => e.innings === 1);
                     const extraInning2 = extra.filter(e => e.innings === 2);
-
                     let data = runs.map((run) => {return {...run, ...(run.innings===wicket[0].innings)?wicket[0]:wicket[1], ...(run.innings===over[0].innings)?over[0]:over[1], ...(run.innings===over[0].innings)?{extra:getExtraObj(extraInning1)}:{extra:getExtraObj(extraInning2)}}});
 
                     data[0].isBatting = (data[1].TotalRuns === null)?true:false;
                     data[1].isBatting = (data[1].TotalRuns === null)?false:true;
-
+                    
                     data = data.map(d => {
                         return {
                             totalRuns:d.TotalRuns,
                             innings:d.innings,
                             teamId:d.teamId,
-                            wicket:d.wickets,
-                            overNum:d.OverNum,
-                            ballNumber:d.BallNumber,
-                            extras:d.extra,
+                            wickets:d.wickets,
+                            overNum:(d.OverNum === undefined)?0:d.OverNum,
+                            ballNumber:(d.BallNumber === undefined)?0:d.BallNumber,
+                            extras:{
+                                total:d.extra.total,
+                                wides:(d.extra.wides === undefined)?0:d.extra.wides,
+                                noBalls:(d.extra.noBalls === undefined)?0:d.extra.noBalls,
+                                legByes:(d.extra.legByes === undefined)?0:d.extra.legByes,
+                                byes:(d.extra.byes === undefined)?0:d.extra.byes,
+                            },
                             isBatting:d.isBatting
                     };});
                     

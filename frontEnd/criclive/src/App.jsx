@@ -7,40 +7,40 @@ import { useState, useEffect } from "react";
 import api from "./services/api";
 import socket from "./services/socket";
 import Preloader from "./components/Preloader";
-const scoresData = [
-  {
-    totalRuns: 225,
-    innings: 1,
-    extras: {
-      total: 10,
-      wides: 5,
-      noBalls: 2,
-      legByes: 2,
-      byes: 1,
-    },
-    wickets: 2,
-    overNum: 49,
-    ballNumber: 5,
-    teamId: 1,
-    isBatting: false,
-  },
-  {
-    totalRuns: 12,
-    innings: 2,
-    extras: {
-      total: 5,
-      wides: 2,
-      noBalls: 1,
-      legByes: 1,
-      byes: 1,
-    },
-    wickets: 0,
-    overNum: 1,
-    ballNumber: 1,
-    teamId: 2,
-    isBatting: true,
-  },
-];
+// const scoresData = [
+//   {
+//     totalRuns: 225,
+//     innings: 1,
+//     extras: {
+//       total: 10,
+//       wides: 5,
+//       noBalls: 2,
+//       legByes: 2,
+//       byes: 1,
+//     },
+//     wickets: 2,
+//     overNum: 49,
+//     ballNumber: 5,
+//     teamId: 1,
+//     isBatting: false,
+//   },
+//   {
+//     totalRuns: 12,
+//     innings: 2,
+//     extras: {
+//       total: 5,
+//       wides: 2,
+//       noBalls: 1,
+//       legByes: 1,
+//       byes: 1,
+//     },
+//     wickets: 0,
+//     overNum: 1,
+//     ballNumber: 1,
+//     teamId: 2,
+//     isBatting: true,
+//   },
+// ];
 
 const teamNameMap = {
   1: "Sri Lanka",
@@ -52,7 +52,7 @@ const App = () => {
   const [matchInfo, setMatchInfo] = useState({});
   const [teamsInfo, setTeamsInfo] = useState([{}, {}]);
   const [isLoading, setIsLoading] = useState(true);
-  //const [scoresData, setScoresData] = useState([]);
+  const [scoresData, setScoresData] = useState([]);
   //Match finished or not
   const isMatchOver = false;
 
@@ -117,28 +117,35 @@ const App = () => {
       console.log(`Socket Connected ID = ${socket.id}`);
     });
 
-    socket.on("match-score", (data) => console.table(data));
-    socket.on("innings-one-batting", (data) =>
-      console.log("innings-one-batting", data)
-    );
-    socket.on("innings-two-batting", (data) =>
-      console.log("innings-two-batting", data)
-    );
+    socket.on("match-score", (data) => {
+      console.log("scoresData", data);
+      setScoresData(data);
+    });
+    // socket.on("innings-one-batting", (data) =>
+    //   console.log("innings-one-batting", data)
+    // );
+    // socket.on("innings-two-batting", (data) =>
+    //   console.log("innings-two-batting", data)
+    // );
 
-    socket.on("match-status", (data) => console.log("match-status", data));
+    // socket.on("match-status", (data) => console.log("match-status", data));
   }, []);
 
   useEffect(() => {
+    console.log({
+      matchInfo: matchInfo,
+      teamsInfo: teamsInfo,
+      scoresData: scoresData,
+    });
     if (
       Object.keys(teamsInfo[0]).length !== 0 &&
       Object.keys(teamsInfo[1]).length !== 0 &&
-      Object.keys(matchInfo).length !== 0
+      Object.keys(matchInfo).length !== 0 &&
+      scoresData.length !== 0
     ) {
       setIsLoading(false);
-    } else {
-      setIsLoading(true);
     }
-  }, [matchInfo, teamsInfo]);
+  }, [matchInfo, teamsInfo, scoresData]);
   if (isLoading)
     return (
       <div className={styles.preloaderContainer}>
