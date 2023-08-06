@@ -8,5 +8,4 @@ module.exports = {
     TWOBATTING: "innings-two-batting",
     ONEBALLING: "innings-one-balling",
     TWOBALLING: "innings-two-balling",
-    ONPLAYING: "on-playing",
 }
