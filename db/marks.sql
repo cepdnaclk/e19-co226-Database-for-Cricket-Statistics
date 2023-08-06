@@ -92,4 +92,55 @@ DELIMITER ;
 --call procedure 
 CALL getHowOut(dismissedPlayerID);
 
+-- get fielder + bowler for caught out
 
+CREATE PROCEDURE getCaughtOut(IN dismissedPlayerID INT)
+BEGIN 
+    SELECT 
+        (SELECT PlayerName FROM PLAYER 
+         INNER JOIN DISMISSALINNINGS1 ON PLAYER.PlayerID = DISMISSALINNINGS1.CaughtBy 
+         WHERE Dismissed = dismissedPlayerID) AS caughtBy,
+        
+        (SELECT PlayerName FROM PLAYER 
+         WHERE PlayerID = (SELECT CurrentBowlerID 
+                          FROM INNINGS1 
+                          WHERE Ball_ID = (SELECT Ball_ID FROM DISMISSALINNINGS1 WHERE Dismissed = dismissedPlayerID))) AS bowled;
+END;
+
+//
+
+DELIMITER ;
+
+--get bowler name
+CREATE PROCEDURE getBowler(IN dismissedPlayerID INT)
+BEGIN
+    SELECT
+        (SELECT PlayerName FROM PLAYER 
+         WHERE PlayerID = (SELECT CurrentBowlerID 
+                          FROM INNINGS1 
+                          WHERE Ball_ID = (SELECT Ball_ID FROM DISMISSALINNINGS1 WHERE Dismissed = dismissedPlayerID))) AS bowled;
+END;
+ 
+
+---get Bowling figures returns name, id, runs, numberof wickets and balls faced
+
+DELIMITER //
+
+CREATE PROCEDURE getBowlingFigures(IN bowlerID INT)
+BEGIN
+    SELECT
+        (SELECT PlayerName FROM PLAYER WHERE PlayerID = bowlerID) AS PlayerName,
+        (SELECT PlayerID FROM PLAYER WHERE PlayerID = bowlerID) AS PlayerID,
+        (SELECT SUM(TotalRuns) AS TotalRuns
+        FROM (
+            SELECT SUM(RunsScored) AS TotalRuns FROM INNINGS1 WHERE CurrentBowlerID = bowlerID
+            UNION ALL
+            SELECT SUM(ExtraRuns) AS TotalRuns FROM EXTRAINNINGS1 WHERE Ball_ID IN (SELECT Ball_ID  FROM INNINGS1 WHERE CurrentBowlerID = bowlerID)
+        ) AS SubqueryAlias) AS TotalRuns,
+        (SELECT COUNT(Ball_ID) FROM INNINGS1 WHERE CurrentBowlerID = bowlerID AND Ball_ID NOT IN (SELECT Ball_ID FROM DISMISSALINNINGS1 WHERE DismissType = 'runOut')) AS numberOfWickets,
+        (SELECT COUNT(Ball_ID) FROM INNINGS1 WHERE CurrentBowlerID = bowlerID) AS ballsFaced;
+END;
+
+//
+
+DELIMITER ;

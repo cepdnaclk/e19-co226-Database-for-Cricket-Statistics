@@ -1,17 +1,15 @@
-const {matchScoreSend, matchStatus, matchExtra, matchPlaying} = require("../socket/matchScoreSocket");
-const {getBattingScore, getBallingScore} = require("../db/scoreDb");
-const {getScoreWicketOver, getExtra, getPlayingTeam} = require("../db/matchScoreDb");
+const {matchScoreSend, matchStatus} = require("../socket/matchScoreSocket");
+const {getBattingScore, getBallingScore} = require("../db/matchBattingBallingScoreDb");
+const {getScoreWicketOver} = require("../db/matchScoreDb");
 const newLocal = "../socket/scoresSocket";
-const {battingScoreSend, ballingScoreSend} = require(newLocal);
+const {battingScoreSend1, ballingScoreSend1, battingScoreSend2, ballingScoreSend2}= require(newLocal);
 const config = require("../db/configDb");
 
 function main(io){
     config();
     getScoreWicketOver(io, matchScoreSend, matchStatus);
-    getBattingScore(io, battingScoreSend);
-    getBallingScore(io, ballingScoreSend);
-    getExtra(io, matchExtra);
-    getPlayingTeam(io, matchPlaying);
+    getBattingScore(io, battingScoreSend1, battingScoreSend2);
+    getBallingScore(io, ballingScoreSend1, ballingScoreSend2);
 }
 
 module.exports = main;

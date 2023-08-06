@@ -1,15 +1,21 @@
 const topics = require("../util/topics");
 
-function battingScoreSend(io, data1, data2){
-    io.emit(topics.ONEBATTING, data1);
-    io.emit(topics.TWOBATTING, data2);
+function battingScoreSend1(io, data){
+    io.emit(topics.ONEBATTING, data);
 }
 
-function ballingScoreSend(io, data1, data2){
-    io.emit(topics.ONEBALLING, data1);
-    io.emit(topics.TWOBALLING, data2);
+function battingScoreSend2(io, data){
+    io.emit(topics.TWOBATTING, data);
+}
+
+function ballingScoreSend1(io, data){
+    io.emit(topics.ONEBALLING, data);
+}
+
+function ballingScoreSend2(io, data){
+    io.emit(topics.TWOBALLING, data);
 }
 
 
-module.exports = {battingScoreSend, ballingScoreSend};
 
+module.exports = {battingScoreSend1, ballingScoreSend1, battingScoreSend2, ballingScoreSend2};
