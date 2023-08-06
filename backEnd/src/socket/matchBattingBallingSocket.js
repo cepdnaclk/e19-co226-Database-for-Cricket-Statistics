@@ -9,7 +9,6 @@ function battingScoreSend2(io, data){
 }
 
 function ballingScoreSend1(io, data){
-    console.log(data);
     io.emit(topics.ONEBALLING, data);
 }
 
