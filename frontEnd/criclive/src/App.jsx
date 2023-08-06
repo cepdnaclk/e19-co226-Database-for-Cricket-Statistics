@@ -7,40 +7,40 @@ import { useState, useEffect } from "react";
 import api from "./services/api";
 import socket from "./services/socket";
 import Preloader from "./components/Preloader";
-// const scoresData = [
-//   {
-//     totalRuns: 225,
-//     innings: 1,
-//     extras: {
-//       total: 10,
-//       wides: 5,
-//       noBalls: 2,
-//       legByes: 2,
-//       byes: 1,
-//     },
-//     wickets: 2,
-//     overNum: 49,
-//     ballNumber: 5,
-//     teamId: 1,
-//     isBatting: false,
-//   },
-//   {
-//     totalRuns: 12,
-//     innings: 2,
-//     extras: {
-//       total: 5,
-//       wides: 2,
-//       noBalls: 1,
-//       legByes: 1,
-//       byes: 1,
-//     },
-//     wickets: 0,
-//     overNum: 1,
-//     ballNumber: 1,
-//     teamId: 2,
-//     isBatting: true,
-//   },
-// ];
+const scoresData = [
+  {
+    totalRuns: 225,
+    innings: 1,
+    extras: {
+      total: 10,
+      wides: 5,
+      noBalls: 2,
+      legByes: 2,
+      byes: 1,
+    },
+    wickets: 2,
+    overNum: 49,
+    ballNumber: 5,
+    teamId: 1,
+    isBatting: false,
+  },
+  {
+    totalRuns: 12,
+    innings: 2,
+    extras: {
+      total: 5,
+      wides: 2,
+      noBalls: 1,
+      legByes: 1,
+      byes: 1,
+    },
+    wickets: 0,
+    overNum: 1,
+    ballNumber: 1,
+    teamId: 2,
+    isBatting: true,
+  },
+];
 
 const teamNameMap = {
   1: "Sri Lanka",
@@ -52,7 +52,7 @@ const App = () => {
   const [matchInfo, setMatchInfo] = useState({});
   const [teamsInfo, setTeamsInfo] = useState([{}, {}]);
   const [isLoading, setIsLoading] = useState(true);
-  const [scoresData, setScoresData] = useState([]);
+  //const [scoresData, setScoresData] = useState([]);
   //Match finished or not
   const isMatchOver = false;
 
@@ -69,7 +69,7 @@ const App = () => {
             "date": "2023-08-09T18:30:00.000Z",
             "time": "15:00:00",
             "venue": "Melbourne Stadium",
-            "toss": 1,
+            "tossWinningTeamId": 1,
             "matchName": "Australia vs India",
             "tossIsBatting": 1
           }
@@ -117,13 +117,15 @@ const App = () => {
       console.log(`Socket Connected ID = ${socket.id}`);
     });
 
-    socket.on("match-score", (data) => setScoresData(data));
+    socket.on("match-score", (data) => console.table(data));
     socket.on("innings-one-batting", (data) =>
       console.log("innings-one-batting", data)
     );
     socket.on("innings-two-batting", (data) =>
       console.log("innings-two-batting", data)
     );
+
+    socket.on("match-status", (data) => console.log("match-status", data));
   }, []);
 
   useEffect(() => {
@@ -133,6 +135,8 @@ const App = () => {
       Object.keys(matchInfo).length !== 0
     ) {
       setIsLoading(false);
+    } else {
+      setIsLoading(true);
     }
   }, [matchInfo, teamsInfo]);
   if (isLoading)
@@ -162,8 +166,8 @@ const App = () => {
         <p>
           <span>Toss: </span>
           {/* Extract the team name of team who won the toss */}
-          {teamsInfo.find((obj) => obj.teamId === matchInfo.toss).teamName +
-            " "}
+          {teamsInfo.find((obj) => obj.teamId === matchInfo.tossWinningTeamId)
+            .teamName + " "}
           won the toss and opted to bowl first
         </p>
         <p>
