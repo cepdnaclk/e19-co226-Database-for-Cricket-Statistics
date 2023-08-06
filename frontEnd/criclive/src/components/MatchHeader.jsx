@@ -36,6 +36,7 @@ const MatchHeader = ({ scoresData, teamNameMap }) => {
 };
 
 const TeamInfoAndScore = ({ scoreObj, teamName }) => {
+  let yetToBat = scoreObj.totalRuns === null;
   return (
     <div
       className={classNames(
@@ -49,13 +50,13 @@ const TeamInfoAndScore = ({ scoreObj, teamName }) => {
       </div>
       <div className={styles.score}>
         <p className={styles.runsWickets}>
-          {scoreObj.totalRuns === null
+          {yetToBat
             ? "Yet to Bat"
             : scoreObj.totalRuns + "/" + scoreObj.wickets}
         </p>
-        <p
-          className={styles.overs}
-        >{`(${scoreObj.overNum}.${scoreObj.ballNumber})`}</p>
+        <p className={styles.overs}>
+          {yetToBat || `(${scoreObj.overNum}.${scoreObj.ballNumber})`}
+        </p>
       </div>
     </div>
   );
