@@ -1,6 +1,7 @@
 import classNames from "classnames";
 import styles from "../styles/Scorecard.module.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import api from "../services/api";
 const inningsOneBatsmenData = [
   {
     name: "Pathum Nissanka",
@@ -21,6 +22,7 @@ const inningsOneBatsmenData = [
     sr: "0.00",
   },
 ];
+
 const teamOnePlayers = [
   "Kusal Mendis",
   "Pathum Nissanka",
@@ -47,8 +49,57 @@ const inningsOneBowlersData = [
   },
 ];
 
-const Scorecard = () => {
-  const [inningsSelected, setInningsSelected] = useState(1);
+const inningsTwoBatsmenData = [
+  {
+    name: "Rohit Sharma",
+    howOut: "Not Out",
+    runs: "6",
+    balls: "10",
+    fours: "1",
+    sixes: "0",
+    sr: "60.0",
+  },
+  {
+    name: "Ishan Kishan",
+    howOut: "Not Out",
+    runs: "3",
+    balls: "3",
+    fours: "0",
+    sixes: "0",
+    sr: "100.0",
+  },
+];
+const teamTwoPlayers = [
+  "Rohit Sharma",
+  "Ishan Kishan",
+  "Virat Kohli",
+  "Ravindra Jadeja",
+];
+const inningsTwoBowlersData = [
+  {
+    name: "Dilshan Madushanka",
+    overs: "1",
+    maidens: "0",
+    wickets: "0",
+    runs: "8",
+    econ: "8",
+  },
+
+  {
+    name: "Kasun Rajitha",
+    overs: "0",
+    maidens: "0",
+    wickets: "0",
+    runs: "4",
+    econ: "-",
+  },
+];
+
+const Scorecard = ({ scoresData, teamNameMap }) => {
+  const [inningsSelected, setInningsSelected] = useState(
+    scoresData[0].isBatting ? 1 : 2
+  );
+
   return (
     <>
       <div className={styles.inningsSelector}>
@@ -59,7 +110,7 @@ const Scorecard = () => {
           )}
           onClick={() => setInningsSelected(1)}
         >
-          Sri Lanka
+          {teamNameMap[scoresData[0].teamId]}
         </div>
         <div
           className={classNames(
@@ -68,11 +119,14 @@ const Scorecard = () => {
           )}
           onClick={() => setInningsSelected(2)}
         >
-          India
+          {teamNameMap[scoresData[1].teamId]}
         </div>
       </div>
       <div className={styles.scorecardContainer}>
-        <BattingTable inningsSelected={inningsSelected} />
+        <BattingTable
+          inningsSelected={inningsSelected}
+          scoresObj={scoresData[inningsSelected - 1]}
+        />
         <br />
         <div className={styles.yetToBat}>
           Yet to Bat
@@ -82,6 +136,14 @@ const Scorecard = () => {
                 .filter(
                   (name) =>
                     !inningsOneBatsmenData.some((obj) => obj.name === name)
+                )
+                .map((name, index) => <li>{name}</li>)}
+
+            {inningsSelected === 2 &&
+              teamTwoPlayers
+                .filter(
+                  (name) =>
+                    !inningsTwoBatsmenData.some((obj) => obj.name === name)
                 )
                 .map((name, index) => <li>{name}</li>)}
           </ul>
@@ -109,12 +171,14 @@ const BowlingTable = ({ inningsSelected }) => {
         {/* Scorecard Batsmen Info */}
         {inningsSelected === 1 &&
           inningsOneBowlersData.map((dataObj) => <BowlerFigure {...dataObj} />)}
+        {inningsSelected === 2 &&
+          inningsTwoBowlersData.map((dataObj) => <BowlerFigure {...dataObj} />)}
       </tbody>
     </table>
   );
 };
 
-const BattingTable = ({ inningsSelected }) => {
+const BattingTable = ({ inningsSelected, scoresObj }) => {
   return (
     <table>
       <thead>
@@ -132,22 +196,26 @@ const BattingTable = ({ inningsSelected }) => {
         {inningsSelected === 1 &&
           inningsOneBatsmenData.map((dataObj) => <BatsmanScore {...dataObj} />)}
 
+        {inningsSelected === 2 &&
+          inningsTwoBatsmenData.map((dataObj) => <BatsmanScore {...dataObj} />)}
+
         {/* Extras */}
         <tr>
           <td className={styles.alignLeft}>Extras</td>
-          <td>8</td>
+          <td>{scoresObj.extras.total}</td>
           <td colSpan={4} className={styles.alignLeft}>
-            {" "}
-            (4W, 2LB, 1B, 1NB)
+            ({scoresObj.extras.wides}W, {scoresObj.extras.noBalls}NB,{" "}
+            {scoresObj.extras.legByes}LB, {scoresObj.extras.byes}B)
           </td>
         </tr>
 
         {/* Total Runs */}
         <tr>
           <td className={styles.alignLeft}>Total Runs</td>
-          <td>130</td>
+          <td>{scoresObj.totalRuns}</td>
           <td colSpan={4} className={styles.alignLeft}>
-            (5 Wickets, 23 Overs)
+            ({scoresObj.wickets} Wickets, {scoresObj.overNum}.
+            {scoresObj.ballNumber} Overs)
           </td>
         </tr>
       </tbody>

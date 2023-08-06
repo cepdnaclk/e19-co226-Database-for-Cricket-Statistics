@@ -8,9 +8,9 @@ function batting(res){
         runs: res.TotalRuns,
         balls: res.BallsFaced,
         isOut:res.IsOut,
-        fours: "4",
-        sixes: "1",
-        sr: res.TotalRuns*1.0/(res.BallsFaced*1.0/6)
+        // fours: "4",
+        // sixes: "1",
+        sr: (res.TotalRuns*0.1*6)/(res.BallsFaced*0.1)
     }});
    
 }
@@ -23,7 +23,7 @@ function balling(res){
         overs: res.OverNumber,
         wickets: res.wicket,
         runs: res.run,
-        econ: res.run*1.0/res.OverNumber,
+        econ: (res.run*0.1)/(res.OverNumber*0.1),
     }});
 }
 
