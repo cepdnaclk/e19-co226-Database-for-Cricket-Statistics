@@ -23,7 +23,7 @@ function getMatchInfo(res){
             venue:data[0].Venue,
             toss:(data[0].Toss===1)?true:false,
             matchName:data[0].MatchName,
-            tossIsBatting:data[0].TossIsBatting
+            tossIsBatting:(data[0].TossIsBatting===1)?true:false
         });
     });
 }
