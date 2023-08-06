@@ -6,6 +6,7 @@ import styles from "./styles/App.module.scss";
 import { useState, useEffect } from "react";
 import api from "./services/api";
 import socket from "./services/socket";
+import Preloader from "./components/Preloader";
 const scoresData = [
   {
     totalRuns: 225,
@@ -50,6 +51,8 @@ const App = () => {
   const [selected, setSelected] = useState("scorecard");
   const [matchInfo, setMatchInfo] = useState({});
   const [teamsInfo, setTeamsInfo] = useState([{}, {}]);
+  const [isLoading, setIsLoading] = useState(true);
+  // const [scoresData, setScoresData] = useState([]);
   //Match finished or not
   const isMatchOver = false;
 
@@ -61,15 +64,15 @@ const App = () => {
         setMatchInfo(response.data);
         /* Sample response
           {
-            "Team1_ID": 1,
-            "Team2_ID": 2,
-            "Date": "2023-08-09T18:30:00.000Z",
-            "Time": "15:00:00",
-            "Venue": "Melbourne Stadium",
-            "Toss": 1,
-            "MatchName": "Australia vs India",
-            "TossIsBatting": 1
-          } 
+            "team1Id": 1,
+            "team2Id": 1,
+            "date": "2023-08-09T18:30:00.000Z",
+            "time": "15:00:00",
+            "venue": "Melbourne Stadium",
+            "toss": 1,
+            "matchName": "Australia vs India",
+            "tossIsBatting": 1
+          }
         */
       } catch (err) {
         console.log("Error: fetchMatchInfo");
@@ -83,21 +86,23 @@ const App = () => {
         setTeamsInfo(response.data);
 
         /* Sample response
+        
         [
           {
-            "TeamID":1,
-            "TeamName":"TeamA",
-            "Country":"Australia",
-            "Coach":"David Smith",
-            "CaptainID":1},
-            
+            "teamId": 1,
+            "teamName": "TeamA",
+            "country": "Australia",
+            "coach": "David Smith",
+            "captainId": 1
+          },
           {
-            "TeamID":2,
-            "TeamName":"TeamB",
-            "Country":"India",
-            "Coach":"Raj Singh",
-            "CaptainID":2}
-          ]
+            "teamId": 2,
+            "teamName": "TeamB",
+            "country": "India",
+            "coach": "Raj Singh",
+            "captainId": 2
+          }
+        ]
         */
       } catch (err) {
         console.log("Error: fetchMatchInfo");
@@ -105,13 +110,32 @@ const App = () => {
       }
     };
 
-    fetchTeamsInfo();
     fetchMatchInfo();
+    fetchTeamsInfo();
 
-    // socket.on("connect", () => {
-    //   console.log(`Socket Connected ID = ${socket.id}`);
-    // });
+    socket.on("connect", () => {
+      console.log(`Socket Connected ID = ${socket.id}`);
+    });
+
+    socket.on("match-score", (data) => console.log("match-score", data));
+    socket.on("match-score", (data) => console.log("match-score", data));
   }, []);
+
+  useEffect(() => {
+    if (
+      Object.keys(teamsInfo[0]).length !== 0 &&
+      Object.keys(teamsInfo[1]).length !== 0 &&
+      Object.keys(matchInfo).length !== 0
+    ) {
+      setIsLoading(false);
+    }
+  }, [matchInfo, teamsInfo]);
+  if (isLoading)
+    return (
+      <div className={styles.preloaderContainer}>
+        <Preloader />{" "}
+      </div>
+    );
 
   return (
     <div className={styles.container}>
@@ -133,11 +157,13 @@ const App = () => {
         <p>
           <span>Toss: </span>
           {/* Extract the team name of team who won the toss */}
-          IND won the toss and opted to bowl first
+          {teamsInfo.find((obj) => obj.teamId === matchInfo.toss).teamName +
+            " "}
+          won the toss and opted to bowl first
         </p>
         <p>
           {/* Extract the venue */}
-          <span>Stadium: </span> {matchInfo.Venue}
+          <span>Stadium: </span> {matchInfo.venue}
         </p>
       </div>
     </div>
