@@ -58,7 +58,7 @@ CREATE TRIGGER PlayerOut
 AFTER INSERT ON DISMISSALINNINGS1 
 FOR EACH ROW
 BEGIN 
-    UPDATE BatsmanScores SET IsOut = 1 WHERE PlayerID = NEW.Dismissed;
+    UPDATE BatsmanScoresFirstInnings SET IsOut = 1 WHERE PlayerID = NEW.Dismissed;
 END;
 //
 
@@ -144,3 +144,43 @@ END;
 //
 
 DELIMITER ;
+
+--- view for bowling
+CREATE VIEW BowlingFiguresView AS
+SELECT
+    P.PlayerName,
+    P.PlayerID,
+    IFNULL(TR.TotalRuns, 0) AS TotalRuns,
+    IFNULL(NW.numberOfWickets, 0) AS NumberOfWickets,
+    IFNULL(BF.ballsFaced, 0) AS BallsFaced
+FROM PLAYER P
+INNER JOIN (
+    SELECT
+        CurrentBowlerID,
+        SUM(TotalRuns) AS TotalRuns
+    FROM (
+        SELECT CurrentBowlerID, SUM(RunsScored) AS TotalRuns FROM INNINGS1 GROUP BY CurrentBowlerID
+        UNION ALL
+        SELECT I1.CurrentBowlerID, SUM(ExtraRuns) AS TotalRuns
+        FROM EXTRAINNINGS1 E1
+        INNER JOIN INNINGS1 I1 ON E1.Ball_ID = I1.Ball_ID
+        GROUP BY I1.CurrentBowlerID
+    ) AS SubqueryAlias
+    GROUP BY CurrentBowlerID
+) AS TR ON P.PlayerID = TR.CurrentBowlerID
+LEFT JOIN (
+    SELECT
+        CurrentBowlerID,
+        COUNT(Ball_ID) AS numberOfWickets
+    FROM INNINGS1
+    WHERE Ball_ID NOT IN (SELECT Ball_ID FROM DISMISSALINNINGS1 WHERE DismissType = 'runOut')
+    GROUP BY CurrentBowlerID
+) AS NW ON P.PlayerID = NW.CurrentBowlerID
+LEFT JOIN (
+    SELECT
+        CurrentBowlerID,
+        COUNT(Ball_ID) AS ballsFaced
+    FROM INNINGS1
+    GROUP BY CurrentBowlerID
+) AS BF ON P.PlayerID = BF.CurrentBowlerID;
+
