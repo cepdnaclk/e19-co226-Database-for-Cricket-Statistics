@@ -69,7 +69,7 @@ const App = () => {
             "date": "2023-08-09T18:30:00.000Z",
             "time": "15:00:00",
             "venue": "Melbourne Stadium",
-            "toss": 1,
+            "tossWinningTeamId": 1,
             "matchName": "Australia vs India",
             "tossIsBatting": 1
           }
@@ -124,6 +124,8 @@ const App = () => {
     socket.on("innings-two-batting", (data) =>
       console.log("innings-two-batting", data)
     );
+
+    socket.on("match-status", (data) => console.log("match-status", data));
   }, []);
 
   useEffect(() => {
@@ -164,8 +166,8 @@ const App = () => {
         <p>
           <span>Toss: </span>
           {/* Extract the team name of team who won the toss */}
-          {teamsInfo.find((obj) => obj.teamId === matchInfo.toss).teamName +
-            " "}
+          {teamsInfo.find((obj) => obj.teamId === matchInfo.tossWinningTeamId)
+            .teamName + " "}
           won the toss and opted to bowl first
         </p>
         <p>
