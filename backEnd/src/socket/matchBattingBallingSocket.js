@@ -1,6 +1,7 @@
 const topics = require("../util/topics");
 
 function battingScoreSend1(io, data){
+    console.log(data);
     io.emit(topics.ONEBATTING, data);
 }
 
