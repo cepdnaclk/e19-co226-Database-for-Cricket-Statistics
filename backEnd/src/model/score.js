@@ -3,8 +3,8 @@ function batting(res){
     return res.map(res => {
         return {
         name: res.PlayerName,
-        playerId:res.OnStrikeID,
-        howOut: (res.IsOut)?"":"notOut",
+        playerId:res.PlayerID,
+        howOut: (res.IsOut)?"":"Not Out",
         runs: res.TotalRuns,
         balls: res.BallsFaced,
         isOut:res.IsOut,

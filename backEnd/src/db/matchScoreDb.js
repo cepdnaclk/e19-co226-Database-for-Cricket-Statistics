@@ -65,7 +65,7 @@ function getScoreWicketOver(io, result, resultStatus){
                             wicket:d.wickets,
                             overNum:d.OverNum,
                             ballNumber:d.BallNumber,
-                            extra:d.extra,
+                            extras:d.extra,
                             isBatting:d.isBatting
                     };});
                     
@@ -105,7 +105,6 @@ function getMatchStatus(io, result, data, data1){
     }
 
 
-
     db.query(sql,(err, res) => {
         
         if (res.length === 0){
@@ -118,7 +117,8 @@ function getMatchStatus(io, result, data, data1){
             ball:ball.ball,
             comment:ball.Commentary,
             overNumber:ball.OverNum,
-            ballNumber:ball.BallNumber
+            ballNumber:ball.BallNumber,
+            ballId: data.Ball_ID
         });
     });
 }
