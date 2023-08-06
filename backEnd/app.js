@@ -5,6 +5,7 @@ require("dotenv").config();
 const http = require("http");
 const cors = require("cors");
 const createSocket = require("./src/socket/socket");
+const { instrument } = require("@socket.io/admin-ui");
 
 // config port
 const PORT = process.env.PORT || 5000;
@@ -39,3 +40,8 @@ function intervalFunc() {
   // console.log("Sending data...");
 }
 setInterval(intervalFunc, 2000);
+
+instrument(io, {
+  auth: false,
+  mode: "development",
+});

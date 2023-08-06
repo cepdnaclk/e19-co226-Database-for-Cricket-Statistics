@@ -3,7 +3,12 @@ import styles from "../styles/MatchHeader.module.scss";
 import Flag from "react-flagkit";
 import classNames from "classnames";
 const FLAG_SIZE = 65;
-function MatchHeader() {
+
+const flagName = {
+  "Sri Lanka": "LK",
+  India: "IN",
+};
+const MatchHeader = ({ scoresData, teamNameMap }) => {
   return (
     <div className={styles.header}>
       <img
@@ -12,26 +17,14 @@ function MatchHeader() {
         alt="cricLive Logo"
       />
       <div className={styles.scores}>
-        <div className={classNames(styles.home)}>
-          <div className={styles.flagAndName}>
-            <Flag country="LK" size={FLAG_SIZE} />
-            <p>Sri Lanka</p>
-          </div>
-          <div className={styles.score}>
-            <p className={styles.runsWickets}>225</p>
-            <p className={styles.overs}>(49.5)</p>
-          </div>
-        </div>
-        <div className={classNames(styles.away, styles.batting)}>
-          <div className={styles.flagAndName}>
-            <Flag country="IN" size={FLAG_SIZE} />
-            <p>India</p>
-          </div>
-          <div className={styles.score}>
-            <p className={styles.runsWickets}>130/5</p>
-            <p className={styles.overs}>(23)</p>
-          </div>
-        </div>
+        <TeamInfoAndScore
+          scoreObj={scoresData[0]}
+          teamName={teamNameMap[scoresData[0].teamId]}
+        />
+        <TeamInfoAndScore
+          scoreObj={scoresData[1]}
+          teamName={teamNameMap[scoresData[1].teamId]}
+        />
       </div>
 
       <div className={styles.status}>
@@ -40,6 +33,29 @@ function MatchHeader() {
       </div>
     </div>
   );
-}
+};
 
+const TeamInfoAndScore = ({ scoreObj, teamName }) => {
+  return (
+    <div
+      className={classNames(
+        scoreObj.innings === 1 ? styles.home : styles.away,
+        scoreObj.isBatting && styles.batting
+      )}
+    >
+      <div className={styles.flagAndName}>
+        <Flag country={flagName[teamName]} size={FLAG_SIZE} />
+        <p>{teamName}</p>
+      </div>
+      <div className={styles.score}>
+        <p className={styles.runsWickets}>
+          {scoreObj.totalRuns}/{scoreObj.wickets}
+        </p>
+        <p
+          className={styles.overs}
+        >{`(${scoreObj.overNum}.${scoreObj.ballNumber})`}</p>
+      </div>
+    </div>
+  );
+};
 export default MatchHeader;

@@ -1,5 +1,4 @@
 const db = require("../../dbConfig/dbConfig")
-const getStatus = require("../model/matchStatus");
 
 const sql_getScore = `
 SELECT SUM(TotalRuns) AS TotalRuns, 1 AS innings, (SELECT Team1_ID FROM CURRENTMATCH) as teamId
@@ -71,7 +70,7 @@ function getScoreWicketOver(io, result, resultStatus){
                     };});
                     
                     result(io, data);
-                    getMatchStatus(io, resultStatus, over);
+                    getMatchStatus(io, resultStatus, over, data);
                 });
             });
         });
@@ -93,7 +92,7 @@ function getExtraObj(extra){
     return obj;
 }
 
-function getMatchStatus(io, result, data){
+function getMatchStatus(io, result, data, data1){
 
     let ball;
     let sql;
@@ -105,6 +104,8 @@ function getMatchStatus(io, result, data){
         ball = data[1];
     }
 
+
+
     db.query(sql,(err, res) => {
         
         if (res.length === 0){
@@ -113,6 +114,7 @@ function getMatchStatus(io, result, data){
             ball.ball = "W";
         }
         result(io, {
+            matchOver: (data1[1].totalRuns !== null && ((data1[0].overNum === data1[1].overNum && data1[1].ballNumber === 6) || data1[1].wicket === 10 || data1[0].totalRuns > data1[1].totalRuns))?true:false,
             ball:ball.ball,
             comment:ball.Commentary,
             overNumber:ball.OverNum,
