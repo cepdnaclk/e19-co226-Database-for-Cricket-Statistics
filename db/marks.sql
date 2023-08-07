@@ -123,7 +123,7 @@ END;
 
 ---get Bowling figures returns name, id, runs, numberof wickets and balls faced
 --- view for bowling
-CREATE VIEW BowlingFiguresView AS
+CREATE VIEW BowlingFiguresViewfirst AS
 SELECT
     P.PlayerName,
     P.PlayerID,
@@ -140,7 +140,7 @@ INNER JOIN (
         UNION ALL
         SELECT I1.CurrentBowlerID, SUM(ExtraRuns) AS TotalRuns
         FROM EXTRAINNINGS1 E1
-        INNER JOIN INNINGS1 I1 ON E1.Ball_ID = I1.Ball_ID
+        INNER JOIN INNINGS1 I1 ON E1.Ball_ID = I1.Ball_ID 
         GROUP BY I1.CurrentBowlerID
     ) AS SubqueryAlias
     GROUP BY CurrentBowlerID
@@ -161,7 +161,7 @@ LEFT JOIN (
     GROUP BY CurrentBowlerID
 ) AS BF ON P.PlayerID = BF.CurrentBowlerID;
 
-CREATE VIEW BowlingFiguresView AS
+CREATE VIEW BowlingFiguresViewsecond AS
 SELECT
     P.PlayerName,
     P.PlayerID,
@@ -198,6 +198,5 @@ LEFT JOIN (
     FROM INNINGS1
     GROUP BY CurrentBowlerID
 ) AS BF ON P.PlayerID = BF.CurrentBowlerID;
-
 
 
