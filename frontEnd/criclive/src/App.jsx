@@ -42,10 +42,10 @@ import Preloader from "./components/Preloader";
 //   },
 // ];
 
-const teamNameMap = {
-  1: "Sri Lanka",
-  2: "India",
-};
+// const teamNameMap = {
+//   1: "Sri Lanka",
+//   2: "India",
+// };
 const App = () => {
   //menu Selection State
   const [selected, setSelected] = useState("scorecard");
@@ -53,6 +53,7 @@ const App = () => {
   const [teamsInfo, setTeamsInfo] = useState([{}, {}]);
   const [isLoading, setIsLoading] = useState(true);
   const [scoresData, setScoresData] = useState([]);
+  const [teamNameMap, setTeamNameMap] = useState({});
   //Match finished or not
   const isMatchOver = false;
 
