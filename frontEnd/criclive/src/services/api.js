@@ -1,5 +1,5 @@
 import axios from "axios";
 
 export default axios.create({
-  baseURL: "https://criclive-backend.onrender.com",
+  baseURL: "http://localhost:5000",
 });
