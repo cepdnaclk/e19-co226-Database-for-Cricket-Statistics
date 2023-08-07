@@ -49,7 +49,7 @@ function getPlayerInfo(teamId, res){
     db.query(sql_playerDetails + teamId,(err, players) => {
         db.query(sql_teamCaptain + teamId,(err, captainPlayer) => {
 
-            if (player !== undefined){
+            if (players !== undefined){
                 const data = players.map(player => (player.PlayerID === captainPlayer[0].CaptainID) ? {captain:true, ...player}:{captain:false, ...player});
                 
                 const player = data.map(p => {

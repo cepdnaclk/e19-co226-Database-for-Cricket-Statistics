@@ -8,6 +8,13 @@ const dbConn = mysql.createConnection({
   database: "bzg2gtr1s18vgce364iy",
 });
 
+// const dbConn = mysql.createConnection({
+//   host: "localhost",
+//   user: "root",
+//   password: "",
+//   database: "criclive",
+// });
+
 // connect db
 dbConn.connect(function (err) {
   if (err) throw err;
