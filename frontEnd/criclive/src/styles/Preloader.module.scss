@@ -1,3 +1,10 @@
+.preloaderContainer {
+  height: 100dvh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .lds-roller {
   display: inline-block;
   position: relative;
