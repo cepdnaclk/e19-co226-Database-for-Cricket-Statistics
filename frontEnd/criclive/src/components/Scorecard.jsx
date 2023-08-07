@@ -29,25 +29,25 @@ import api from "../services/api";
 //   "Charith Asalanka",
 //   "Dasun Shanaka",
 // ];
-const inningsOneBowlersData = [
-  {
-    name: "Jaspreet Bumrah",
-    overs: "10",
-    maidens: "1",
-    wickets: "3",
-    runs: "37",
-    econ: "3.7",
-  },
+// const inningsOneBowlersData = [
+//   {
+//     name: "Jaspreet Bumrah",
+//     overs: "10",
+//     maidens: "1",
+//     wickets: "3",
+//     runs: "37",
+//     econ: "3.7",
+//   },
 
-  {
-    name: "Yuzzy Chahal",
-    overs: "10",
-    maidens: "2",
-    wickets: "2",
-    runs: "27",
-    econ: "2.7",
-  },
-];
+//   {
+//     name: "Yuzzy Chahal",
+//     overs: "10",
+//     maidens: "2",
+//     wickets: "2",
+//     runs: "27",
+//     econ: "2.7",
+//   },
+// ];
 
 // const inningsTwoBatsmenData = [
 //   {
@@ -75,25 +75,25 @@ const inningsOneBowlersData = [
 //   "Virat Kohli",
 //   "Ravindra Jadeja",
 // ];
-const inningsTwoBowlersData = [
-  {
-    name: "Dilshan Madushanka",
-    overs: "1",
-    maidens: "0",
-    wickets: "0",
-    runs: "8",
-    econ: "8",
-  },
+// const inningsTwoBowlersData = [
+//   {
+//     name: "Dilshan Madushanka",
+//     overs: "1",
+//     maidens: "0",
+//     wickets: "0",
+//     runs: "8",
+//     econ: "8",
+//   },
 
-  {
-    name: "Kasun Rajitha",
-    overs: "0",
-    maidens: "0",
-    wickets: "0",
-    runs: "4",
-    econ: "-",
-  },
-];
+//   {
+//     name: "Kasun Rajitha",
+//     overs: "0",
+//     maidens: "0",
+//     wickets: "0",
+//     runs: "4",
+//     econ: "-",
+//   },
+// ];
 
 const Scorecard = ({
   scoresData,
@@ -102,6 +102,8 @@ const Scorecard = ({
   inningsTwoBatsmenData,
   teamOnePlayers,
   teamTwoPlayers,
+  inningsOneBowlersData,
+  inningsTwoBowlersData,
 }) => {
   const [inningsSelected, setInningsSelected] = useState(
     scoresData[0].isBatting ? 1 : 2
@@ -129,46 +131,76 @@ const Scorecard = ({
           {teamNameMap[scoresData[1].teamId]}
         </div>
       </div>
-      <div className={styles.scorecardContainer}>
-        <BattingTable
-          inningsSelected={inningsSelected}
-          scoresObj={scoresData[inningsSelected - 1]}
-          inningsBatsmenData={
-            inningsSelected == 1 ? inningsOneBatsmenData : inningsTwoBatsmenData
-          }
-        />
-        <br />
-        <div className={styles.yetToBat}>
-          Yet to Bat
-          <ul>
-            {inningsSelected === 1 &&
-              teamOnePlayers
-                .filter(
-                  (player) =>
-                    !inningsOneBatsmenData.some(
-                      (obj) => obj.playerId === player.playerId
-                    )
-                )
-                .map((player, index) => <li>{player.playerName}</li>)}
 
-            {inningsSelected === 2 &&
-              teamTwoPlayers
-                .filter(
-                  (player) =>
-                    !inningsTwoBatsmenData.some(
-                      (obj) => obj.playerId === player.playerId
-                    )
-                )
-                .map((player, index) => <li>{player.playerName}</li>)}
-          </ul>
-          <br />
-        </div>
-        <BowlingTable inningsSelected={inningsSelected} />
-      </div>
+      {inningsSelected === 1 ? (
+        <InningsInfo
+          teamPlayers={teamOnePlayers}
+          inningsBatsmenData={inningsOneBatsmenData}
+          inningsBowlersData={inningsOneBowlersData}
+          scoresObj={scoresData[inningsSelected - 1]}
+          key={inningsSelected}
+        />
+      ) : (
+        <InningsInfo
+          teamPlayers={teamTwoPlayers}
+          inningsBatsmenData={inningsTwoBatsmenData}
+          inningsBowlersData={inningsTwoBowlersData}
+          scoresObj={scoresData[inningsSelected - 1]}
+          key={inningsSelected}
+        />
+      )}
     </>
   );
 };
-const BowlingTable = ({ inningsSelected }) => {
+
+const InningsInfo = ({
+  teamPlayers,
+  inningsBatsmenData,
+  inningsBowlersData,
+  scoresObj,
+}) => {
+  if (inningsBatsmenData.length === 0)
+    return (
+      <div className={styles.scorecardContainer}>
+        <p className={styles.teamLineUp}>Team Line Up</p>
+        {teamPlayers.map((player) => {
+          return (
+            <div className={styles.playerInfo}>
+              <p className={styles.playerName}>{player.playerName}</p>
+              <p className={styles.playerType}>{player.playerType}</p>
+            </div>
+          );
+        })}
+      </div>
+    );
+  return (
+    <div className={styles.scorecardContainer}>
+      <BattingTable
+        scoresObj={scoresObj}
+        inningsBatsmenData={inningsBatsmenData}
+      />
+      <br />
+      <div className={styles.yetToBat}>
+        Yet to Bat
+        <ul>
+          {teamPlayers
+            .filter(
+              (player) =>
+                !inningsBatsmenData.some(
+                  (obj) => obj.playerId === player.playerId
+                )
+            )
+            .map((player, index) => (
+              <li key={index}>{player.playerName}</li>
+            ))}
+        </ul>
+        <br />
+      </div>
+      <BowlingTable inningsBowlersData={inningsBowlersData} />
+    </div>
+  );
+};
+const BowlingTable = ({ inningsBowlersData }) => {
   return (
     <table>
       <thead>
@@ -183,10 +215,10 @@ const BowlingTable = ({ inningsSelected }) => {
       </thead>
       <tbody>
         {/* Scorecard Batsmen Info */}
-        {inningsSelected === 1 &&
-          inningsOneBowlersData.map((dataObj) => <BowlerFigure {...dataObj} />)}
-        {inningsSelected === 2 &&
-          inningsTwoBowlersData.map((dataObj) => <BowlerFigure {...dataObj} />)}
+
+        {inningsBowlersData.map((dataObj) => (
+          <BowlerFigure {...dataObj} key={dataObj.playerId} />
+        ))}
       </tbody>
     </table>
   );

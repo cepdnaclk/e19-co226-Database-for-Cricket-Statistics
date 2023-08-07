@@ -9,7 +9,7 @@ const comments = [
   },
 ];
 
-const Commentary = () => {
+const Commentary = ({ matchStatus }) => {
   return (
     <div className={styles.container}>
       <BallComment

@@ -9,7 +9,14 @@ const flagName = {
   India: "IN",
   Australia: "AU",
 };
-const MatchHeader = ({ scoresData, teamNameMap }) => {
+const MatchHeader = ({
+  scoresData,
+  teamNameMap,
+  onStrikeBatsman,
+  nonStrikeBatsman,
+  battingTeamId,
+  currentBowler,
+}) => {
   return (
     <div className={styles.header}>
       <img
@@ -27,17 +34,39 @@ const MatchHeader = ({ scoresData, teamNameMap }) => {
           teamName={teamNameMap[scoresData[1].teamId]}
         />
       </div>
-
       <div className={styles.status}>
         <p>IND needs 96 runs in 27 Overs</p>
         <p className={styles.matchInfo}>Final · Asia Cup 2023</p>
+      </div>
+      <div
+        className={classNames(
+          styles.currentSummary,
+          battingTeamId === 2 && styles.battingDetailsOnRight
+        )}
+      >
+        <div className={styles.summaryItem}>
+          <p>
+            {onStrikeBatsman.name} * {onStrikeBatsman.runs}(
+            {onStrikeBatsman.balls})
+          </p>
+          <p>
+            {nonStrikeBatsman.name} {nonStrikeBatsman.runs}(
+            {nonStrikeBatsman.balls})
+          </p>
+        </div>
+        <div className={styles.summaryItem}>
+          <p>
+            {currentBowler.name} ({currentBowler.overs}.
+            {currentBowler.ballNumber})
+          </p>
+        </div>
       </div>
     </div>
   );
 };
 
 const TeamInfoAndScore = ({ scoreObj, teamName }) => {
-  let yetToBat = scoreObj.totalRuns === null;
+  let yetToBat = !scoreObj.isBatting;
   return (
     <div
       className={classNames(
@@ -46,7 +75,11 @@ const TeamInfoAndScore = ({ scoreObj, teamName }) => {
       )}
     >
       <div className={styles.flagAndName}>
-        <Flag country={flagName[teamName]} size={FLAG_SIZE} />
+        <Flag
+          country={flagName[teamName]}
+          size={FLAG_SIZE}
+          className={styles.flagIcon}
+        />
         <p>{teamName}</p>
       </div>
       <div className={styles.score}>
