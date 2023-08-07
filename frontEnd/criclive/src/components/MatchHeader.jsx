@@ -7,6 +7,7 @@ const FLAG_SIZE = 65;
 const flagName = {
   "Sri Lanka": "LK",
   India: "IN",
+  Australia: "AU",
 };
 const MatchHeader = ({ scoresData, teamNameMap }) => {
   return (

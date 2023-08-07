@@ -30,7 +30,6 @@ function getMatchInfo(res){
 
 function getTeamInfo(res){
     db.query(sql_teamDetails,(err, data) => {
-
         const teams = data.map(team => {
             return {
                 teamId:team.TeamID,
@@ -46,11 +45,14 @@ function getTeamInfo(res){
 }
 
 function getPlayerInfo(teamId, res){
+
     db.query(sql_playerDetails + teamId,(err, players) => {
         db.query(sql_teamCaptain + teamId,(err, captainPlayer) => {
-            const data = players.map(player => (player.PlayerID === captainPlayer[0].CaptainID) ? {captain:true, ...player}:{captain:false, ...player});
-            
-            const player = data.map(p => {
+
+            if (player !== undefined){
+                const data = players.map(player => (player.PlayerID === captainPlayer[0].CaptainID) ? {captain:true, ...player}:{captain:false, ...player});
+                
+                const player = data.map(p => {
                 return {
                     captain:p.captain,
                     playerId:p.PlayerID,
@@ -60,8 +62,10 @@ function getPlayerInfo(teamId, res){
                     teamId:p.TeamID
                 };
             });
-
+            
             res.status(200).json(player);
+
+            }
         });
     });
 }
