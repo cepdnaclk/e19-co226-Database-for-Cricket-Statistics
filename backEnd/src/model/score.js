@@ -12,7 +12,7 @@ function batting(res, playing){
         onStrike:(playing[0].OnStrikeID === res.PlayerID)?true:false,
         fours: "4",
         sixes: "1",
-        sr: (res.TotalRuns*0.1*6)/(res.BallsFaced*0.1)
+        sr: ((res.TotalRuns*0.1*6)/(res.BallsFaced*0.1)).toFixed(2)
     }});
 }
 
@@ -28,7 +28,7 @@ function balling(res, playing){
         wickets: res.NumberOfWickets,
         runs: res.TotalRuns,
         ballNumber:res.BallsFaced%6,
-        econ: (res.TotalRuns*0.1)/(res.BallsFaced*0.1/6),
+        econ: ((res.TotalRuns*0.1)/(res.BallsFaced*0.1/6)).toFixed(2),
         currentBowler:(playing[0].CurrentBowlerID === res.PlayerID)?true:false,
     }});
 }
