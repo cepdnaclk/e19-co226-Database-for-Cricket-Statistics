@@ -6,7 +6,7 @@ const {battingScoreSend1, ballingScoreSend1, battingScoreSend2, ballingScoreSend
 const config = require("../db/configDb");
 
 function main(io){
-    config();
+    // config();
     getScoreWicketOver(io, matchScoreSend, matchStatus);
     getBattingScore(io, battingScoreSend1, battingScoreSend2);
     getBallingScore(io, ballingScoreSend1, ballingScoreSend2);
