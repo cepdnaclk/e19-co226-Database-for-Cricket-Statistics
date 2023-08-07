@@ -93,7 +93,6 @@ DELIMITER ;
 CALL getHowOut(dismissedPlayerID);
 
 -- get fielder + bowler for caught out
-
 CREATE PROCEDURE getCaughtOut(IN dismissedPlayerID INT)
 BEGIN 
     SELECT 
@@ -123,30 +122,8 @@ END;
  
 
 ---get Bowling figures returns name, id, runs, numberof wickets and balls faced
-
-DELIMITER //
-
-CREATE PROCEDURE getBowlingFigures(IN bowlerID INT)
-BEGIN
-    SELECT
-        (SELECT PlayerName FROM PLAYER WHERE PlayerID = bowlerID) AS PlayerName,
-        (SELECT PlayerID FROM PLAYER WHERE PlayerID = bowlerID) AS PlayerID,
-        (SELECT SUM(TotalRuns) AS TotalRuns
-        FROM (
-            SELECT SUM(RunsScored) AS TotalRuns FROM INNINGS1 WHERE CurrentBowlerID = bowlerID
-            UNION ALL
-            SELECT SUM(ExtraRuns) AS TotalRuns FROM EXTRAINNINGS1 WHERE Ball_ID IN (SELECT Ball_ID  FROM INNINGS1 WHERE CurrentBowlerID = bowlerID)
-        ) AS SubqueryAlias) AS TotalRuns,
-        (SELECT COUNT(Ball_ID) FROM INNINGS1 WHERE CurrentBowlerID = bowlerID AND Ball_ID NOT IN (SELECT Ball_ID FROM DISMISSALINNINGS1 WHERE DismissType = 'runOut')) AS numberOfWickets,
-        (SELECT COUNT(Ball_ID) FROM INNINGS1 WHERE CurrentBowlerID = bowlerID) AS ballsFaced;
-END;
-
-//
-
-DELIMITER ;
-
 --- view for bowling
-CREATE VIEW BowlingFiguresView AS
+CREATE VIEW BowlingFiguresViewfirst AS
 SELECT
     P.PlayerName,
     P.PlayerID,
@@ -163,7 +140,7 @@ INNER JOIN (
         UNION ALL
         SELECT I1.CurrentBowlerID, SUM(ExtraRuns) AS TotalRuns
         FROM EXTRAINNINGS1 E1
-        INNER JOIN INNINGS1 I1 ON E1.Ball_ID = I1.Ball_ID
+        INNER JOIN INNINGS1 I1 ON E1.Ball_ID = I1.Ball_ID 
         GROUP BY I1.CurrentBowlerID
     ) AS SubqueryAlias
     GROUP BY CurrentBowlerID
@@ -183,4 +160,43 @@ LEFT JOIN (
     FROM INNINGS1
     GROUP BY CurrentBowlerID
 ) AS BF ON P.PlayerID = BF.CurrentBowlerID;
+
+CREATE VIEW BowlingFiguresViewsecond AS
+SELECT
+    P.PlayerName,
+    P.PlayerID,
+    IFNULL(TR.TotalRuns, 0) AS TotalRuns,
+    IFNULL(NW.numberOfWickets, 0) AS NumberOfWickets,
+    IFNULL(BF.ballsFaced, 0) AS BallsFaced
+FROM PLAYER P
+INNER JOIN (
+    SELECT
+        CurrentBowlerID,
+        SUM(TotalRuns) AS TotalRuns
+    FROM (
+        SELECT CurrentBowlerID, SUM(RunsScored) AS TotalRuns FROM INNINGS2 GROUP BY CurrentBowlerID
+        UNION ALL
+        SELECT I1.CurrentBowlerID, SUM(ExtraRuns) AS TotalRuns
+        FROM EXTRAINNINGS2 E1
+        INNER JOIN INNINGS2 I1 ON E1.Ball_ID = I1.Ball_ID
+        GROUP BY I1.CurrentBowlerID
+    ) AS SubqueryAlias
+    GROUP BY CurrentBowlerID
+) AS TR ON P.PlayerID = TR.CurrentBowlerID
+LEFT JOIN (
+    SELECT
+        CurrentBowlerID,
+        COUNT(Ball_ID) AS numberOfWickets
+    FROM INNINGS1
+    WHERE Ball_ID NOT IN (SELECT Ball_ID FROM DISMISSALINNINGS2 WHERE DismissType = 'runOut')
+    GROUP BY CurrentBowlerID
+) AS NW ON P.PlayerID = NW.CurrentBowlerID
+LEFT JOIN (
+    SELECT
+        CurrentBowlerID,
+        COUNT(Ball_ID) AS ballsFaced
+    FROM INNINGS1
+    GROUP BY CurrentBowlerID
+) AS BF ON P.PlayerID = BF.CurrentBowlerID;
+
 

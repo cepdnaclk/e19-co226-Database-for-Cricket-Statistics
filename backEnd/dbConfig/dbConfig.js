@@ -1,6 +1,7 @@
 const mysql = require("mysql");
 
 //local mysql db connection
+
 const dbConn = mysql.createConnection({
   host: "bzg2gtr1s18vgce364iy-mysql.services.clever-cloud.com",
   user: "uvsdiey20opi9xq9",
