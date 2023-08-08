@@ -281,7 +281,11 @@ const App = () => {
     setOnStrikeBatsman(batsmenData.find((batsman) => batsman.onStrike));
 
     //have to check howOut === "Not Out" condition
-    setNonStrikeBatsman(batsmenData.find((batsman) => !batsman.onStrike));
+    setNonStrikeBatsman(
+      batsmenData.find(
+        (batsman) => !batsman.onStrike && batsman.howOut === "Not Out"
+      )
+    );
   }, [
     inningsOneBatsmenData,
     inningsTwoBatsmenData,

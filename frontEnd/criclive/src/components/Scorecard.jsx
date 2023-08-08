@@ -282,13 +282,23 @@ const BatsmanScore = ({ name, howOut, runs, balls, fours, sixes, sr }) => {
   );
 };
 
-const BowlerFigure = ({ name, overs, maidens, runs, wickets, econ }) => {
+const BowlerFigure = ({
+  name,
+  overs,
+  maidens,
+  runs,
+  wickets,
+  econ,
+  ballNumber,
+}) => {
   return (
     <tr>
       <td>
         <p className={styles.batsmanName}>{name}</p>
       </td>
-      <td>{overs}</td>
+      <td>
+        {overs}.{ballNumber}
+      </td>
       <td>{maidens}</td>
       <td>{runs}</td>
       <td>{wickets}</td>
