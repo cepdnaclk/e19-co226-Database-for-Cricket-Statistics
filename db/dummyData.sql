@@ -111,7 +111,7 @@ INSERT INTO PLAYER (PlayerID, PlayerName, PlayerType, DateofBirth) VALUES
 INSERT INTO TEAM (TeamID, TeamName, Country, Coach, CaptainID) VALUES
 (1, 'TeamA', 'Australia', 'David Smith', 1),
 (2, 'TeamB', 'India', 'Raj Singh', 2),
-(3, 'TeamC', 'England', 'Andrew Brown', 3),
+(3, 'TeamC', 'England', 'Andrew Brown', 3);
 
 -- Insert data into TEAMPLAYERS table
 INSERT INTO TEAMPLAYERS (PlayerID, TeamID) VALUES
@@ -123,7 +123,7 @@ INSERT INTO TEAMPLAYERS (PlayerID, TeamID) VALUES
 
 -- Insert data into CURRENTMATCH table
 INSERT INTO CURRENTMATCH (Team1_ID, Team2_ID, Date, Time, Venue, Toss, MatchName, TossIsBatting) VALUES
-(1, 2, '2023-08-10', '15:00:00', 'Melbourne Stadium', 1, 'Australia vs India', TRUE),
+(1, 2, '2023-08-10', '15:00:00', 'Melbourne Stadium', 1, 'Australia vs India', TRUE);
 
 -- Insert data into INNINGS1 table
 INSERT INTO INNINGS1 (Ball_ID, OverNum, BallNumber, RunsScored, OnStrikeID, NonStrikeID, CurrentBowlerID) VALUES
