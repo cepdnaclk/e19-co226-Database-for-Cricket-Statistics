@@ -32,13 +32,17 @@ WHERE Ball_ID = (SELECT MAX(Ball_ID) FROM  INNINGS2)
 function getBattingScore(io, result1, result2){
     db.query(sql_batting1,(err, one) => {
         db.query(sql_batman1,(err, two) => {
-            result1(io, batting(one, two));
+            if (one != undefined && two != undefined){
+                result1(io, batting(one, two));
+            }
         });
     });
 
     db.query(sql_batting2,(err, one) => {
         db.query(sql_batman2,(err, two) => {
-            result2(io, batting(one, two));
+            if (one != undefined && two != undefined){
+                result2(io, batting(one, two));
+            }
         });
     });
 }
@@ -47,13 +51,17 @@ function getBattingScore(io, result1, result2){
 function getBallingScore(io, result1, result2){
     db.query(sql_balling1,(err, one) => {
         db.query(sql_bowling1,(err, two) => {
-            result1(io, balling(one, two));
+            if (one != undefined && two != undefined){
+                result1(io, balling(one, two));
+            }
         });
     });
 
     db.query(sql_balling2,(err, one) => {
         db.query(sql_bowling2,(err, two) => {
-            result2(io, balling(one, two));
+            if (one != undefined && two != undefined){
+                result2(io, balling(one, two));
+            }
         });
     });
 }

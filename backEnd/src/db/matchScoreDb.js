@@ -45,9 +45,24 @@ WHERE BALL_ID =
 
 function getScoreWicketOver(io, result, resultStatus){
     db.query(sql_getScore,(err, runs) => {
+
+        if(runs == undefined)
+            return;
+
         db.query(sql_wickets,(err, wicket) => {
+
+            if(wicket == undefined)
+                return;
+
             db.query(sql_over,(err, over) => {
+
+                if(over == undefined)
+                    return;
+
                 db.query(sql_getExtra,(err, extra) => {
+
+                    if(extra == undefined)
+                        return;
 
                     const extraInning1 = extra.filter(e => e.innings === 1);
                     const extraInning2 = extra.filter(e => e.innings === 2);
@@ -77,6 +92,7 @@ function getScoreWicketOver(io, result, resultStatus){
                     
                     result(io, data);
                     getMatchStatus(io, resultStatus, over, data);
+
                 });
             });
         });
@@ -111,6 +127,10 @@ function getMatchStatus(io, result, data, data1){
     }
 
     db.query(sql,(err, res) => {
+
+        if (res == undefined){
+            return;
+        }
         
         if (res.length === 0){
             ball.ball = ball.RunsScored;
