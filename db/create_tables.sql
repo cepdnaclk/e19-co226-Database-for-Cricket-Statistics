@@ -63,6 +63,7 @@ CREATE TABLE INNINGS1(
     OnStrikeID INT,
     NonStrikeID INT,
     CurrentBowlerID INT,
+    Commentary TEXT,
     CONSTRAINT fk_onstrike FOREIGN KEY (OnStrikeID)
     REFERENCES PLAYER(PlayerID)
     ON DELETE CASCADE
@@ -85,6 +86,7 @@ CREATE TABLE INNINGS2(
     OnStrikeID INT,
     NonStrikeID INT,
     CurrentBowlerID INT,
+    Commentary TEXT,
     CONSTRAINT fk_onstrike2nd FOREIGN KEY (OnStrikeID)
     REFERENCES PLAYER(PlayerID)
     ON DELETE CASCADE
