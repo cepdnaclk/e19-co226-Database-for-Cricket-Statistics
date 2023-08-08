@@ -67,22 +67,3 @@ function getBallingScore(io, result1, result2){
 }
 
 module.exports = {getBattingScore, getBallingScore};
-
-// {
-//     name: "Pathum Nissanka",
-//     howOut: "b J.Bumrah", //c Sangakkara b Muralitharan //run out (M. Jayawaradene) //lbw J.Bumrah
-//     runs: "40",
-//     balls: "35",
-//     fours: "4",
-//     sixes: "1",
-//     sr: "114.29",
-// }
-
-// {
-//     name: "Jaspreet Bumrah",
-//     overs: "10",
-//     maidens: "1",
-//     wickets: "3",
-//     runs: "37",
-//     econ: "3.7",
-// }
