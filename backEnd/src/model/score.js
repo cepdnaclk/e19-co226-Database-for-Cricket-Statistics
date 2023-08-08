@@ -6,7 +6,7 @@ function batting(res, playing){
         return {
         name: res.PlayerName,
         playerId:res.PlayerID,
-        howOut: (res.IsOut === 0)?"":"Not Out",
+        howOut: (res.IsOut === 0)?"Not Out":"",
         runs: res.TotalRuns,
         balls: res.BallsFaced,
         onStrike:(playing[0].OnStrikeID === res.PlayerID)?true:false,

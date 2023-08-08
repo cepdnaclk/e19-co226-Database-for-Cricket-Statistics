@@ -51,6 +51,7 @@ function getScoreWicketOver(io, result, resultStatus){
 
                     const extraInning1 = extra.filter(e => e.innings === 1);
                     const extraInning2 = extra.filter(e => e.innings === 2);
+
                     let data = runs.map((run) => {return {...run, ...(run.innings===wicket[0].innings)?wicket[0]:wicket[1], ...(run.innings===over[0].innings)?over[0]:over[1], ...(run.innings===over[0].innings)?{extra:getExtraObj(extraInning1)}:{extra:getExtraObj(extraInning2)}}});
 
                     data[0].isBatting = (data[1].TotalRuns === null)?true:false;
@@ -109,7 +110,6 @@ function getMatchStatus(io, result, data, data1){
         ball = data[1];
     }
 
-
     db.query(sql,(err, res) => {
         
         if (res.length === 0){
@@ -120,10 +120,10 @@ function getMatchStatus(io, result, data, data1){
         result(io, {
             matchOver: (data1[1].totalRuns !== null && ((data1[0].overNum === data1[1].overNum && data1[1].ballNumber === 6) || data1[1].wicket === 10 || data1[0].totalRuns > data1[1].totalRuns))?true:false,
             ball:ball.ball,
-            comment:ball.Commentary,
+            comment:(ball.Commentary === null)?"":ball.Commentary,
             overNumber:ball.OverNum,
             ballNumber:ball.BallNumber,
-            ballId: data.Ball_ID
+            ballId: data[0].Ball_ID
         });
     });
 }

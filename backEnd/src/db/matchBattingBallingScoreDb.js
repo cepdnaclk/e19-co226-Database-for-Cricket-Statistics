@@ -15,9 +15,9 @@ SELECT OnStrikeID, NonStrikeID  FROM INNINGS2
 WHERE Ball_ID = (SELECT MAX(Ball_ID) FROM  INNINGS2)
 `;
 
-const sql_balling1 = "SELECT * FROM BowlingFiguresViewFirst";
+const sql_balling1 = "SELECT * FROM BowlingFiguresViewfirst";
 
-const sql_balling2 = "SELECT * FROM BowlingFiguresViewSecond";
+const sql_balling2 = "SELECT * FROM BowlingFiguresViewsecond";
 
 const sql_bowling1 = ` 
 SELECT CurrentBowlerID FROM INNINGS1
