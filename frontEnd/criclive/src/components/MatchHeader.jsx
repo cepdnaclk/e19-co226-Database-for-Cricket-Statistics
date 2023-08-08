@@ -11,6 +11,7 @@ const flagName = {
 };
 const MatchHeader = ({
   scoresData,
+  matchInfo,
   teamNameMap,
   onStrikeBatsman,
   nonStrikeBatsman,
@@ -35,8 +36,8 @@ const MatchHeader = ({
         />
       </div>
       <div className={styles.status}>
-        <p>IND needs 96 runs in 27 Overs</p>
-        <p className={styles.matchInfo}>Final · Asia Cup 2023</p>
+        <p>{getMatchStatusString(scoresData, teamNameMap)}</p>
+        <p className={styles.matchInfo}>{matchInfo.matchName}</p>
       </div>
       <div
         className={classNames(
@@ -96,3 +97,40 @@ const TeamInfoAndScore = ({ scoreObj, teamName }) => {
   );
 };
 export default MatchHeader;
+
+const getMatchStatusString = (scoresData, teamNameMap) => {
+  const MATCH_OVERS = 5;
+  const battingTeamScoreObj = scoresData.find((scoreObj) => scoreObj.isBatting);
+  const bowlingTeamScoreObj = scoresData.find(
+    (scoreObj) => !scoreObj.isBatting
+  );
+
+  const currentRunRate = (
+    battingTeamScoreObj.totalRuns /
+    ((battingTeamScoreObj.overNum * 6 + battingTeamScoreObj.ballNumber) / 6)
+  ).toFixed(1);
+  const isChasing =
+    scoresData[0].totalRuns !== null && scoresData[1].totalRuns !== null;
+  if (isChasing) {
+    const requiredRuns =
+      bowlingTeamScoreObj.totalRuns - battingTeamScoreObj.totalRuns;
+    const remainingBalls =
+      MATCH_OVERS * 6 -
+      (battingTeamScoreObj.overNum * 6 + battingTeamScoreObj.ballNumber);
+    const remainingOvers = `${Math.floor(remainingBalls / 6)}.${
+      remainingBalls % 6
+    }`;
+    const requiredRunRate = (requiredRuns / (remainingBalls / 6)).toFixed(1);
+
+    if (remainingBalls > 100)
+      return `${
+        teamNameMap[battingTeamScoreObj.teamId]
+      } needs ${requiredRuns} in ${remainingOvers} CRR:${currentRunRate} RRR:${requiredRunRate}`;
+    else if (remainingBalls <= 100)
+      return `${
+        teamNameMap[battingTeamScoreObj.teamId]
+      } needs ${requiredRuns} in ${remainingBalls}`;
+  } else if (!isChasing) {
+    return `Current Run Rate: ${currentRunRate}`;
+  }
+};

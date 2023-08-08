@@ -307,6 +307,7 @@ const App = () => {
         onStrikeBatsman={onStrikeBatsman}
         nonStrikeBatsman={nonStrikeBatsman}
         currentBowler={currentBowler}
+        matchInfo={matchInfo}
       />
       <Menu
         selected={selected}

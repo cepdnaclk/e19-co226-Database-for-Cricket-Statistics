@@ -1,6 +1,7 @@
 import classNames from "classnames";
 import styles from "../styles/Commentary.module.scss";
-
+import api from "../services/api";
+import { useEffect } from "react";
 const comments = [
   {
     ball: "4",
@@ -8,8 +9,22 @@ const comments = [
       "23.2: J. Bumrah to Pathum Nissanka, FOUR! Nice and fine! On the pads, this is worked down towards the fine leg fence for a boundary.",
   },
 ];
-
+const RETRY_DELAY = 2000;
 const Commentary = ({ matchStatus }) => {
+  useEffect(() => {
+    const fetchPastCommentary = async () => {
+      try {
+        const response = await api.get("/commentry");
+        console.log(response);
+      } catch (err) {
+        console.log("Error: fetchPastCommentary");
+        console.log(err);
+        setTimeout(fetchPastCommentary, RETRY_DELAY);
+      }
+    };
+
+    fetchPastCommentary();
+  }, []);
   return (
     <div className={styles.container}>
       <BallComment
