@@ -1,4 +1,4 @@
-const db = require("../../dbConfig/dbConfig")
+const db = require("../../dbConfig/dbConfig");
 
 const sql_matchDetails = "SELECT * FROM CURRENTMATCH";
 
@@ -18,6 +18,7 @@ function getMatchInfo(res){
 
         if (data == undefined){
             res.status(404).json({});
+            return;
         }
 
         res.status(200).json({
@@ -36,6 +37,7 @@ function getTeamInfo(res){
 
         if (data == undefined){
             res.status(404).json({});
+            return;
         }
 
         const teams = data.map(team => {
@@ -59,6 +61,7 @@ function getPlayerInfo(teamId, res){
 
             if (players == undefined || captainPlayer == undefined){
                 res.status(404).json({});
+                return;
             }
 
             if (players !== undefined){

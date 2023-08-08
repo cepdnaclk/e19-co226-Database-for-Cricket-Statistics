@@ -43,6 +43,16 @@ SELECT * FROM DISMISSALINNINGS2
 WHERE BALL_ID =
 `;
 
+const sql_isExtra1 = ` 
+SELECT * FROM extrainnings1
+WHERE BALL_ID =
+`;
+
+const sql_isExtra2 = ` 
+SELECT * FROM extrainnings2
+WHERE BALL_ID =
+`;
+
 function getScoreWicketOver(io, result, resultStatus){
     db.query(sql_getScore,(err, runs) => {
 
@@ -136,15 +146,65 @@ function getMatchStatus(io, result, data, data1){
             ball.ball = ball.RunsScored;
         } else {
             ball.ball = "W";
+
+            result(io, {
+                matchOver: (data1[1].totalRuns !== null && ((data1[0].overNum === data1[1].overNum && data1[1].ballNumber === 6) || data1[1].wicket === 10 || data1[0].totalRuns > data1[1].totalRuns))?true:false,
+                ball:ball.ball,
+                comment:(ball.Commentary === null)?"":ball.Commentary,
+                overNumber:ball.OverNum,
+                ballNumber:ball.BallNumber,
+                ballId: data[0].Ball_ID
+            });
+
+            return;
         }
-        result(io, {
-            matchOver: (data1[1].totalRuns !== null && ((data1[0].overNum === data1[1].overNum && data1[1].ballNumber === 6) || data1[1].wicket === 10 || data1[0].totalRuns > data1[1].totalRuns))?true:false,
-            ball:ball.ball,
-            comment:(ball.Commentary === null)?"":ball.Commentary,
-            overNumber:ball.OverNum,
-            ballNumber:ball.BallNumber,
-            ballId: data[0].Ball_ID
+
+        let sql_e;
+        if(data.length === 1){
+            sql_e = sql_isExtra1 + data[0].Ball_ID;
+        } else {
+            sql_e = sql_isExtra2 + data[1].Ball_ID;
+        }
+
+        db.query(sql_e,(err, extra) => {
+
+            if (extra == undefined){
+                return;
+            }
+            
+            if (extra.length !== 0){
+                switch(extra[0].Type){
+                    case "wides":
+                        ball.ball = "Wd";
+                        break;
+                    
+                    case "noBalls":
+                        ball.ball = "N";
+                        break;
+
+                    case "legByes":
+                        ball.ball = "Lb";
+                        break;
+
+                    case "byes":
+                        ball.ball = "B";
+                        break;
+                    
+                    default:
+                        ball.ball = ball.ball; 
+                }
+            } 
+
+            result(io, {
+                matchOver: (data1[1].totalRuns !== null && ((data1[0].overNum === data1[1].overNum && data1[1].ballNumber === 6) || data1[1].wicket === 10 || data1[0].totalRuns > data1[1].totalRuns))?true:false,
+                ball:ball.ball,
+                comment:(ball.Commentary === null)?"":ball.Commentary,
+                overNumber:ball.OverNum,
+                ballNumber:ball.BallNumber,
+                ballId: data[0].Ball_ID
+            });
         });
+
     });
 }
 
