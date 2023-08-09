@@ -32,98 +32,91 @@ SELECT
     P.PlayerName,
     I1.OnStrikeID AS PlayerID,
     SUM(I1.RunsScored) AS TotalRuns,
-    COUNT(CASE WHEN I1.RunsScored = 4 THEN 1 ELSE 0 END) AS '4s',
-    COUNT(CASE WHEN I1.RunsScored = 6 THEN 1 ELSE 0 END) AS '6s',
+    COUNT(CASE WHEN I1.RunsScored = 4 THEN Ball_ID ELSE NULL END) AS '4s',
+    COUNT(CASE WHEN I1.RunsScored = 6 THEN Ball_ID ELSE NULL END) AS '6s',
     COUNT(Ball_ID) AS BallsFaced,
-    0 AS IsOut
+    (CASE WHEN OnStrikeID IN(SELECT Dismissed FROM DISMISSALINNINGS1) THEN 1 ELSE 0 END) AS IsOut,
+    (CASE WHEN OnStrikeID IN(SELECT Dismissed FROM DISMISSALINNINGS1) 
+     	THEN (SELECT DismissType FROM DISMISSALINNINGS1 
+              WHERE I1.OnStrikeID = DISMISSALINNINGS1.Dismissed) ELSE NULL END) AS howOut,
+    (CASE WHEN OnStrikeID IN(SELECT Dismissed FROM DISMISSALINNINGS1)
+        THEN (SELECT PlayerName FROM PLAYER 
+            INNER JOIN DISMISSALINNINGS1 ON PLAYER.PlayerID = DISMISSALINNINGS1.CaughtBy 
+            WHERE Dismissed = I1.OnStrikeID)ELSE NULL END) AS caughtBy,
+    (CASE WHEN OnStrikeID IN(SELECT Dismissed FROM DISMISSALINNINGS1)
+        THEN (SELECT PlayerName FROM PLAYER 
+            INNER JOIN DISMISSALINNINGS1 ON PLAYER.PlayerID = DISMISSALINNINGS1.FieldedBy 
+            WHERE Dismissed = I1.OnStrikeID)ELSE NULL END) AS fieldedBy,
+    (CASE WHEN OnStrikeID IN(SELECT Dismissed FROM DISMISSALINNINGS1)
+        THEN (SELECT PlayerName FROM PLAYER 
+            WHERE PlayerID = (SELECT CurrentBowlerID 
+                          FROM INNINGS1 
+                          WHERE Ball_ID = (SELECT Ball_ID FROM DISMISSALINNINGS1 
+                                           WHERE I1.OnStrikeID = DISMISSALINNINGS1.Dismissed))) ELSE NULL END) AS bowled
 FROM INNINGS1 AS I1
 INNER JOIN PLAYER AS P ON I1.OnStrikeID = P.PlayerID
 GROUP BY P.PlayerName, I1.OnStrikeID;
-
-
 
 CREATE VIEW BatsmanScoresSecondInnings AS
 SELECT 
     P.PlayerName,
     I2.OnStrikeID AS PlayerID,
     SUM(I2.RunsScored) AS TotalRuns,
-    COUNT(CASE WHEN I2.RunsScored = 4 THEN 1 ELSE 0 END) AS '4s',
-    COUNT(CASE WHEN I2.RunsScored = 6 THEN 1 ELSE 0 END) AS '6s',
+    COUNT(CASE WHEN I2.RunsScored = 4 THEN Ball_ID ELSE NULL END) AS '4s',
+    COUNT(CASE WHEN I2.RunsScored = 6 THEN Ball_ID ELSE NULL END) AS '6s',
     COUNT(Ball_ID) AS BallsFaced,
-    0 AS IsOut
+    (CASE WHEN OnStrikeID IN(SELECT Dismissed FROM DISMISSALINNINGS2) THEN 1 ELSE 0 END) AS IsOut,
+    (CASE WHEN OnStrikeID IN(SELECT Dismissed FROM DISMISSALINNINGS2) 
+     	THEN (SELECT DismissType FROM DISMISSALINNINGS2 
+              WHERE I2.OnStrikeID = DISMISSALINNINGS2.Dismissed) ELSE NULL END) AS howOut,
+    (CASE WHEN OnStrikeID IN(SELECT Dismissed FROM DISMISSALINNINGS2)
+        THEN (SELECT PlayerName FROM PLAYER 
+            INNER JOIN DISMISSALINNINGS2 ON PLAYER.PlayerID = DISMISSALINNINGS2.CaughtBy 
+            WHERE Dismissed = I2.OnStrikeID)ELSE NULL END) AS caughtBy,
+    (CASE WHEN OnStrikeID IN(SELECT Dismissed FROM DISMISSALINNINGS2)
+        THEN (SELECT PlayerName FROM PLAYER 
+            INNER JOIN DISMISSALINNINGS2 ON PLAYER.PlayerID = DISMISSALINNINGS2.FieldedBy 
+            WHERE Dismissed = I2.OnStrikeID)ELSE NULL END) AS fieldedBy,
+    (CASE WHEN OnStrikeID IN(SELECT Dismissed FROM DISMISSALINNINGS2)
+        THEN (SELECT PlayerName FROM PLAYER 
+            WHERE PlayerID = (SELECT CurrentBowlerID 
+                          FROM INNINGS2 
+                          WHERE Ball_ID = (SELECT Ball_ID FROM DISMISSALINNINGS2 
+                                           WHERE I2.OnStrikeID = DISMISSALINNINGS2.Dismissed))) ELSE NULL END) AS bowled
 FROM INNINGS2 AS I2
 INNER JOIN PLAYER AS P ON I2.OnStrikeID = P.PlayerID
 GROUP BY P.PlayerName, I2.OnStrikeID;
 
--- isout, how out
+-- --call procedure 
+-- CALL getHowOut(dismissedPlayerID);
 
-DELIMITER //
-
-CREATE TRIGGER PlayerOut
-AFTER INSERT ON DISMISSALINNINGS1 
-FOR EACH ROW
-BEGIN 
-    UPDATE BatsmanScoresFirstInnings SET IsOut = 1 WHERE PlayerID = NEW.Dismissed;
-END;
-//
-
-DELIMITER ;
------------------------------- same procedure as the above trigger but does not trigger automatically
-DELIMITER //
-
-CREATE PROCEDURE UpdateBatsmanIsOut(IN dismissedPlayerID INT)
-BEGIN
-    UPDATE BatsmanScores
-    SET IsOut = 1
-    WHERE PlayerID = dismissedPlayerID;
-END;
-
-//
-
-DELIMITER ;
-
---get how out procedure
-DELIMITER //
-
-CREATE PROCEDURE getHowOut(IN dismissedPlayerID INT)
-BEGIN
-    SELECT DismissType FROM DISMISSALINNINGS1 WHERE Dismissed = dismissedPlayerID;
-END;
-
-//
-
-DELIMITER ;
-
---call procedure 
-CALL getHowOut(dismissedPlayerID);
-
--- get fielder + bowler for caught out
-CREATE PROCEDURE getCaughtOut(IN dismissedPlayerID INT)
-BEGIN 
-    SELECT 
-        (SELECT PlayerName FROM PLAYER 
-         INNER JOIN DISMISSALINNINGS1 ON PLAYER.PlayerID = DISMISSALINNINGS1.CaughtBy 
-         WHERE Dismissed = dismissedPlayerID) AS caughtBy,
+-- -- get fielder + bowler for caught out
+-- CREATE PROCEDURE getCaughtOut(IN dismissedPlayerID INT)
+-- BEGIN 
+--     SELECT 
+--         (SELECT PlayerName FROM PLAYER 
+--          INNER JOIN DISMISSALINNINGS1 ON PLAYER.PlayerID = DISMISSALINNINGS1.CaughtBy 
+--          WHERE Dismissed = dismissedPlayerID) AS caughtBy,
         
-        (SELECT PlayerName FROM PLAYER 
-         WHERE PlayerID = (SELECT CurrentBowlerID 
-                          FROM INNINGS1 
-                          WHERE Ball_ID = (SELECT Ball_ID FROM DISMISSALINNINGS1 WHERE Dismissed = dismissedPlayerID))) AS bowled;
-END;
+--         (SELECT PlayerName FROM PLAYER 
+--          WHERE PlayerID = (SELECT CurrentBowlerID 
+--                           FROM INNINGS1 
+--                           WHERE Ball_ID = (SELECT Ball_ID FROM DISMISSALINNINGS1 WHERE Dismissed = dismissedPlayerID))) AS bowled;
+-- END;
 
-//
+-- //
 
-DELIMITER ;
+-- DELIMITER ;
 
---get bowler name
-CREATE PROCEDURE getBowler(IN dismissedPlayerID INT)
-BEGIN
-    SELECT
-        (SELECT PlayerName FROM PLAYER 
-         WHERE PlayerID = (SELECT CurrentBowlerID 
-                          FROM INNINGS1 
-                          WHERE Ball_ID = (SELECT Ball_ID FROM DISMISSALINNINGS1 WHERE Dismissed = dismissedPlayerID))) AS bowled;
-END;
+-- --get bowler name
+-- CREATE PROCEDURE getBowler(IN dismissedPlayerID INT)
+-- BEGIN
+--     SELECT
+--         (SELECT PlayerName FROM PLAYER 
+--          WHERE PlayerID = (SELECT CurrentBowlerID 
+--                           FROM INNINGS1 
+--                           WHERE Ball_ID = (SELECT Ball_ID FROM DISMISSALINNINGS1 WHERE Dismissed = dismissedPlayerID))) AS bowled;
+-- END;
  
 
 ---get Bowling figures returns name, id, runs, numberof wickets and balls faced
