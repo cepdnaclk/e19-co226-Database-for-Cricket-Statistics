@@ -174,7 +174,7 @@ function getMatchStatus(io, result, data, data1) {
             : false,
         ball: ball.ball,
         comment: ball.Commentary === null ? "" : ball.Commentary,
-        overNum: ball.OverNum,
+        overNumber: ball.OverNum,
         ballNumber: ball.BallNumber,
         ballId: data[0].Ball_ID,
       });

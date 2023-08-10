@@ -10,7 +10,7 @@ const Commentary = ({ comments }) => {
           .map((commentObj) => (
             <BallComment
               ball={commentObj.ball}
-              overString={`${commentObj.overNum}.${commentObj.ballNumber}`}
+              overString={`${commentObj.overNumber}.${commentObj.ballNumber}`}
               comment={commentObj.comment}
               key={commentObj.ballId}
             />

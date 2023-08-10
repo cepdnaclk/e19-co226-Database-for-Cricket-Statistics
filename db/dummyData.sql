@@ -41,8 +41,9 @@ VALUES
 INSERT INTO INNINGS1 (Ball_ID, OverNum, BallNumber, RunsScored, OnStrikeID, NonStrikeID, CurrentBowlerID, Commentary) VALUES
 (1, 1, 1, 4, 2, 3, 22, "Four!! First Ball of the Final of the Asia Cup 2023. Dimuth Karunathne on Strike. Juspreet Bumrah running in from the Lake End and strays on to the Pads of Karunathne who flicks it away to the mid-wicket boundary"),
 (2, 1, 2, 1, 2, 3, 22, "Fuller One by Bumrash nudged away for a single"),
-(3, 1, 3, 1, 3, 2, 22, "Short of length on the off stump driven on the Backfoot by Nissanka, one run");
-(4, 1, 4, 0, 2, 3, 22, "Dot Ball. Good Line and Length by Bumrah");
+(3, 1, 3, 1, 3, 2, 22, "Short of length on the off stump driven on the Backfoot by Nissanka, one run"),
+(4, 1, 4, 0, 2, 3, 22, "Dot Ball. Good Line and Length by Bumrah"),
+(5, 1, 5, 6, 2, 3, 22, "SIX!. What a shot by Karunarathne! Bouncer by Bumrah, pulled infront of square for a massive six.");
 
 
 
