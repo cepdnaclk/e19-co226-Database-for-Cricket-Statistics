@@ -1,4 +1,4 @@
---total marks innings 1
+-- total marks innings 1
 SELECT SUM(TotalRuns) AS TotalRuns
 FROM (
     SELECT SUM(RunsScored) AS TotalRuns FROM INNINGS1
@@ -6,7 +6,7 @@ FROM (
     SELECT SUM(ExtraRuns) AS TotalRuns FROM EXTRAINNINGS1
 ) AS SubqueryAlias;
 
---total marks innings 2
+-- total marks innings 2
 SELECT SUM(TotalRuns) AS TotalRuns
 FROM (
     SELECT SUM(RunsScored) AS TotalRuns FROM INNINGS2
@@ -14,19 +14,19 @@ FROM (
     SELECT SUM(ExtraRuns) AS TotalRuns FROM EXTRAINNINGS2
 ) AS SubqueryAlias;
 
---wickets innings 1
+-- wickets innings 1
 SELECT COUNT(Ball_ID) FROM DISMISSALINNINGS1;
 
---wickets innings 2
+-- wickets innings 2
 SELECT COUNT(Ball_ID) FROM DISMISSALINNINGS2;
 
---overs, balls and onstriker and nonstriker, currentBowler
+-- overs, balls and onstriker and nonstriker, currentBowler
 SELECT OverNum, BallNumber, OnStrikeID, NonStrikeID,CurrentBowlerID FROM INNINGS1 WHERE Ball_ID = (SELECT MAX(Ball_ID) FROM  INNINGS1);
 
---overs and balls innings 2
+-- overs and balls innings 2
 SELECT OverNum, BallNumber FROM INNINGS2 WHERE Ball_ID = (SELECT MAX(Ball_ID) FROM  INNINGS2);
 
---batsman scores
+-- batsman scores
 CREATE VIEW BatsmanScoresFirstInnings AS
 SELECT 
     P.PlayerName,
@@ -87,39 +87,8 @@ FROM INNINGS2 AS I2
 INNER JOIN PLAYER AS P ON I2.OnStrikeID = P.PlayerID
 GROUP BY P.PlayerName, I2.OnStrikeID;
 
--- --call procedure 
--- CALL getHowOut(dismissedPlayerID);
 
--- -- get fielder + bowler for caught out
--- CREATE PROCEDURE getCaughtOut(IN dismissedPlayerID INT)
--- BEGIN 
---     SELECT 
---         (SELECT PlayerName FROM PLAYER 
---          INNER JOIN DISMISSALINNINGS1 ON PLAYER.PlayerID = DISMISSALINNINGS1.CaughtBy 
---          WHERE Dismissed = dismissedPlayerID) AS caughtBy,
-        
---         (SELECT PlayerName FROM PLAYER 
---          WHERE PlayerID = (SELECT CurrentBowlerID 
---                           FROM INNINGS1 
---                           WHERE Ball_ID = (SELECT Ball_ID FROM DISMISSALINNINGS1 WHERE Dismissed = dismissedPlayerID))) AS bowled;
--- END;
-
--- //
-
--- DELIMITER ;
-
--- --get bowler name
--- CREATE PROCEDURE getBowler(IN dismissedPlayerID INT)
--- BEGIN
---     SELECT
---         (SELECT PlayerName FROM PLAYER 
---          WHERE PlayerID = (SELECT CurrentBowlerID 
---                           FROM INNINGS1 
---                           WHERE Ball_ID = (SELECT Ball_ID FROM DISMISSALINNINGS1 WHERE Dismissed = dismissedPlayerID))) AS bowled;
--- END;
- 
-
----get Bowling figures returns name, id, runs, numberof wickets and balls faced
+-- get Bowling figures returns name, id, runs, numberof wickets and balls faced
 --- view for bowling
 
 ---
@@ -166,7 +135,7 @@ LEFT JOIN (
         CurrentBowlerID,
         COUNT(DISTINCT OverNum) AS MaidenOvers
     FROM INNINGS1
-    WHERE RunsScored = 0 Ball_ID NOT IN (SELECT Ball_ID FROM EXTRAINNINGS1 UNION SELECT Ball_ID FROM DISMISSALINNINGS1)
+    WHERE RunsScored = 0 and Ball_ID NOT IN (SELECT Ball_ID FROM EXTRAINNINGS1 UNION SELECT Ball_ID FROM DISMISSALINNINGS1)
     GROUP BY CurrentBowlerID
 ) AS MO ON P.PlayerID = MO.CurrentBowlerID;
 
