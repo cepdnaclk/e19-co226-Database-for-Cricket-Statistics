@@ -4,7 +4,7 @@ CREATE TABLE PLAYER(
     PlayerID INT NOT NULL PRIMARY KEY,
     PlayerName VARCHAR(40),
     PlayerType VARCHAR(15),
-    DateofBirth date,
+    DateofBirth date
 );
 
 CREATE TABLE TEAM(
