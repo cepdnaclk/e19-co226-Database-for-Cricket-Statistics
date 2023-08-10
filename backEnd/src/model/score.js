@@ -1,6 +1,15 @@
 function batting(res, playing){
 
     playing = (playing.length === 0)?[{}]:playing;
+    playing = playing[0];
+
+    let onStrike;
+    if (playing.RunsScored % 2 == 0 && playing.BallNumber != 6)
+        onStrike = playing.OnStrikeID;
+    else if (playing.RunsScored % 2 == 1 && playing.BallNumber != 6)
+        onStrike = playing.NonStrikeID;
+    else if(playing.BallNumber == 6)
+        onStrike = playing.NonStrikeID;
 
     return res.map(res => {
         return {
@@ -9,20 +18,26 @@ function batting(res, playing){
         howOut: (res.IsOut === 0)?"Not Out":getHowOut(res),
         runs: res.TotalRuns,
         balls: res.BallsFaced,
-        onStrike:(playing[0].OnStrikeID === res.PlayerID)?true:false,
+        onStrike:(onStrike === res.PlayerID)?true:false,
         fours: res.fours,
         sixes: res.sixes,
-        sr: ((res.TotalRuns*0.1*6)/(res.BallsFaced*0.1)).toFixed(2)
+        sr: ((res.TotalRuns*0.1*100)/(res.BallsFaced*0.1)).toFixed(2)
     }});
 }
 
 function  getHowOut(res){
     switch(res.howOut){
         case "runOut":
-            return res.fieldedBy;
+            return "run out (" + res.fieldedBy + ")";
 
-        case "":
-            return res.fieldedBy;
+        case "lbw":
+            return "lbw b " + res.bowled;
+
+        case "catch":
+            return "c " + res.caughtBy + " b " + res.bowled;
+
+        case "wicket":
+            return "b " + res.bowled;
         
         default:
             return "";

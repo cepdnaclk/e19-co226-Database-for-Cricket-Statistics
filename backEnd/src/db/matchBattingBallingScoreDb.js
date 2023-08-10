@@ -4,14 +4,14 @@ const {batting, balling} = require("../model/score");
 const sql_batting1 = "SELECT * FROM BatsmanScoresFirstInnings";
 
 const sql_batman1 = ` 
-SELECT OnStrikeID, NonStrikeID  FROM INNINGS1
+SELECT *  FROM INNINGS1
 WHERE Ball_ID = (SELECT MAX(Ball_ID) FROM  INNINGS1)
 `;
 
 const sql_batting2 = "SELECT * FROM BatsmanScoresSecondInnings";
 
 const sql_batman2 = ` 
-SELECT OnStrikeID, NonStrikeID  FROM INNINGS2
+SELECT *  FROM INNINGS2
 WHERE Ball_ID = (SELECT MAX(Ball_ID) FROM  INNINGS2)
 `;
 
