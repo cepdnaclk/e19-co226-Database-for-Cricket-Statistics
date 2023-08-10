@@ -6,10 +6,12 @@ function batting(res, playing){
     let onStrike;
     if (playing.RunsScored % 2 == 0 && playing.BallNumber != 6)
         onStrike = playing.OnStrikeID;
-    else if (playing.RunsScored % 2 == 1 && playing.BallNumber != 6)
+        else if (playing.RunsScored % 2 == 1 && playing.BallNumber != 6)
         onStrike = playing.NonStrikeID;
-    else if(playing.BallNumber == 6)
+        else if(playing.BallNumber == 6 && playing.RunsScored % 2 == 0)
         onStrike = playing.NonStrikeID;
+        else if(playing.BallNumber == 6 && playing.RunsScored % 2 == 1)
+        onStrike = playing.OnStrikeID;
 
     return res.map(res => {
         return {
