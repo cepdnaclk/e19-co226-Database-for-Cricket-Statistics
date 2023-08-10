@@ -48,32 +48,32 @@ INSERT INTO INNINGS1 (Ball_ID, OverNum, BallNumber, RunsScored, OnStrikeID, NonS
 
 
 
--- Insert data into EXTRAINNINGS1 table
-INSERT INTO EXTRAINNINGS1 (Ball_ID, Type, ExtraRuns) VALUES
-(4, 'Leg Bye', 1),
-(6, 'No Ball', 2);
+-- -- Insert data into EXTRAINNINGS1 table
+-- INSERT INTO EXTRAINNINGS1 (Ball_ID, Type, ExtraRuns) VALUES
+-- (4, 'Leg Bye', 1),
+-- (6, 'No Ball', 2);
 
--- Insert data into DISMISSALINNINGS1 table
-INSERT INTO DISMISSALINNINGS1 (Ball_ID, DismissType, CaughtBy, FieldedBy, Dismissed) VALUES
-(3, 'Run Out', NULL, 5, 1),
-(6, 'Caught', 4, NULL, 2);
-
-
--- Insert data into INNINGS2 table
-INSERT INTO INNINGS2 (Ball_ID, OverNum, BallNumber, RunsScored, OnStrikeID, NonStrikeID, CurrentBowlerID) VALUES
-(1, 1, 1, 2, 2, 4, 1),
-(2, 1, 2, 1, 2, 4, 1),
-(3, 1, 3, 4, 2, 4, 2),
-(4, 2, 1, 6, 4, 2, 5),
-(5, 2, 2, 0, 4, 2, 5),
-(6, 2, 3, 1, 4, 2, 5);
--- Insert data into EXTRAINNINGS2 table
-INSERT INTO EXTRAINNINGS2 (Ball_ID, Type, ExtraRuns) VALUES
-(1, 'No Ball', 2),
-(5, 'Wide', 1);
+-- -- Insert data into DISMISSALINNINGS1 table
+-- INSERT INTO DISMISSALINNINGS1 (Ball_ID, DismissType, CaughtBy, FieldedBy, Dismissed) VALUES
+-- (3, 'Run Out', NULL, 5, 1),
+-- (6, 'Caught', 4, NULL, 2);
 
 
--- Insert data into DISMISSALINNINGS2 table
-INSERT INTO DISMISSALINNINGS2 (Ball_ID, DismissType, CaughtBy, FieldedBy, Dismissed) VALUES
-(2, 'Caught', 5, NULL, 3),
-(3, 'Bowled', NULL, NULL, 5);
+-- -- Insert data into INNINGS2 table
+-- INSERT INTO INNINGS2 (Ball_ID, OverNum, BallNumber, RunsScored, OnStrikeID, NonStrikeID, CurrentBowlerID) VALUES
+-- (1, 1, 1, 2, 2, 4, 1),
+-- (2, 1, 2, 1, 2, 4, 1),
+-- (3, 1, 3, 4, 2, 4, 2),
+-- (4, 2, 1, 6, 4, 2, 5),
+-- (5, 2, 2, 0, 4, 2, 5),
+-- (6, 2, 3, 1, 4, 2, 5);
+-- -- Insert data into EXTRAINNINGS2 table
+-- INSERT INTO EXTRAINNINGS2 (Ball_ID, Type, ExtraRuns) VALUES
+-- (1, 'No Ball', 2),
+-- (5, 'Wide', 1);
+
+
+-- -- Insert data into DISMISSALINNINGS2 table
+-- INSERT INTO DISMISSALINNINGS2 (Ball_ID, DismissType, CaughtBy, FieldedBy, Dismissed) VALUES
+-- (2, 'Caught', 5, NULL, 3),
+-- (3, 'Bowled', NULL, NULL, 5);
