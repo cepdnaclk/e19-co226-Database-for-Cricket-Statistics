@@ -166,7 +166,7 @@ LEFT JOIN (
         CurrentBowlerID,
         COUNT(DISTINCT OverNum) AS MaidenOvers
     FROM INNINGS1
-    WHERE SUM(RunsScored) = 0
+    WHERE RunsScored = 0
     GROUP BY CurrentBowlerID
 ) AS MO ON P.PlayerID = MO.CurrentBowlerID;
 
