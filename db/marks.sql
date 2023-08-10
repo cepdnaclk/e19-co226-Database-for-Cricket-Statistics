@@ -164,7 +164,7 @@ LEFT JOIN (
 LEFT JOIN (
     SELECT
         CurrentBowlerID,
-        COUNT(DISTINCT Over) AS MaidenOvers
+        COUNT(DISTINCT OverNum) AS MaidenOvers
     FROM INNINGS1
     WHERE SUM(RunsScored) = 0
     GROUP BY CurrentBowlerID
