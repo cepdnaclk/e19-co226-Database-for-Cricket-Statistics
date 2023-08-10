@@ -30,21 +30,24 @@ function getCommentry(res){
 
     db.query(sql_commentry, (err, comments) => {
             
-            if (comments == undefined){
+        if (comments == undefined){
+                console.log(err);
                 res.status(404);
                 return;
             }
-
-            db.query(sql_wickets, (err, wicket) => {
             
+            db.query(sql_wickets, (err, wicket) => {
+                
                 if (wicket == undefined){
+                    console.log(err);
                     res.status(404);
                     return;
                 }
-    
+                
                 db.query(sql_extra, (err, extra) => {
-            
+                    
                     if (extra == undefined){
+                        console.log(err);
                         res.status(404);
                         return;
                     }

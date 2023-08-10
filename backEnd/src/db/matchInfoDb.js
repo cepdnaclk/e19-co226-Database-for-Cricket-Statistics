@@ -15,8 +15,9 @@ const sql_teamCaptain = "SELECT CaptainID FROM TEAM WHERE TeamID = ";
 
 function getMatchInfo(res){
     db.query(sql_matchDetails,(err, data) => {
-
+        
         if (data == undefined){
+            console.log(err);
             res.status(404).json({});
             return;
         }
@@ -34,8 +35,9 @@ function getMatchInfo(res){
 
 function getTeamInfo(res){
     db.query(sql_teamDetails,(err, data) => {
-
+        
         if (data == undefined){
+            console.log(err);
             res.status(404).json({});
             return;
         }
@@ -57,9 +59,12 @@ function getTeamInfo(res){
 function getPlayerInfo(teamId, res){
 
     db.query(sql_playerDetails + teamId,(err, players) => {
+        
+        
         db.query(sql_teamCaptain + teamId,(err, captainPlayer) => {
-
+            
             if (players == undefined || captainPlayer == undefined){
+                console.log(err);
                 res.status(404).json({});
                 return;
             }
