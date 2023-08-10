@@ -207,6 +207,14 @@ LEFT JOIN (
         COUNT(Ball_ID) AS ballsFaced
     FROM INNINGS1
     GROUP BY CurrentBowlerID
-) AS BF ON P.PlayerID = BF.CurrentBowlerID;
+) AS BF ON P.PlayerID = BF.CurrentBowlerID
+LEFT JOIN (
+    SELECT
+        CurrentBowlerID,
+        COUNT(DISTINCT OverNum) AS MaidenOvers
+    FROM INNINGS2
+    WHERE RunsScored = 0
+    GROUP BY CurrentBowlerID
+) AS MO ON P.PlayerID = MO.CurrentBowlerID;
 
 
