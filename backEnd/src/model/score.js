@@ -6,17 +6,31 @@ function batting(res, playing){
         return {
         name: res.PlayerName,
         playerId:res.PlayerID,
-        howOut: (res.IsOut === 0)?"Not Out":"",
+        howOut: (res.IsOut === 0)?"Not Out":getHowOut(res),
         runs: res.TotalRuns,
         balls: res.BallsFaced,
         onStrike:(playing[0].OnStrikeID === res.PlayerID)?true:false,
-        fours: "4",
-        sixes: "1",
+        fours: res.fours,
+        sixes: res.sixes,
         sr: ((res.TotalRuns*0.1*6)/(res.BallsFaced*0.1)).toFixed(2)
     }});
 }
 
+function  getHowOut(res){
+    switch(res.howOut){
+        case "runOut":
+            return res.fieldedBy;
+
+        case "":
+            return res.fieldedBy;
+        
+        default:
+            return "";
+    }
+}
+
 function balling(res, playing){
+
 
     playing = (playing.length === 0)?[{}]:playing;
 
@@ -30,6 +44,7 @@ function balling(res, playing){
         ballNumber:res.BallsFaced%6,
         econ: ((res.TotalRuns*0.1)/(res.BallsFaced*0.1/6)).toFixed(2),
         currentBowler:(playing[0].CurrentBowlerID === res.PlayerID)?true:false,
+        maidenOver:res.MaidenOvers
     }});
 }
 
