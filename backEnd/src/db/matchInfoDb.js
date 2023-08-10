@@ -28,7 +28,8 @@ function getMatchInfo(res){
             venue:data[0].Venue,
             tossWinningTeamId:data[0].Toss,
             matchName:data[0].MatchName,
-            tossIsBatting:(data[0].TossIsBatting===1)?true:false
+            tossIsBatting:(data[0].TossIsBatting===1)?true:false,
+            matchType:data[0].MatchType
         });
     });
 }

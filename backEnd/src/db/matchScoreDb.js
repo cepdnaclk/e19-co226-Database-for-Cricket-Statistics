@@ -1,4 +1,5 @@
-const db = require("../../dbConfig/dbConfig")
+const db = require("../../dbConfig/dbConfig");
+const match = require("../util/match");
 
 const sql_getScore = `
 SELECT SUM(TotalRuns) AS TotalRuns, 1 AS innings, (SELECT Team1_ID FROM CURRENTMATCH) as teamId
@@ -154,7 +155,7 @@ function getMatchStatus(io, result, data, data1){
             ball.ball = "W";
 
             result(io, {
-                matchOver: (data1[1].totalRuns !== null && ((data1[0].overNum === data1[1].overNum && data1[1].ballNumber === 6) || data1[1].wicket === 10 || data1[0].totalRuns > data1[1].totalRuns))?true:false,
+                matchOver: (data1[1].totalRuns !== null && ((data1[1].overNum === match.matchOver && data1[1].ballNumber === 6) || data1[1].wicket === 10 || data1[0].totalRuns > data1[1].totalRuns))?true:false,
                 ball:ball.ball,
                 comment:(ball.Commentary === null)?"":ball.Commentary,
                 overNumber:ball.OverNum,
@@ -202,7 +203,7 @@ function getMatchStatus(io, result, data, data1){
             } 
 
             result(io, {
-                matchOver: (data1[1].totalRuns !== null && ((data1[0].overNum === data1[1].overNum && data1[1].ballNumber === 6) || data1[1].wicket === 10 || data1[0].totalRuns > data1[1].totalRuns))?true:false,
+                matchOver: (data1[1].totalRuns !== null && ((data1[1].overNum === match.matchOver && data1[1].ballNumber === 6) || data1[1].wicket === 10 || data1[0].totalRuns > data1[1].totalRuns))?true:false,
                 ball:ball.ball,
                 comment:(ball.Commentary === null)?"":ball.Commentary,
                 overNumber:ball.OverNum,
