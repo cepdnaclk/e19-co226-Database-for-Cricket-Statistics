@@ -62,7 +62,8 @@ const App = () => {
   const [teamTwoPlayers, setTeamTwoPlayers] = useState([]);
   const [inningsOneBowlersData, setInningsOneBowlersData] = useState([]);
   const [inningsTwoBowlersData, setInningsTwoBowlersData] = useState([]);
-  const [matchStatus, setMatchStatus] = useState({});
+  const [comments, setComments] = useState([]);
+  const [latestComment, setlatestComment] = useState({});
   const [onStrikeBatsman, setOnStrikeBatsman] = useState({});
   const [nonStrikeBatsman, setNonStrikeBatsman] = useState({});
   const [currentBowler, setCurrentBowler] = useState({});
@@ -165,9 +166,22 @@ const App = () => {
       }
     };
 
+    const fetchPastCommentary = async () => {
+      try {
+        const response = await api.get("/commentry");
+        console.log("commentary ", response);
+        setComments(response.data);
+      } catch (err) {
+        console.log("Error: fetchPastCommentary");
+        console.log(err);
+        setTimeout(fetchPastCommentary, RETRY_DELAY);
+      }
+    };
+
     fetchMatchInfo();
     fetchTeamsInfo();
     fetchTeamPlayersInfo();
+    fetchPastCommentary();
   }, []);
 
   //Sockets
@@ -200,8 +214,8 @@ const App = () => {
       setInningsTwoBowlersData(data);
     }
 
-    function onMatchStatus(data) {
-      setMatchStatus(data);
+    function onlatestComment(data) {
+      setlatestComment(data);
       console.log("match-status", data);
     }
     socket.on("connect", () => {
@@ -213,7 +227,7 @@ const App = () => {
     socket.on("innings-two-batting", onInningsTwoBatting);
     socket.on("innings-one-balling", onInningsOneBowling);
     socket.on("innings-two-balling", onInningsTwoBowling);
-    socket.on("match-status", onMatchStatus);
+    socket.on("match-status", onlatestComment);
 
     return () => {
       socket.off("match-score", onMatchScore);
@@ -221,7 +235,7 @@ const App = () => {
       socket.off("innings-two-batting", onInningsTwoBatting);
       socket.off("innings-one-balling", onInningsOneBowling);
       socket.off("innings-two-balling", onInningsTwoBowling);
-      socket.off("match-status", onMatchStatus);
+      socket.off("match-status", onlatestComment);
     };
   }, []);
 
@@ -251,6 +265,7 @@ const App = () => {
       scoresData.length !== 0 &&
       teamOnePlayers.length !== 0 &&
       teamTwoPlayers.length !== 0 &&
+      comments.length !== 0 &&
       (battingTeamId === 1
         ? inningsOneBatsmenData.length !== 0
         : inningsTwoBatsmenData.length !== 0)
@@ -266,6 +281,7 @@ const App = () => {
     inningsOneBatsmenData,
     inningsTwoBatsmenData,
     battingTeamId,
+    comments,
   ]);
 
   //Finding the current batsmen and bowlers
@@ -295,6 +311,25 @@ const App = () => {
     isLoading,
   ]);
 
+  //update commentary with latest Comment
+  useEffect(() => {
+    if (isLoading) return;
+
+    setComments((prevComments) => {
+      if (
+        prevComments.length !== 0 &&
+        prevComments.slice(-1)[0].ballId === latestComment.ballId
+      )
+        return prevComments;
+
+      console.log("compare", ...prevComments.slice(-1), latestComment);
+      //shift the array so maximum objects contained is 20
+      if (prevComments.length >= 20) prevComments.shift();
+
+      return [...prevComments, latestComment];
+    });
+  }, [latestComment]);
+
   //If loading return the preloader
   if (isLoading) return <Preloader />;
 
@@ -312,7 +347,7 @@ const App = () => {
       <Menu
         selected={selected}
         setSelected={setSelected}
-        isMatchOver={matchStatus.matchOver}
+        isMatchOver={latestComment.matchOver}
       />
 
       {/* If selected == "scorecard" then show the scorecard component
@@ -330,7 +365,7 @@ const App = () => {
           inningsTwoBowlersData={inningsTwoBowlersData}
         />
       )}
-      {selected === "commentary" && <Commentary matchStatus={matchStatus} />}
+      {selected === "commentary" && <Commentary comments={comments} />}
       <div className={styles.matchMeta}>
         <p>
           <span>Toss: </span>

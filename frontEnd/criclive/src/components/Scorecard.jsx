@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import styles from "../styles/Scorecard.module.scss";
-import { useEffect, useState } from "react";
-import api from "../services/api";
+import { useState } from "react";
+
 // const inningsOneBatsmenData = [
 //   {
 //     name: "Pathum Nissanka",
@@ -166,7 +166,10 @@ const InningsInfo = ({
         {teamPlayers.map((player) => {
           return (
             <div className={styles.playerInfo}>
-              <p className={styles.playerName}>{player.playerName}</p>
+              <p className={styles.playerName}>
+                {player.playerName}
+                <span>{player.captain && "  (C)"}</span>
+              </p>
               <p className={styles.playerType}>{player.playerType}</p>
             </div>
           );

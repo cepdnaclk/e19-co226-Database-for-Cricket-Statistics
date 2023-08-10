@@ -106,9 +106,13 @@ ul {
 }
 
 .playerInfo {
-  margin: 0.4em 0;
+  margin: 0.7em 0;
   .playerName {
     font-size: 0.9em;
+
+    span {
+      color: hsl(0, 0%, 70%);
+    }
   }
   .playerType {
     font-size: 0.8em;

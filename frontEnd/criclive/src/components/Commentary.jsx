@@ -1,65 +1,42 @@
 import classNames from "classnames";
 import styles from "../styles/Commentary.module.scss";
-import api from "../services/api";
-import { useEffect } from "react";
-const comments = [
-  {
-    ball: "4",
-    comment:
-      "23.2: J. Bumrah to Pathum Nissanka, FOUR! Nice and fine! On the pads, this is worked down towards the fine leg fence for a boundary.",
-  },
-];
-const RETRY_DELAY = 2000;
-const Commentary = ({ matchStatus }) => {
-  useEffect(() => {
-    const fetchPastCommentary = async () => {
-      try {
-        const response = await api.get("/commentry");
-        console.log(response);
-      } catch (err) {
-        console.log("Error: fetchPastCommentary");
-        console.log(err);
-        setTimeout(fetchPastCommentary, RETRY_DELAY);
-      }
-    };
 
-    fetchPastCommentary();
-  }, []);
+const Commentary = ({ comments }) => {
   return (
     <div className={styles.container}>
-      <BallComment
-        ball="4"
-        comment="23.2: J. Bumrah to Pathum Nissanka, FOUR! Nice and fine! On the pads, this is worked down towards the fine leg fence for a boundary."
-      />
-
-      <BallComment
-        ball="W"
-        comment="23.1: J. Bumrah to Pathum Nissanka, FOUR! Nice and fine! On the pads, this is worked down towards the fine leg fence for a boundary."
-      />
-
-      <BallComment
-        ball="2"
-        comment="22.6 H. Pandya to Kusal Mendis, Easy Couple"
-      />
+      {comments !== undefined &&
+        comments
+          .toReversed()
+          .map((commentObj) => (
+            <BallComment
+              ball={commentObj.ball}
+              overString={`${commentObj.overNum}.${commentObj.ballNumber}`}
+              comment={commentObj.comment}
+              key={commentObj.ballId}
+            />
+          ))}
     </div>
   );
 };
 
 export default Commentary;
 
-const BallComment = ({ ball, comment }) => {
+const BallComment = ({ ball, comment, overString }) => {
   return (
     <>
       <div
         className={classNames(
           styles.ball,
-          (ball === "4" || ball === "6") && styles.green,
+          (ball === 4 || ball === 6) && styles.green,
           ball === "W" && styles.red
         )}
       >
         {ball}
       </div>
-      <div className={styles.comment}>{comment}</div>
+      <div className={styles.comment}>
+        <span>{overString}: </span>
+        {comment}
+      </div>
     </>
   );
 };
