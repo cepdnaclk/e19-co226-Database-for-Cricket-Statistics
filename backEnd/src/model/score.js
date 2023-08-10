@@ -31,13 +31,19 @@ function  getHowOut(res){
             return "run out (" + res.fieldedBy + ")";
 
         case "lbw":
-            return "lbw b " + res.bowled;
+            return "lbw b. " + res.bowled;
 
-        case "catch":
-            return "c " + res.caughtBy + " b " + res.bowled;
+        case "caught":
+            return "c. " + res.caughtBy + " b. " + res.bowled;
 
-        case "wicket":
-            return "b " + res.bowled;
+        case "bowled":
+            return "b. " + res.bowled;
+        
+        case "stumped":
+            return "St. " + res.fieldedBy + " b. " + res.bowled;
+        
+        case "hitWicket":
+            return "(hitWicket) b. " + res.bowled;
         
         default:
             return "";
