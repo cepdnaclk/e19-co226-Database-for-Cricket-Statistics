@@ -288,7 +288,7 @@ const BatsmanScore = ({ name, howOut, runs, balls, fours, sixes, sr }) => {
 const BowlerFigure = ({
   name,
   overs,
-  maidens,
+  maidenOver,
   runs,
   wickets,
   econ,
@@ -302,7 +302,7 @@ const BowlerFigure = ({
       <td>
         {overs}.{ballNumber}
       </td>
-      <td>{maidens}</td>
+      <td>{maidenOver}</td>
       <td>{runs}</td>
       <td>{wickets}</td>
       <td>{econ}</td>
