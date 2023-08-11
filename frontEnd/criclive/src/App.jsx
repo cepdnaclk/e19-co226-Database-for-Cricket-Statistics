@@ -343,6 +343,7 @@ const App = () => {
         nonStrikeBatsman={nonStrikeBatsman}
         currentBowler={currentBowler}
         matchInfo={matchInfo}
+        isMatchOver={latestComment.matchOver}
       />
       <Menu
         selected={selected}
