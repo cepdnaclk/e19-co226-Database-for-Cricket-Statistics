@@ -70,7 +70,7 @@ SELECT
     P.PlayerID,
     IFNULL(TR.TotalRuns, 0) AS TotalRuns,
     IFNULL(NW.numberOfWickets, 0) AS NumberOfWickets,
-    IFNULL(BF.ballsFaced, 0) AS BallsFaced,
+    IFNULL(BF.ballsBowled, 0) AS ballsBowled,
     IFNULL(MaidenOvers, 0) AS MaidenOvers
 FROM PLAYER P
 INNER JOIN (
@@ -98,7 +98,10 @@ LEFT JOIN (
 LEFT JOIN (
     SELECT
         CurrentBowlerID,
-        COUNT(Ball_ID) AS ballsFaced
+        COUNT(CASE WHEN Ball_ID IN (SELECT Ball_ID FROM EXTRAINNINGS1 
+                                    WHERE Type = 'byes' OR Type = 'legByes') 
+                                    THEN Ball_ID 
+                                    ELSE NULL END) AS ballsBowled
     FROM INNINGS1
     GROUP BY CurrentBowlerID
 ) AS BF ON P.PlayerID = BF.CurrentBowlerID
@@ -107,7 +110,13 @@ LEFT JOIN (
         CurrentBowlerID,
         COUNT(DISTINCT OverNum) AS MaidenOvers
     FROM INNINGS1
-    WHERE RunsScored = 0 and Ball_ID NOT IN (SELECT Ball_ID FROM EXTRAINNINGS1 UNION SELECT Ball_ID FROM DISMISSALINNINGS1)
+    WHERE NOT EXISTS (
+        SELECT 1
+        FROM INNINGS2 AS I
+        WHERE I.CurrentBowlerID = INNINGS1.CurrentBowlerID
+          AND I.OverNum = INNINGS1.OverNum
+          AND I.RunsScored > 0
+    ) AND Ball_ID NOT IN (SELECT Ball_ID FROM EXTRAINNINGS1 UNION SELECT Ball_ID FROM DISMISSALINNINGS1)
     GROUP BY CurrentBowlerID
 ) AS MO ON P.PlayerID = MO.CurrentBowlerID;
 
@@ -118,7 +127,7 @@ SELECT
     P.PlayerID,
     IFNULL(TR.TotalRuns, 0) AS TotalRuns,
     IFNULL(NW.numberOfWickets, 0) AS NumberOfWickets,
-    IFNULL(BF.ballsFaced, 0) AS BallsFaced,
+    IFNULL(BF.ballsBowled, 0) AS ballsBowled,
     IFNULL(MaidenOvers, 0) AS MaidenOvers
 FROM PLAYER P
 INNER JOIN (
@@ -146,7 +155,10 @@ LEFT JOIN (
 LEFT JOIN (
     SELECT
         CurrentBowlerID,
-        COUNT(Ball_ID) AS ballsFaced
+        COUNT(CASE WHEN Ball_ID IN (SELECT Ball_ID FROM EXTRAINNINGS2 
+                                    WHERE Type = 'byes' OR Type = 'legByes') 
+                                    THEN Ball_ID 
+                                    ELSE NULL END) AS ballsBowled
     FROM INNINGS1
     GROUP BY CurrentBowlerID
 ) AS BF ON P.PlayerID = BF.CurrentBowlerID
@@ -155,7 +167,14 @@ LEFT JOIN (
         CurrentBowlerID,
         COUNT(DISTINCT OverNum) AS MaidenOvers
     FROM INNINGS2
-    WHERE RunsScored = 0 and Ball_ID NOT IN (SELECT Ball_ID FROM EXTRAINNINGS2 UNION SELECT Ball_ID FROM DISMISSALINNINGS2)
+    WHERE NOT EXISTS (
+        SELECT 1
+        FROM INNINGS2 AS I
+        WHERE I.CurrentBowlerID = INNINGS2.CurrentBowlerID
+          AND I.OverNum = INNINGS2.OverNum
+          AND I.RunsScored > 0
+    ) AND Ball_ID NOT IN (SELECT Ball_ID FROM EXTRAINNINGS2 UNION SELECT Ball_ID FROM DISMISSALINNINGS2)
     GROUP BY CurrentBowlerID
 ) AS MO ON P.PlayerID = MO.CurrentBowlerID;
+
 

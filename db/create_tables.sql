@@ -38,6 +38,7 @@ CREATE TABLE CURRENTMATCH(
     Toss INT,
     MatchName VARCHAR(50),
     TossIsBatting BOOLEAN,
+    MatchType INT,
     PRIMARY KEY (Team1_ID, Team2_ID, Date),
     CONSTRAINT fk_team1 FOREIGN KEY (Team1_ID)
     REFERENCES TEAM(TeamID)
