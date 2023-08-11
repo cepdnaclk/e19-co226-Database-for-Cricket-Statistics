@@ -197,19 +197,19 @@ function getMatchStatus(io, result, data, data1) {
       if (extra.length !== 0) {
         switch (extra[0].Type) {
           case "wides":
-            ball.ball = "Wd";
+            ball.ball = "wd";
             break;
 
           case "noBalls":
-            ball.ball = "N";
+            ball.ball = "nb";
             break;
 
           case "legByes":
-            ball.ball = "Lb";
+            ball.ball = "lb";
             break;
 
           case "byes":
-            ball.ball = "B";
+            ball.ball = "b";
             break;
 
           default:

@@ -3,8 +3,8 @@ SELECT
     P.PlayerName,
     I1.OnStrikeID AS PlayerID,
     SUM(I1.RunsScored) AS TotalRuns,
-    COUNT(CASE WHEN I1.RunsScored = 4 THEN Ball_ID ELSE NULL END) AS '4s',
-    COUNT(CASE WHEN I1.RunsScored = 6 THEN Ball_ID ELSE NULL END) AS '6s',
+    COUNT(CASE WHEN I1.RunsScored = 4 THEN Ball_ID ELSE NULL END) AS fours,
+    COUNT(CASE WHEN I1.RunsScored = 6 THEN Ball_ID ELSE NULL END) AS sixes,
     COUNT(Ball_ID) AS BallsFaced,
     (CASE WHEN OnStrikeID IN(SELECT Dismissed FROM DISMISSALINNINGS1) THEN 1 ELSE 0 END) AS IsOut,
     (CASE WHEN OnStrikeID IN(SELECT Dismissed FROM DISMISSALINNINGS1) 
@@ -34,8 +34,8 @@ SELECT
     P.PlayerName,
     I2.OnStrikeID AS PlayerID,
     SUM(I2.RunsScored) AS TotalRuns,
-    COUNT(CASE WHEN I2.RunsScored = 4 THEN Ball_ID ELSE NULL END) AS '4s',
-    COUNT(CASE WHEN I2.RunsScored = 6 THEN Ball_ID ELSE NULL END) AS '6s',
+    COUNT(CASE WHEN I2.RunsScored = 4 THEN Ball_ID ELSE NULL END) AS fours,
+    COUNT(CASE WHEN I2.RunsScored = 6 THEN Ball_ID ELSE NULL END) AS sixes,
     COUNT(Ball_ID) AS BallsFaced,
     (CASE WHEN OnStrikeID IN(SELECT Dismissed FROM DISMISSALINNINGS2) THEN 1 ELSE 0 END) AS IsOut,
     (CASE WHEN OnStrikeID IN(SELECT Dismissed FROM DISMISSALINNINGS2) 

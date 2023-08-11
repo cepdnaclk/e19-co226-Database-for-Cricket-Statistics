@@ -77,19 +77,19 @@ function getCommentry(res) {
             if (w.Ball_ID === c.ballId && w.innings === c.innings) {
               switch (w.Type) {
                 case "wides":
-                  c.ball = "Wd";
+                  c.ball = "wd";
                   break;
 
                 case "noBalls":
-                  c.ball = "N";
+                  c.ball = "nb";
                   break;
 
                 case "legByes":
-                  c.ball = "Lb";
+                  c.ball = "lb";
                   break;
 
                 case "byes":
-                  c.ball = "B";
+                  c.ball = "b";
                   break;
 
                 default:
