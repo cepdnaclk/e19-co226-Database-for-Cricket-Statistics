@@ -1,6 +1,7 @@
 import classNames from "classnames";
 import styles from "../styles/Scorecard.module.scss";
 import { useState } from "react";
+import { getOverString } from "../utils";
 
 // const inningsOneBatsmenData = [
 //   {
@@ -260,8 +261,7 @@ const BattingTable = ({ scoresObj, inningsBatsmenData }) => {
           <td className={styles.alignLeft}>Total Runs</td>
           <td>{scoresObj.totalRuns}</td>
           <td colSpan={4} className={styles.alignLeft}>
-            ({scoresObj.wickets} Wickets, {scoresObj.overNum}.
-            {scoresObj.ballNumber} Overs)
+            ({scoresObj.wickets} Wickets, {getOverString(scoresObj)} Overs){" "}
           </td>
         </tr>
       </tbody>

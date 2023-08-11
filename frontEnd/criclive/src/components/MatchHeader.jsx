@@ -2,6 +2,7 @@ import React from "react";
 import styles from "../styles/MatchHeader.module.scss";
 import Flag from "react-flagkit";
 import classNames from "classnames";
+import { getOverString } from "../utils";
 const FLAG_SIZE = 65;
 
 const flagName = {
@@ -17,6 +18,7 @@ const MatchHeader = ({
   nonStrikeBatsman,
   battingTeamId,
   currentBowler,
+  isMatchOver,
 }) => {
   return (
     <div className={styles.header}>
@@ -36,7 +38,7 @@ const MatchHeader = ({
         />
       </div>
       <div className={styles.status}>
-        <p>{getMatchStatusString(scoresData, teamNameMap)}</p>
+        <p>{getMatchStatusString(scoresData, teamNameMap, isMatchOver)}</p>
         <p className={styles.matchInfo}>{matchInfo.matchName}</p>
       </div>
       <div
@@ -90,7 +92,7 @@ const TeamInfoAndScore = ({ scoreObj, teamName }) => {
             : scoreObj.totalRuns + "/" + scoreObj.wickets}
         </p>
         <p className={styles.overs}>
-          {yetToBat || `(${scoreObj.overNum}.${scoreObj.ballNumber})`}
+          {yetToBat || `(${getOverString(scoreObj)})`}
         </p>
       </div>
     </div>
@@ -98,12 +100,34 @@ const TeamInfoAndScore = ({ scoreObj, teamName }) => {
 };
 export default MatchHeader;
 
-const getMatchStatusString = (scoresData, teamNameMap) => {
-  const MATCH_OVERS = 5;
+const getMatchStatusString = (scoresData, teamNameMap, isMatchOver) => {
+  const MATCH_OVERS = 2;
   const battingTeamScoreObj = scoresData.find((scoreObj) => scoreObj.isBatting);
   const bowlingTeamScoreObj = scoresData.find(
     (scoreObj) => !scoreObj.isBatting
   );
+
+  //Match is Over --> display result
+  if (isMatchOver) {
+    // chasing team won
+    if (battingTeamScoreObj.totalRuns > bowlingTeamScoreObj.totalRuns) {
+      return `${teamNameMap[battingTeamScoreObj.teamId]} won by ${
+        battingTeamScoreObj.wickets
+      } wickets`;
+    }
+
+    // first bat team won
+    else if (battingTeamScoreObj.totalRuns < bowlingTeamScoreObj.totalRuns) {
+      return `${teamNameMap[bowlingTeamScoreObj.teamId]} won by ${
+        bowlingTeamScoreObj.totalRuns - battingTeamScoreObj.totalRuns
+      } runs`;
+    }
+
+    // tied
+    else {
+      return "Match Tied";
+    }
+  }
 
   const currentRunRate = (
     battingTeamScoreObj.totalRuns /
