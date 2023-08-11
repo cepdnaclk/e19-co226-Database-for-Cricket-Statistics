@@ -1,17 +1,37 @@
-function batting(res, playing){
+function batting(res, playing, nonStriker){
 
     playing = (playing.length === 0)?[{}]:playing;
     playing = playing[0];
+    nonStriker = nonStriker[0];
 
     let onStrike;
     if (playing.RunsScored % 2 == 0 && playing.BallNumber != 6)
         onStrike = playing.OnStrikeID;
-        else if (playing.RunsScored % 2 == 1 && playing.BallNumber != 6)
+    else if (playing.RunsScored % 2 == 1 && playing.BallNumber != 6)
         onStrike = playing.NonStrikeID;
-        else if(playing.BallNumber == 6 && playing.RunsScored % 2 == 0)
+    else if(playing.BallNumber == 6 && playing.RunsScored % 2 == 0)
         onStrike = playing.NonStrikeID;
-        else if(playing.BallNumber == 6 && playing.RunsScored % 2 == 1)
+    else if(playing.BallNumber == 6 && playing.RunsScored % 2 == 1)
         onStrike = playing.OnStrikeID;
+    
+    if (nonStriker != undefined)
+    {
+        if (res.filter(d => (d.PlayerID == nonStriker.PlayerID)).length == 0){
+            res.push({
+                PlayerName: nonStriker.PlayerName,
+                PlayerID: nonStriker.PlayerID,
+                TotalRuns: 0,
+                fours: 0,
+                sixes: 0,
+                BallsFaced: 0,
+                IsOut: 0,
+                howOut: null,
+                caughtBy: null,
+                fieldedBy: null,
+                bowled: null
+            });
+    }
+    }    
 
     return res.map(res => {
         return {
@@ -23,7 +43,7 @@ function batting(res, playing){
         onStrike:(onStrike === res.PlayerID)?true:false,
         fours: res.fours,
         sixes: res.sixes,
-        sr: ((res.TotalRuns*0.1*100)/(res.BallsFaced*0.1)).toFixed(2)
+        sr: (((res.TotalRuns*0.1*100)/(res.BallsFaced*0.1)).toFixed(2) == "NaN")?0:((res.TotalRuns*0.1*100)/(res.BallsFaced*0.1)).toFixed(2)
     }});
 }
 
