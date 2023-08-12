@@ -265,7 +265,6 @@ const App = () => {
       scoresData.length !== 0 &&
       teamOnePlayers.length !== 0 &&
       teamTwoPlayers.length !== 0 &&
-      comments.length !== 0 &&
       (battingTeamId === 1
         ? inningsOneBatsmenData.length !== 0
         : inningsTwoBatsmenData.length !== 0)
