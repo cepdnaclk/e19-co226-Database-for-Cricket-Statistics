@@ -142,6 +142,7 @@ function getExtraObj(extra) {
 }
 
 function getMatchStatus(io, result, data, data1) {
+
   let ball;
   let sql;
   if (data.length === 1) {
@@ -153,6 +154,7 @@ function getMatchStatus(io, result, data, data1) {
   }
 
   db.query(sql, (err, res) => {
+
     if (res == undefined) {
       console.log(err);
       return;
@@ -176,7 +178,7 @@ function getMatchStatus(io, result, data, data1) {
         comment: ball.Commentary === null ? "" : ball.Commentary,
         overNumber: ball.OverNum,
         ballNumber: ball.BallNumber,
-        ballId: data[0].Ball_ID,
+        ballId: ball.Ball_ID,
       });
 
       return;
@@ -230,7 +232,7 @@ function getMatchStatus(io, result, data, data1) {
         comment: ball.Commentary === null ? "" : ball.Commentary,
         overNumber: ball.OverNum,
         ballNumber: ball.BallNumber,
-        ballId: data[0].Ball_ID,
+        ballId: ball.Ball_ID,
       });
     });
   });
