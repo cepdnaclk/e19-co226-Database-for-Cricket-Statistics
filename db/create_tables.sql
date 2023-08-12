@@ -1,10 +1,8 @@
-CREATE DATABASE [IF NOT EXISTS]  CRICLIVE;
-
 CREATE TABLE PLAYER(
     PlayerID INT NOT NULL PRIMARY KEY,
     PlayerName VARCHAR(40),
     PlayerType VARCHAR(15),
-    DateofBirth date,
+    DateofBirth date
 );
 
 CREATE TABLE TEAM(
@@ -40,6 +38,7 @@ CREATE TABLE CURRENTMATCH(
     Toss INT,
     MatchName VARCHAR(50),
     TossIsBatting BOOLEAN,
+    MatchType INT,
     PRIMARY KEY (Team1_ID, Team2_ID, Date),
     CONSTRAINT fk_team1 FOREIGN KEY (Team1_ID)
     REFERENCES TEAM(TeamID)
@@ -63,6 +62,7 @@ CREATE TABLE INNINGS1(
     OnStrikeID INT,
     NonStrikeID INT,
     CurrentBowlerID INT,
+    Commentary TEXT,
     CONSTRAINT fk_onstrike FOREIGN KEY (OnStrikeID)
     REFERENCES PLAYER(PlayerID)
     ON DELETE CASCADE
@@ -85,6 +85,7 @@ CREATE TABLE INNINGS2(
     OnStrikeID INT,
     NonStrikeID INT,
     CurrentBowlerID INT,
+    Commentary TEXT,
     CONSTRAINT fk_onstrike2nd FOREIGN KEY (OnStrikeID)
     REFERENCES PLAYER(PlayerID)
     ON DELETE CASCADE

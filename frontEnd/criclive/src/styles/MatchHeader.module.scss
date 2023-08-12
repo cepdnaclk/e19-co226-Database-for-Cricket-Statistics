@@ -1,7 +1,7 @@
 @use "variables" as *;
 .header {
   height: max-content;
-  padding: 1dvh 5dvw 2dvh 5dvw;
+  padding: 1dvh 4dvw 2dvh 4dvw;
   margin-top: 2em;
   background-color: $bg-color;
   border-top: 1px solid hsl(0, 0%, 30%);
@@ -34,6 +34,12 @@
     gap: 4dvw;
     .flagAndName {
       text-align: center;
+
+      .flagIcon {
+        height: max-content;
+        border: 1px solid hsl(0, 0%, 30%);
+        border-radius: 0.3em;
+      }
     }
 
     .score {
@@ -75,6 +81,27 @@
 
   .matchInfo {
     color: hsl(0, 0%, 70%);
+  }
+}
+
+.currentSummary {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85em;
+  margin: 2em 0;
+  color: hsl(0, 0%, 85%);
+
+  &.battingDetailsOnRight {
+    flex-direction: row-reverse;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .header {
+    font-size: 0.95em;
+  }
+  .flagIcon {
+    width: 3.6em;
   }
 }
 

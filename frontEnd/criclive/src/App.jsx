@@ -46,18 +46,33 @@ import Preloader from "./components/Preloader";
 //   1: "Sri Lanka",
 //   2: "India",
 // };
+
+const RETRY_DELAY = 1000;
 const App = () => {
-  //menu Selection State
+  //States
   const [selected, setSelected] = useState("scorecard");
   const [matchInfo, setMatchInfo] = useState({});
   const [teamsInfo, setTeamsInfo] = useState([{}, {}]);
   const [isLoading, setIsLoading] = useState(true);
   const [scoresData, setScoresData] = useState([]);
   const [teamNameMap, setTeamNameMap] = useState({});
+  const [inningsOneBatsmenData, setInningsOneBatsmenData] = useState([]);
+  const [inningsTwoBatsmenData, setInningsTwoBatsmenData] = useState([]);
+  const [teamOnePlayers, setTeamOnePlayers] = useState([]);
+  const [teamTwoPlayers, setTeamTwoPlayers] = useState([]);
+  const [inningsOneBowlersData, setInningsOneBowlersData] = useState([]);
+  const [inningsTwoBowlersData, setInningsTwoBowlersData] = useState([]);
+  const [comments, setComments] = useState([]);
+  const [latestComment, setlatestComment] = useState({});
+  const [onStrikeBatsman, setOnStrikeBatsman] = useState({});
+  const [nonStrikeBatsman, setNonStrikeBatsman] = useState({});
+  const [currentBowler, setCurrentBowler] = useState({});
+  const [battingTeamId, setBattingTeamId] = useState();
+
   //Match finished or not
   const isMatchOver = false;
 
-  //Fetching MatchInfo From Endpoint
+  //Fetching MatchInfo From Endpoints
   useEffect(() => {
     const fetchMatchInfo = async () => {
       try {
@@ -78,6 +93,7 @@ const App = () => {
       } catch (err) {
         console.log("Error: fetchMatchInfo");
         console.log(err);
+        setTimeout(fetchMatchInfo, RETRY_DELAY);
       }
     };
 
@@ -108,74 +124,254 @@ const App = () => {
       } catch (err) {
         console.log("Error: fetchMatchInfo");
         console.log(err);
+        setTimeout(fetchTeamsInfo, RETRY_DELAY);
+      }
+    };
+
+    const fetchTeamPlayersInfo = async () => {
+      try {
+        const responseTeamOne = await api.get(
+          "/matchInfo/teams/details?teamId=1"
+        );
+        const responseTeamTwo = await api.get(
+          "/matchInfo/teams/details?teamId=2"
+        );
+        /*
+        [
+          {
+            "captain": true,
+            "playerId": 2,
+            "playerName": "Jane Smith",
+            "playerType": "Bowler",
+            "dateOfBirth": "1988-10-20T18:30:00.000Z",
+            "teamId": 2
+          },
+          {
+            "captain": false,
+            "playerId": 4,
+            "playerName": "Sarah Williams",
+            "playerType": "Batsman",
+            "dateOfBirth": "1995-07-03T18:30:00.000Z",
+            "teamId": 2
+          }
+        ]
+
+        */
+        setTeamOnePlayers(responseTeamOne.data);
+        setTeamTwoPlayers(responseTeamTwo.data);
+      } catch (err) {
+        console.log("Error: fetchTeamPlayers");
+        console.log(err);
+        setTimeout(fetchTeamPlayersInfo, RETRY_DELAY);
+      }
+    };
+
+    const fetchPastCommentary = async () => {
+      try {
+        const response = await api.get("/commentry");
+        console.log("commentary ", response);
+        setComments(response.data);
+      } catch (err) {
+        console.log("Error: fetchPastCommentary");
+        console.log(err);
+        setTimeout(fetchPastCommentary, RETRY_DELAY);
       }
     };
 
     fetchMatchInfo();
     fetchTeamsInfo();
+    fetchTeamPlayersInfo();
+    fetchPastCommentary();
+  }, []);
 
+  //Sockets
+  useEffect(() => {
+    function onMatchScore(data) {
+      console.log("scoresData", data);
+      setScoresData(data);
+      setBattingTeamId(
+        data.find((scoresObj) => scoresObj.isBatting === true).teamId
+      );
+    }
+
+    function onInningsOneBatting(data) {
+      console.log("innings-one-batting", data);
+      setInningsOneBatsmenData(data);
+    }
+
+    function onInningsTwoBatting(data) {
+      console.log("innings-two-batting", data);
+      setInningsTwoBatsmenData(data);
+    }
+
+    function onInningsOneBowling(data) {
+      console.log("innings-one-balling", data);
+      setInningsOneBowlersData(data);
+    }
+
+    function onInningsTwoBowling(data) {
+      console.log("innings-two-balling", data);
+      setInningsTwoBowlersData(data);
+    }
+
+    function onlatestComment(data) {
+      setlatestComment(data);
+      console.log("match-status", data);
+    }
     socket.on("connect", () => {
       console.log(`Socket Connected ID = ${socket.id}`);
     });
 
-    socket.on("match-score", (data) => {
-      console.log("scoresData", data);
-      setScoresData(data);
-    });
-    // socket.on("innings-one-batting", (data) =>
-    //   console.log("innings-one-batting", data)
-    // );
-    // socket.on("innings-two-batting", (data) =>
-    //   console.log("innings-two-batting", data)
-    // );
+    socket.on("match-score", onMatchScore);
+    socket.on("innings-one-batting", onInningsOneBatting);
+    socket.on("innings-two-batting", onInningsTwoBatting);
+    socket.on("innings-one-balling", onInningsOneBowling);
+    socket.on("innings-two-balling", onInningsTwoBowling);
+    socket.on("match-status", onlatestComment);
 
-    // socket.on("match-status", (data) => console.log("match-status", data));
+    return () => {
+      socket.off("match-score", onMatchScore);
+      socket.off("innings-one-batting", onInningsOneBatting);
+      socket.off("innings-two-batting", onInningsTwoBatting);
+      socket.off("innings-one-balling", onInningsOneBowling);
+      socket.off("innings-two-balling", onInningsTwoBowling);
+      socket.off("match-status", onlatestComment);
+    };
   }, []);
 
+  useEffect(() => {
+    const teamNameMapTemp = {};
+
+    for (const team of teamsInfo) {
+      teamNameMapTemp[team.teamId] = team.teamName;
+    }
+
+    setTeamNameMap(teamNameMapTemp);
+  }, [matchInfo, teamsInfo]);
+
+  //set preloader conditions
   useEffect(() => {
     console.log({
       matchInfo: matchInfo,
       teamsInfo: teamsInfo,
       scoresData: scoresData,
+      teamOnePlayers: teamOnePlayers,
+      teamTwoPlayers: teamTwoPlayers,
     });
     if (
       Object.keys(teamsInfo[0]).length !== 0 &&
       Object.keys(teamsInfo[1]).length !== 0 &&
       Object.keys(matchInfo).length !== 0 &&
-      scoresData.length !== 0
+      scoresData.length !== 0 &&
+      teamOnePlayers.length !== 0 &&
+      teamTwoPlayers.length !== 0 &&
+      comments.length !== 0 &&
+      (battingTeamId === 1
+        ? inningsOneBatsmenData.length !== 0
+        : inningsTwoBatsmenData.length !== 0)
     ) {
       setIsLoading(false);
     }
-  }, [matchInfo, teamsInfo, scoresData]);
-  if (isLoading)
-    return (
-      <div className={styles.preloaderContainer}>
-        <Preloader />{" "}
-      </div>
+  }, [
+    matchInfo,
+    teamsInfo,
+    scoresData,
+    teamOnePlayers,
+    teamTwoPlayers,
+    inningsOneBatsmenData,
+    inningsTwoBatsmenData,
+    battingTeamId,
+    comments,
+  ]);
+
+  //Finding the current batsmen and bowlers
+  useEffect(() => {
+    if (isLoading) return;
+
+    const batsmenData =
+      battingTeamId === 1 ? inningsOneBatsmenData : inningsTwoBatsmenData;
+
+    const bowlersData =
+      battingTeamId === 1 ? inningsOneBowlersData : inningsTwoBowlersData;
+    setCurrentBowler(bowlersData.find((bowler) => bowler.currentBowler));
+    setOnStrikeBatsman(batsmenData.find((batsman) => batsman.onStrike));
+
+    //have to check howOut === "Not Out" condition
+    setNonStrikeBatsman(
+      batsmenData.find(
+        (batsman) => !batsman.onStrike && batsman.howOut === "Not Out"
+      )
     );
+  }, [
+    inningsOneBatsmenData,
+    inningsTwoBatsmenData,
+    inningsOneBowlersData,
+    inningsTwoBowlersData,
+    battingTeamId,
+    isLoading,
+  ]);
+
+  //update commentary with latest Comment
+  useEffect(() => {
+    if (isLoading) return;
+
+    setComments((prevComments) => {
+      if (
+        prevComments.length !== 0 &&
+        prevComments.slice(-1)[0].ballId === latestComment.ballId
+      )
+        return prevComments;
+
+      console.log("compare", ...prevComments.slice(-1), latestComment);
+      //shift the array so maximum objects contained is 20
+      if (prevComments.length >= 20) prevComments.shift();
+
+      return [...prevComments, latestComment];
+    });
+  }, [latestComment]);
+
+  //If loading return the preloader
+  if (isLoading) return <Preloader />;
 
   return (
     <div className={styles.container}>
-      <MatchHeader scoresData={scoresData} teamNameMap={teamNameMap} />
+      <MatchHeader
+        scoresData={scoresData}
+        teamNameMap={teamNameMap}
+        battingTeamId={battingTeamId}
+        onStrikeBatsman={onStrikeBatsman}
+        nonStrikeBatsman={nonStrikeBatsman}
+        currentBowler={currentBowler}
+        matchInfo={matchInfo}
+        isMatchOver={latestComment.matchOver}
+      />
       <Menu
         selected={selected}
         setSelected={setSelected}
-        isMatchOver={isMatchOver}
+        isMatchOver={latestComment.matchOver}
       />
 
       {/* If selected == "scorecard" then show the scorecard component
         else if selected == "commentary" then show the commentary component
       */}
       {selected === "scorecard" && (
-        <Scorecard scoresData={scoresData} teamNameMap={teamNameMap} />
+        <Scorecard
+          scoresData={scoresData}
+          teamNameMap={teamNameMap}
+          inningsOneBatsmenData={inningsOneBatsmenData}
+          inningsTwoBatsmenData={inningsTwoBatsmenData}
+          teamOnePlayers={teamOnePlayers}
+          teamTwoPlayers={teamTwoPlayers}
+          inningsOneBowlersData={inningsOneBowlersData}
+          inningsTwoBowlersData={inningsTwoBowlersData}
+        />
       )}
-      {selected === "commentary" && <Commentary />}
+      {selected === "commentary" && <Commentary comments={comments} />}
       <div className={styles.matchMeta}>
         <p>
           <span>Toss: </span>
           {/* Extract the team name of team who won the toss */}
-          {teamsInfo.find((obj) => obj.teamId === matchInfo.tossWinningTeamId)
-            .teamName + " "}
+          {teamNameMap[matchInfo.tossWinningTeamId] + " "}
           won the toss and opted to bowl first
         </p>
         <p>

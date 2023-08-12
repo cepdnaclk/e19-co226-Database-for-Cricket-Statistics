@@ -24,9 +24,11 @@ app.use(express.json());
 const io = createSocket(server);
 const mainController = require("./src/controller/mainController");
 const matchInfo = require("./src/routes/matchInfo");
+const comments = require("./src/routes/commentry");
 
 // routing
 app.use("/matchInfo", matchInfo);
+app.use("/commentry", comments);
 
 
 // server 

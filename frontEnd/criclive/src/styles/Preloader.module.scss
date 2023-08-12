@@ -1,8 +1,21 @@
+.preloaderContainer {
+  height: 100dvh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 3em;
+
+  .preloaderLogo {
+    width: 13em;
+  }
+}
 .lds-roller {
   display: inline-block;
   position: relative;
   width: 80px;
-  height: 80px;
+  aspect-ratio: 1;
 }
 .lds-roller div {
   animation: lds-roller 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;

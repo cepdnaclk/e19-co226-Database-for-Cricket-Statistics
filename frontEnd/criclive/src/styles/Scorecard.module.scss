@@ -42,6 +42,7 @@
 
 .scorecardContainer {
   padding: 1em 1.3em;
+
   background-color: $bg-color;
   width: 100%;
   border-radius: 0 0 1em 1em;
@@ -95,5 +96,26 @@ ul {
     margin-right: 1em;
     margin-top: 0.4em;
     color: hsl(0, 0%, 80%);
+  }
+}
+
+.teamLineUp {
+  font-size: 0.9em;
+  color: hsl(0, 0%, 90%);
+  margin-bottom: 1em;
+}
+
+.playerInfo {
+  margin: 0.7em 0;
+  .playerName {
+    font-size: 0.9em;
+
+    span {
+      color: hsl(0, 0%, 70%);
+    }
+  }
+  .playerType {
+    font-size: 0.8em;
+    color: hsl(0, 0%, 70%);
   }
 }
