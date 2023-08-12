@@ -155,7 +155,7 @@ LEFT JOIN (
                                     WHERE Type = 'byes' OR Type = 'legByes') 
                                     THEN Ball_ID 
                                     ELSE NULL END) AS ballsBowled
-    FROM INNINGS1
+    FROM INNINGS2
     GROUP BY CurrentBowlerID
 ) AS BF ON P.PlayerID = BF.CurrentBowlerID
 LEFT JOIN (
