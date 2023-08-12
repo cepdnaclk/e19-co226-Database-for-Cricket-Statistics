@@ -1,9 +1,3 @@
-INSERT INTO TEAM (TeamID, TeamName, Country, Coach, CaptainID)
-VALUES
-    (1, 'Sri Lanka', 'Sri Lanka', 'Chris Silverman', 1),
-    (2, 'India', 'India', 'Rahul Dravid', 1);
-
-
 INSERT INTO PLAYER (PlayerID, PlayerName, PlayerType, DateofBirth)
 VALUES
     (1, 'Dasun Shanaka', 'Batsman', '1991-09-09'),
@@ -29,6 +23,38 @@ VALUES
     (20, 'Washington Sundar', 'All-Rounder', '1999-10-05'),
     (21, 'Shardul Thakur', 'Bowler', '1991-10-16'),
     (22, 'Jasprit Bumrah', 'Bowler', '1993-12-06');
+
+INSERT INTO TEAM (TeamID, TeamName, Country, Coach, CaptainID)
+VALUES
+    (1, 'Sri Lanka', 'Sri Lanka', 'Chris Silverman', 1),
+    (2, 'India', 'India', 'Rahul Dravid', 1);
+
+INSERT INTO TEAMPLAYERS (PlayerID, TeamID)
+VALUES 
+    (1, 1),
+    (2, 1),
+    (3, 1),
+    (4, 1),
+    (5, 1),
+    (6, 1),
+    (7, 1),
+    (8, 1),
+    (9, 1),
+    (10, 1),
+    (11, 1),
+
+    (12, 2),
+    (13, 2),
+    (14, 2),
+    (15, 2),
+    (16, 2),
+    (17, 2),
+    (18, 2),
+    (19, 2),
+    (20, 2),
+    (21, 2),
+    (22, 2);
+
 
 
 INSERT INTO CURRENTMATCH (Team1_ID, Team2_ID, Date, Time, Venue, Toss, MatchName, TossIsBatting, MatchType)

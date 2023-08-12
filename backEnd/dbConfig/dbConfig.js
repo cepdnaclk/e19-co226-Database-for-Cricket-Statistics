@@ -16,6 +16,13 @@ const dbConn = mysql.createConnection({
   database: "criclive",
 });
 
+// const dbConn = mysql.createConnection({
+//   host: "dpg-cjbm11fdb61s739teq4g-a",
+//   user: "user",
+//   password: "k4KlygdqZb8ppbwcrnllQwqUuarDs1HE",
+//   database: "test_7ls7",
+// });
+
 // connect db
 dbConn.connect(function (err) {
   if (err) throw err;

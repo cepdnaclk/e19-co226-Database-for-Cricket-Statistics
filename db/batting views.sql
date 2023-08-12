@@ -60,10 +60,6 @@ INNER JOIN PLAYER AS P ON I2.OnStrikeID = P.PlayerID
 GROUP BY P.PlayerName, I2.OnStrikeID;
 
 
--- get Bowling figures returns name, id, runs, numberof wickets and balls faced
---- view for bowling
-
----
 CREATE VIEW BowlingFiguresViewfirst AS
 SELECT
     P.PlayerName,
@@ -98,7 +94,7 @@ LEFT JOIN (
 LEFT JOIN (
     SELECT
         CurrentBowlerID,
-        COUNT(CASE WHEN Ball_ID IN (SELECT Ball_ID FROM EXTRAINNINGS1 
+        COUNT(CASE WHEN Ball_ID NOT IN (SELECT Ball_ID FROM EXTRAINNINGS1 
                                     WHERE Type = 'byes' OR Type = 'legByes') 
                                     THEN Ball_ID 
                                     ELSE NULL END) AS ballsBowled
@@ -112,7 +108,7 @@ LEFT JOIN (
     FROM INNINGS1
     WHERE NOT EXISTS (
         SELECT 1
-        FROM INNINGS2 AS I
+        FROM INNINGS1 AS I
         WHERE I.CurrentBowlerID = INNINGS1.CurrentBowlerID
           AND I.OverNum = INNINGS1.OverNum
           AND I.RunsScored > 0
@@ -155,7 +151,7 @@ LEFT JOIN (
 LEFT JOIN (
     SELECT
         CurrentBowlerID,
-        COUNT(CASE WHEN Ball_ID IN (SELECT Ball_ID FROM EXTRAINNINGS2 
+        COUNT(CASE WHEN Ball_ID NOT IN (SELECT Ball_ID FROM EXTRAINNINGS2 
                                     WHERE Type = 'byes' OR Type = 'legByes') 
                                     THEN Ball_ID 
                                     ELSE NULL END) AS ballsBowled

@@ -167,8 +167,8 @@ function getMatchStatus(io, result, data, data1) {
         matchOver:
           data1[1].totalRuns !== null &&
           ((data1[1].overNum === match.matchOver &&
-            data1[1].ballNumber === 6) ||
-            data1[1].wicket === 10 ||
+            data1[1].ballNumber === match.matchBalls) ||
+            data1[1].wicket === match.matchWickets ||
             data1[0].totalRuns > data1[1].totalRuns)
             ? true
             : false,
@@ -221,8 +221,8 @@ function getMatchStatus(io, result, data, data1) {
         matchOver:
           data1[1].totalRuns !== null &&
           ((data1[1].overNum === match.matchOver &&
-            data1[1].ballNumber === 6) ||
-            data1[1].wicket === 10 ||
+            data1[1].ballNumber === match.matchBalls) ||
+            data1[1].wicket === match.matchWickets ||
             data1[0].totalRuns > data1[1].totalRuns)
             ? true
             : false,

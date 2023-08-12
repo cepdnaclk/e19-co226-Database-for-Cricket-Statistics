@@ -74,18 +74,17 @@ function  getHowOut(res){
 
 function balling(res, playing){
 
-
     playing = (playing.length === 0)?[{}]:playing;
 
     return res.map(res => {
         return {
         playerId:res.PlayerID,
         name: res.PlayerName,
-        overs: Math.floor(res.BallsFaced/6),
+        overs: Math.floor(res.ballsBowled/6),
         wickets: res.NumberOfWickets,
         runs: res.TotalRuns,
-        ballNumber:res.BallsFaced%6,
-        econ: ((res.TotalRuns*0.1)/(res.BallsFaced*0.1/6)).toFixed(2),
+        ballNumber:res.ballsBowled%6,
+        econ: ((res.TotalRuns*0.1)/(res.ballsBowled*0.1/6)).toFixed(2),
         currentBowler:(playing[0].CurrentBowlerID === res.PlayerID)?true:false,
         maidenOver:res.MaidenOvers
     }});

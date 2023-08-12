@@ -59,6 +59,7 @@ function getTeamInfo(res){
 
 function getPlayerInfo(teamId, res){
 
+
     db.query(sql_playerDetails + teamId,(err, players) => {
         
         
