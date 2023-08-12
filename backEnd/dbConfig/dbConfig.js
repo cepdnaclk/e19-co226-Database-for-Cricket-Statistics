@@ -30,3 +30,11 @@ dbConn.connect(function (err) {
 });
 
 module.exports = dbConn;
+
+//Database for different match instances\
+/*
+cricliveslbate01 --> cricLive SL bat End Of Over 1
+cricliveslbate02 --> cricLive SL bat End of Over 2
+cricliveindbate01 --> criclive Ind bat End of Over 1
+cricliveindbatl02 --> criclive Ind bat last two balls left (we'll demenstrate the live socket)
+*/
