@@ -38,7 +38,14 @@ const MatchHeader = ({
         />
       </div>
       <div className={styles.status}>
-        <p>{getMatchStatusString(scoresData, teamNameMap, isMatchOver)}</p>
+        <p>
+          {getMatchStatusString(
+            scoresData,
+            teamNameMap,
+            isMatchOver,
+            matchInfo.matchType
+          )}
+        </p>
         <p className={styles.matchInfo}>{matchInfo.matchName}</p>
       </div>
       <div
@@ -49,12 +56,12 @@ const MatchHeader = ({
       >
         <div className={styles.summaryItem}>
           <p>
-            {onStrikeBatsman.name} * {onStrikeBatsman.runs}(
-            {onStrikeBatsman.balls})
+            {onStrikeBatsman !== null &&
+              `${onStrikeBatsman.name} * ${onStrikeBatsman.runs}(${onStrikeBatsman.balls})`}
           </p>
           <p>
-            {nonStrikeBatsman.name} {nonStrikeBatsman.runs}(
-            {nonStrikeBatsman.balls})
+            {nonStrikeBatsman !== null &&
+              `${nonStrikeBatsman.name} ${nonStrikeBatsman.runs}(${nonStrikeBatsman.balls})`}
           </p>
         </div>
         <div className={styles.summaryItem}>
@@ -100,8 +107,13 @@ const TeamInfoAndScore = ({ scoreObj, teamName }) => {
 };
 export default MatchHeader;
 
-const getMatchStatusString = (scoresData, teamNameMap, isMatchOver) => {
-  const MATCH_OVERS = 2;
+const getMatchStatusString = (
+  scoresData,
+  teamNameMap,
+  isMatchOver,
+  matchType
+) => {
+  const MATCH_OVERS = matchType;
   const battingTeamScoreObj = scoresData.find((scoreObj) => scoreObj.isBatting);
   const bowlingTeamScoreObj = scoresData.find(
     (scoreObj) => !scoreObj.isBatting
@@ -129,12 +141,17 @@ const getMatchStatusString = (scoresData, teamNameMap, isMatchOver) => {
     }
   }
 
+  //Match Not Over
+
   const currentRunRate = (
     battingTeamScoreObj.totalRuns /
     ((battingTeamScoreObj.overNum * 6 + battingTeamScoreObj.ballNumber) / 6)
   ).toFixed(1);
+
   const isChasing =
     scoresData[0].totalRuns !== null && scoresData[1].totalRuns !== null;
+
+  // If second innings started.
   if (isChasing) {
     const requiredRuns =
       bowlingTeamScoreObj.totalRuns - battingTeamScoreObj.totalRuns;
@@ -156,5 +173,21 @@ const getMatchStatusString = (scoresData, teamNameMap, isMatchOver) => {
       } needs ${requiredRuns} in ${remainingBalls}`;
   } else if (!isChasing) {
     return `Current Run Rate: ${currentRunRate}`;
+  }
+
+  //End of 1st Innings
+  if (
+    !isChasing &&
+    battingTeamScoreObj.ballNumber === 6 &&
+    battingTeamScoreObj.overNum === MATCH_OVERS
+  ) {
+    const requiredRuns = battingTeamScoreObj.totalRuns;
+
+    const remainingOvers = MATCH_OVERS;
+    const requiredRunRate = (requiredRuns / MATCH_OVERS).toFixed(1);
+
+    return `${
+      teamNameMap[bowlingTeamScoreObj.teamId]
+    } needs ${requiredRuns} in ${remainingOvers} RRR:${requiredRunRate}`;
   }
 };

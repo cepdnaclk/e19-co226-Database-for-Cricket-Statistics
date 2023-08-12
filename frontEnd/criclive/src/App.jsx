@@ -294,13 +294,17 @@ const App = () => {
     const bowlersData =
       battingTeamId === 1 ? inningsOneBowlersData : inningsTwoBowlersData;
     setCurrentBowler(bowlersData.find((bowler) => bowler.currentBowler));
-    setOnStrikeBatsman(batsmenData.find((batsman) => batsman.onStrike));
+    setOnStrikeBatsman(
+      batsmenData.find(
+        (batsman) => batsman.onStrike && batsman.howOut === "Not Out"
+      ) || null
+    );
 
     //have to check howOut === "Not Out" condition
     setNonStrikeBatsman(
       batsmenData.find(
         (batsman) => !batsman.onStrike && batsman.howOut === "Not Out"
-      )
+      ) || null
     );
   }, [
     inningsOneBatsmenData,
@@ -318,11 +322,11 @@ const App = () => {
     setComments((prevComments) => {
       if (
         prevComments.length !== 0 &&
-        prevComments.slice(-1)[0].ballId === latestComment.ballId
+        prevComments.slice(-1)[0].ballId === latestComment.ballId &&
+        prevComments.slice(-1)[0].ball === latestComment.ball
       )
         return prevComments;
 
-      console.log("compare", ...prevComments.slice(-1), latestComment);
       //shift the array so maximum objects contained is 20
       if (prevComments.length >= 20) prevComments.shift();
 
