@@ -9,15 +9,15 @@ WHERE Ball_ID = (SELECT MAX(Ball_ID) FROM  INNINGS1)
 `;
 
 const sql_nonStriker1 = `
-SELECT * FROM player
-INNER JOIN innings1 ON player.PlayerID = innings1.NonStrikeID
-WHERE innings1.Ball_ID = (SELECT MAX(Ball_ID) FROM  INNINGS1)
+SELECT * FROM PLAYER
+INNER JOIN INNINGS1 ON PLAYER.PlayerID = INNINGS1.NonStrikeID
+WHERE INNINGS1.Ball_ID = (SELECT MAX(Ball_ID) FROM  INNINGS1)
 `;
 
 const sql_nonStriker2 = `
-SELECT * FROM player
-INNER JOIN innings2 ON player.PlayerID = innings2.NonStrikeID
-WHERE innings2.Ball_ID = (SELECT MAX(Ball_ID) FROM  INNINGS2)
+SELECT * FROM PLAYER
+INNER JOIN INNINGS2 ON PLAYER.PlayerID = INNINGS2.NonStrikeID
+WHERE INNINGS2.Ball_ID = (SELECT MAX(Ball_ID) FROM  INNINGS2)
 `;
 
 const sql_batting2 = "SELECT * FROM BatsmanScoresSecondInnings";
