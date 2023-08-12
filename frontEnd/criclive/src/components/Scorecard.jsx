@@ -243,9 +243,11 @@ const BattingTable = ({ scoresObj, inningsBatsmenData }) => {
       </thead>
       <tbody>
         {/* Scorecard Batsmen Info */}
-        {inningsBatsmenData.map((dataObj) => (
-          <BatsmanScore {...dataObj} />
-        ))}
+        {inningsBatsmenData
+          .sort((a, b) => a.playerId - b.playerId)
+          .map((dataObj) => (
+            <BatsmanScore {...dataObj} />
+          ))}
         {/* Extras */}
         <tr>
           <td className={styles.alignLeft}>Extras</td>
