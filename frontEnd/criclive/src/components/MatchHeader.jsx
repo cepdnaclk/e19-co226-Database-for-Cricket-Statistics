@@ -166,11 +166,11 @@ const getMatchStatusString = (
     if (remainingBalls > 100)
       return `${
         teamNameMap[battingTeamScoreObj.teamId]
-      } needs ${requiredRuns} in ${remainingOvers} CRR:${currentRunRate} RRR:${requiredRunRate}`;
+      } needs ${requiredRuns} in ${remainingOvers} CRR: ${currentRunRate} RRR: ${requiredRunRate}`;
     else if (remainingBalls <= 100)
       return `${
         teamNameMap[battingTeamScoreObj.teamId]
-      } needs ${requiredRuns} in ${remainingBalls}`;
+      } needs ${requiredRuns} in ${remainingBalls} balls CRR: ${currentRunRate} RRR: ${requiredRunRate}`;
   }
 
   //End of 1st Innings
