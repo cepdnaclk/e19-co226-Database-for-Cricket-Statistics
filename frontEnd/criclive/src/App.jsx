@@ -330,7 +330,7 @@ const App = () => {
   }, [latestComment]);
 
   //If loading return the preloader
-  if (isLoading) return <Preloader />;
+  // if (isLoading) return <Preloader />;
 
   return (
     <div className={styles.container}>
