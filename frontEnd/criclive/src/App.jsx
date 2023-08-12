@@ -323,7 +323,8 @@ const App = () => {
       if (
         prevComments.length !== 0 &&
         prevComments.slice(-1)[0].ballId === latestComment.ballId &&
-        prevComments.slice(-1)[0].ball === latestComment.ball
+        prevComments.slice(-1)[0].ball === latestComment.ball &&
+        prevComments.slice(-1)[0].overNumber === latestComment.overNumber
       )
         return prevComments;
 
