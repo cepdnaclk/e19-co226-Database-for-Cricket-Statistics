@@ -76,7 +76,7 @@ const MatchHeader = ({
 };
 
 const TeamInfoAndScore = ({ scoreObj, teamName }) => {
-  let yetToBat = !scoreObj.isBatting;
+  let yetToBat = scoreObj.totalRuns === null;
   return (
     <div
       className={classNames(
@@ -171,15 +171,13 @@ const getMatchStatusString = (
       return `${
         teamNameMap[battingTeamScoreObj.teamId]
       } needs ${requiredRuns} in ${remainingBalls}`;
-  } else if (!isChasing) {
-    return `Current Run Rate: ${currentRunRate}`;
   }
 
   //End of 1st Innings
-  if (
+  else if (
+    battingTeamScoreObj.overNum === MATCH_OVERS - 1 &&
     !isChasing &&
-    battingTeamScoreObj.ballNumber === 6 &&
-    battingTeamScoreObj.overNum === MATCH_OVERS
+    battingTeamScoreObj.ballNumber === 6
   ) {
     const requiredRuns = battingTeamScoreObj.totalRuns;
 
@@ -188,6 +186,11 @@ const getMatchStatusString = (
 
     return `${
       teamNameMap[bowlingTeamScoreObj.teamId]
-    } needs ${requiredRuns} in ${remainingOvers} RRR:${requiredRunRate}`;
+    } needs ${requiredRuns} in ${remainingOvers} Overs RRR:${requiredRunRate}`;
+  }
+
+  //1st innings on Going
+  else if (!isChasing) {
+    return `Current Run Rate: ${currentRunRate}`;
   }
 };
