@@ -88,7 +88,7 @@ LEFT JOIN (
         CurrentBowlerID,
         COUNT(Ball_ID) AS numberOfWickets
     FROM INNINGS1
-    WHERE Ball_ID IN (SELECT Ball_ID FROM DISMISSALINNINGS1)
+    WHERE Ball_ID NOT IN (SELECT Ball_ID FROM DISMISSALINNINGS1 WHERE DismissType = 'runOut')
     GROUP BY CurrentBowlerID
 ) AS NW ON P.PlayerID = NW.CurrentBowlerID
 LEFT JOIN (
