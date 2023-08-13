@@ -94,7 +94,7 @@ INSERT INTO DISMISSALINNINGS1 (Ball_ID, DismissType, CaughtBy, FieldedBy, Dismis
 
 -- -- Insert data into INNINGS2 table
 INSERT INTO INNINGS2 (Ball_ID, OverNum, BallNumber, RunsScored, OnStrikeID, NonStrikeID, CurrentBowlerID, Commentary) VALUES
-(1, 0, 1, 4, 1, 2, "India starts off with a boundary. Kohli's trademark cover drive takes India to a great start. Nothing wrong with the delivery, pure class batting by Kohli"),
+(1, 0, 1, 4, 1, 2,10,  "India starts off with a boundary. Kohli's trademark cover drive takes India to a great start. Nothing wrong with the delivery, pure class batting by Kohli"),
 
 
 
