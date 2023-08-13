@@ -9,6 +9,18 @@ const dbConn = mysql.createConnection({
 });
 
 
+// const dbConn = mysql.createConnection({
+//   host: 'gateway01.us-west-2.prod.aws.tidbcloud.com',
+//   port: 4000,
+//   user: '3m7pRf38p5JMiTT.root',
+//   password: 'eVl1nT9ZuSaRReP8',
+//   database: 'test',
+//   ssl: {
+//     minVersion: 'TLSv1.2',
+//     rejectUnauthorized: true
+//   }
+// });
+
 
 // const dbConn = mysql.createConnection({
 //   host: 'gateway01.us-west-2.prod.aws.tidbcloud.com',
