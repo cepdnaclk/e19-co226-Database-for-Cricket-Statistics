@@ -4,7 +4,8 @@ const sql_commentry = `
 SELECT OverNum, BallNumber, Commentary, RunsScored, Ball_ID, 1 AS innings FROM INNINGS1
 UNION 
 SELECT OverNum, BallNumber, Commentary, RunsScored, Ball_ID, 2 AS innings FROM INNINGS2 
-limit 20
+ORDER BY innings DESC, Ball_ID DESC
+LIMIT 5;
 `;
 
 const sql_wickets = `
@@ -13,7 +14,8 @@ NATURAL JOIN DISMISSALINNINGS1
 UNION 
 SELECT Ball_ID, 2 AS innings FROM INNINGS2 
 NATURAL JOIN DISMISSALINNINGS2
-limit 20
+ORDER BY innings DESC, Ball_ID DESC
+limit 5
 `;
 
 const sql_extra = `
@@ -22,7 +24,8 @@ NATURAL JOIN EXTRAINNINGS1
 UNION 
 SELECT Ball_ID, 2 AS innings, Type FROM INNINGS2 
 NATURAL JOIN EXTRAINNINGS2
-limit 20
+ORDER BY innings DESC, Ball_ID DESC
+limit 5
 `;
 
 function getCommentry(res) {
@@ -32,6 +35,8 @@ function getCommentry(res) {
       res.status(404);
       return;
     }
+
+    console.log(comments)
 
     db.query(sql_wickets, (err, wicket) => {
       if (wicket == undefined) {
