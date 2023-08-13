@@ -1,13 +1,14 @@
 const mysql = require("mysql");
 
 //local mysql db connection
-
 const dbConn = mysql.createConnection({
   host: "localhost",
   user: "root",
   password: "",
   database: "criclive",
 });
+
+
 
 // const dbConn = mysql.createConnection({
 //   host: 'gateway01.us-west-2.prod.aws.tidbcloud.com',
