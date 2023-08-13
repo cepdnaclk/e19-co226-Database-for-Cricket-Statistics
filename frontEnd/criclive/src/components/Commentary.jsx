@@ -12,7 +12,7 @@ const Commentary = ({ comments }) => {
               ball={commentObj.ball}
               overString={`${commentObj.overNumber}.${commentObj.ballNumber}`}
               comment={commentObj.comment}
-              key={commentObj.ballId}
+              key={`${commentObj.ballId}.${commentObj.comment}`}
             />
           ))}
     </div>
