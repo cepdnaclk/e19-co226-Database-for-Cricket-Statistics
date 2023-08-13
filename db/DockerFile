@@ -1,0 +1,8 @@
+FROM mysql:latest
+
+ADD sql /src/sql
+ADD scripts /src/scripts
+
+RUN /src/scripts/prepare_sql_files.sh
+
+ADD /src/scripts /docker-entrypoint-initdb.d
