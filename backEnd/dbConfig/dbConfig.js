@@ -3,12 +3,12 @@ const mysql = require("mysql");
 //local mysql db connection
 
 
-// const dbConn = mysql.createConnection({
-//   host: "localhost",
-//   user: "root",
-//   password: "",
-//   database: "criclive",
-// });
+const dbConn = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "",
+  database: "criclive",
+});
 
 // const dbConn = mysql.createConnection({
 //   host: "localhost",
@@ -17,17 +17,17 @@ const mysql = require("mysql");
 //   database: "criclive",
 // });
 
-const dbConn = mysql.createConnection({
-  host: 'gateway01.us-west-2.prod.aws.tidbcloud.com',
-  port: 4000,
-  user: '3m7pRf38p5JMiTT.root',
-  password: 'eVl1nT9ZuSaRReP8',
-  database: 'test',
-  ssl: {
-    minVersion: 'TLSv1.2',
-    rejectUnauthorized: true
-  }
-});
+// const dbConn = mysql.createConnection({
+//   host: 'gateway01.us-west-2.prod.aws.tidbcloud.com',
+//   port: 4000,
+//   user: '3m7pRf38p5JMiTT.root',
+//   password: 'eVl1nT9ZuSaRReP8',
+//   database: 'test',
+//   ssl: {
+//     minVersion: 'TLSv1.2',
+//     rejectUnauthorized: true
+//   }
+// });
 
 // const dbConn = mysql.createConnection({
 //   host: "bzg2gtr1s18vgce364iy-mysql.services.clever-cloud.com",
