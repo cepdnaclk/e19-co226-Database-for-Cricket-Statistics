@@ -5,7 +5,7 @@ SELECT OverNum, BallNumber, Commentary, RunsScored, Ball_ID, 1 AS innings FROM I
 UNION 
 SELECT OverNum, BallNumber, Commentary, RunsScored, Ball_ID, 2 AS innings FROM INNINGS2 
 ORDER BY innings DESC, Ball_ID DESC
-LIMIT 5;
+LIMIT 20;
 `;
 
 const sql_wickets = `
@@ -15,7 +15,7 @@ UNION
 SELECT Ball_ID, 2 AS innings FROM INNINGS2 
 NATURAL JOIN DISMISSALINNINGS2
 ORDER BY innings DESC, Ball_ID DESC
-limit 5
+limit 20
 `;
 
 const sql_extra = `
@@ -25,7 +25,7 @@ UNION
 SELECT Ball_ID, 2 AS innings, Type FROM INNINGS2 
 NATURAL JOIN EXTRAINNINGS2
 ORDER BY innings DESC, Ball_ID DESC
-limit 5
+limit 20
 `;
 
 function getCommentry(res) {
