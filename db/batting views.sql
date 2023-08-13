@@ -86,9 +86,10 @@ INNER JOIN (
 LEFT JOIN (
     SELECT
         CurrentBowlerID,
-        COUNT(Ball_ID) AS numberOfWickets
-    FROM INNINGS1
-    WHERE Ball_ID NOT IN (SELECT Ball_ID FROM DISMISSALINNINGS1 WHERE DismissType = 'runOut')
+        COUNT(DISMISSALINNINGS1.Ball_ID) AS numberOfWickets
+    FROM DISMISSALINNINGS1
+    INNER JOIN INNINGS1 ON INNINGS1.Ball_ID = DISMISSALINNINGS1.Ball_ID
+    WHERE DismissType !='runOut'
     GROUP BY CurrentBowlerID
 ) AS NW ON P.PlayerID = NW.CurrentBowlerID
 LEFT JOIN (
@@ -143,9 +144,10 @@ INNER JOIN (
 LEFT JOIN (
     SELECT
         CurrentBowlerID,
-        COUNT(Ball_ID) AS numberOfWickets
-    FROM INNINGS2
-    WHERE Ball_ID NOT IN (SELECT Ball_ID FROM DISMISSALINNINGS2 WHERE DismissType = 'runOut')
+        COUNT(DISMISSALINNINGS2.Ball_ID) AS numberOfWickets
+    FROM DISMISSALINNINGS2
+    INNER JOIN INNINGS1 ON INNINGS2.Ball_ID = DISMISSALINNINGS2.Ball_ID
+    WHERE DismissType !='runOut'
     GROUP BY CurrentBowlerID
 ) AS NW ON P.PlayerID = NW.CurrentBowlerID
 LEFT JOIN (
