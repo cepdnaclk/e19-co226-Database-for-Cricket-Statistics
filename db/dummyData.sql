@@ -70,13 +70,13 @@ INSERT INTO INNINGS1 (Ball_ID, OverNum, BallNumber, RunsScored, OnStrikeID, NonS
 (3, 0, 3, 1, 3, 2, 22, "Short of length on the off stump driven on the Backfoot by Nissanka, one run"),
 (4, 0, 4, 0, 2, 3, 22, "Dot Ball. Good Line and Length by Bumrah"),
 (5, 0, 5, 6, 2, 3, 22, "SIX!. What a shot by Karunarathne! Bouncer by Bumrah, pulled infront of square for a massive six."),
-(6, 0, 6, 2, 2, 3, 22, "Two Runs, again on the pads, flicked away to square leg to collect two runs. End of Over")
+(6, 0, 6, 2, 2, 3, 22, "Two Runs, again on the pads, flicked away to square leg to collect two runs. End of Over"),
 
 (7, 1, 1, 0, 3, 2, 21, "Bowled! What a delivery by Thakur. Yorker Length, Nissanka completely bamboozeled! First Wicket for India as Pathum Nissanka walks back to the pavillion"),
 (8, 1, 2, 2, 4, 2, 21, "Run Out! Two wickets in two balls. Comedic Running by the two batsmen, Mendis wanted the 3rd run. Dimuth did not respond. Sadly, for Sri Lanka Dimuth has to walk back to the pavillion after a quickfire 13 of 5 balls"),
-(9, 1, 3, 6, 5, 4, 21, "Huge Six! What a shot by Asalanka on his very first ball. Down the track and over the bowlers head for a 97m six");
-(10,1, 4, 1, 5, 4 , 21, "Good Delivery, on a good length. Asalanka crosses over for a single, Mendis on Strike now");
-(11, 1, 5, 2, 4, 5, 21, "Another good delivery but a misfield resulted mendis to come back for a second");
+(9, 1, 3, 6, 5, 4, 21, "Huge Six! What a shot by Asalanka on his very first ball. Down the track and over the bowlers head for a 97m six"),
+(10,1, 4, 1, 5, 4 , 21, "Good Delivery, on a good length. Asalanka crosses over for a single, Mendis on Strike now"),
+(11, 1, 5, 2, 4, 5, 21, "Another good delivery but a misfield resulted mendis to come back for a second"),
 (12, 1, 6, 6, 4, 5, 21, "Sixer! Scooped over the fine leg fielder for a six. Sri Lanka manages to score 31 in their two overs! This would be an interesting run chase");
 
 
