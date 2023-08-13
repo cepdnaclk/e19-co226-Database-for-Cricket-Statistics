@@ -188,7 +188,7 @@ const App = () => {
   useEffect(() => {
     function onMatchScore(data) {
       console.log("scoresData", data);
-      setScoresData(data);
+      setScoresData(data.sort((a, b) => a.innings - b.innings));
       setBattingTeamId(
         data.find((scoresObj) => scoresObj.isBatting === true).teamId
       );
