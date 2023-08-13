@@ -7,7 +7,7 @@ function createSocket(server){
     // socket config
     const io = new Server(server, {
         cors: {
-          origin: "https://criclive-frontend.onrender.com",
+          origin: "http://localhost:3000",
           methods: ["GET", "POST"],
           credentials:true
         },
