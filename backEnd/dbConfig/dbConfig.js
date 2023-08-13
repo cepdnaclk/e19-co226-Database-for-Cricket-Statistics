@@ -17,10 +17,10 @@ const dbConn = mysql.createConnection({
 });
 
 // const dbConn = mysql.createConnection({
-//   host: "dpg-cjbm11fdb61s739teq4g-a",
-//   user: "user",
-//   password: "k4KlygdqZb8ppbwcrnllQwqUuarDs1HE",
-//   database: "test_7ls7",
+//   host: "localhost",
+//   user: "root",
+//   password: "123",
+//   database: "criclive",
 // });
 
 // connect db
