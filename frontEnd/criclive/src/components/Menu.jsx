@@ -3,7 +3,7 @@ import classNames from "classnames";
 const Menu = ({ isMatchOver, selected, setSelected }) => {
   return (
     <div className={styles.menuContainer}>
-      <div
+      {/* <div
         className={classNames(
           styles.menuItem,
           selected === "summary" && styles.active,
@@ -12,7 +12,7 @@ const Menu = ({ isMatchOver, selected, setSelected }) => {
         onClick={() => setSelected("summary")}
       >
         Summary
-      </div>
+      </div> */}
       <div
         className={classNames(
           styles.menuItem,
