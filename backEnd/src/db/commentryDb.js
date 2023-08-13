@@ -9,19 +9,19 @@ limit 20
 
 const sql_wickets = `
 SELECT Ball_ID, 1 AS innings FROM INNINGS1
-NATURAL JOIN dismissalinnings1 
+NATURAL JOIN DISMISSALINNINGS1 
 UNION 
 SELECT Ball_ID, 2 AS innings FROM INNINGS2 
-NATURAL JOIN dismissalinnings2
+NATURAL JOIN DISMISSALINNINGS2
 limit 20
 `;
 
 const sql_extra = `
 SELECT Ball_ID, 1 AS innings, Type FROM INNINGS1
-NATURAL JOIN extrainnings1 
+NATURAL JOIN EXTRAINNINGS1 
 UNION 
 SELECT Ball_ID, 2 AS innings, Type FROM INNINGS2 
-NATURAL JOIN extrainnings2
+NATURAL JOIN EXTRAINNINGS2
 limit 20
 `;
 
