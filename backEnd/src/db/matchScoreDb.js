@@ -142,6 +142,7 @@ function getExtraObj(extra) {
 }
 
 function getMatchStatus(io, result, data, data1) {
+
   let ball;
   let sql;
   if (data.length === 1) {
@@ -153,6 +154,7 @@ function getMatchStatus(io, result, data, data1) {
   }
 
   db.query(sql, (err, res) => {
+
     if (res == undefined) {
       console.log(err);
       return;
@@ -166,17 +168,17 @@ function getMatchStatus(io, result, data, data1) {
       result(io, {
         matchOver:
           data1[1].totalRuns !== null &&
-          ((data1[1].overNum === match.matchOver &&
+          ((data1[1].overNum === (match.matchOver - 1) &&
             data1[1].ballNumber === match.matchBalls) ||
             data1[1].wicket === match.matchWickets ||
-            data1[0].totalRuns > data1[1].totalRuns)
+            data1[0].totalRuns < data1[1].totalRuns)
             ? true
             : false,
         ball: ball.ball,
         comment: ball.Commentary === null ? "" : ball.Commentary,
         overNumber: ball.OverNum,
         ballNumber: ball.BallNumber,
-        ballId: data[0].Ball_ID,
+        ballId: ball.Ball_ID,
       });
 
       return;
@@ -220,17 +222,17 @@ function getMatchStatus(io, result, data, data1) {
       result(io, {
         matchOver:
           data1[1].totalRuns !== null &&
-          ((data1[1].overNum === match.matchOver &&
+          ((data1[1].overNum === (match.matchOver - 1) &&
             data1[1].ballNumber === match.matchBalls) ||
             data1[1].wicket === match.matchWickets ||
-            data1[0].totalRuns > data1[1].totalRuns)
+            data1[0].totalRuns < data1[1].totalRuns)
             ? true
             : false,
         ball: ball.ball,
         comment: ball.Commentary === null ? "" : ball.Commentary,
         overNumber: ball.OverNum,
         ballNumber: ball.BallNumber,
-        ballId: data[0].Ball_ID,
+        ballId: ball.Ball_ID,
       });
     });
   });

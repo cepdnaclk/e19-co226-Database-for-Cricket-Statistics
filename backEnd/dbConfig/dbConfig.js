@@ -24,15 +24,8 @@ const dbConn = mysql.createConnection({
 // const dbConn = mysql.createConnection({
 //   host: "localhost",
 //   user: "root",
-//   password: "",
+//   password: "123",
 //   database: "criclive",
-// });
-
-// const dbConn = mysql.createConnection({
-//   host: "dpg-cjbm11fdb61s739teq4g-a",
-//   user: "user",
-//   password: "k4KlygdqZb8ppbwcrnllQwqUuarDs1HE",
-//   database: "test_7ls7",
 // });
 
 // connect db
@@ -42,3 +35,11 @@ dbConn.connect(function (err) {
 });
 
 module.exports = dbConn;
+
+//Database for different match instances\
+/*
+cricliveslbate01 --> cricLive SL bat End Of Over 1
+cricliveslbate02 --> cricLive SL bat End of Over 2
+cricliveindbate01 --> criclive Ind bat End of Over 1
+cricliveindbatl02 --> criclive Ind bat last two balls left (we'll demenstrate the live socket)
+*/
