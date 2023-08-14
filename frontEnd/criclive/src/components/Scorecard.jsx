@@ -246,7 +246,7 @@ const BattingTable = ({ scoresObj, inningsBatsmenData }) => {
         {inningsBatsmenData
           .sort((a, b) => a.playerId - b.playerId)
           .map((dataObj) => (
-            <BatsmanScore {...dataObj} />
+            <BatsmanScore {...dataObj} key={dataObj.playerId} />
           ))}
         {/* Extras */}
         <tr>

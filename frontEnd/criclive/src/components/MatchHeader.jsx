@@ -57,17 +57,17 @@ const MatchHeader = ({
         <div className={styles.summaryItem}>
           <p>
             {onStrikeBatsman !== null &&
-              `${onStrikeBatsman.name} * ${onStrikeBatsman.runs}(${onStrikeBatsman.balls})`}
+              `${onStrikeBatsman.name}: * ${onStrikeBatsman.runs}(${onStrikeBatsman.balls})`}
           </p>
           <p>
             {nonStrikeBatsman !== null &&
-              `${nonStrikeBatsman.name} ${nonStrikeBatsman.runs}(${nonStrikeBatsman.balls})`}
+              `${nonStrikeBatsman.name}: ${nonStrikeBatsman.runs}(${nonStrikeBatsman.balls})`}
           </p>
         </div>
         <div className={styles.summaryItem}>
           <p>
-            {currentBowler.name} ({currentBowler.overs}.
-            {currentBowler.ballNumber})
+            {currentBowler.name}: {currentBowler.wickets}/{currentBowler.runs} (
+            {currentBowler.overs}.{currentBowler.ballNumber})
           </p>
         </div>
       </div>
