@@ -4,9 +4,11 @@ import Scorecard from "./components/Scorecard";
 import Commentary from "./components/Commentary";
 import styles from "./styles/App.module.scss";
 import { useState, useEffect } from "react";
-import api from "./services/api";
+
 import socket from "./services/socket";
 import Preloader from "./components/Preloader";
+import axios from "axios";
+
 // const scoresData = [
 //   {
 //     totalRuns: 225,
@@ -76,7 +78,7 @@ const App = () => {
   useEffect(() => {
     const fetchMatchInfo = async () => {
       try {
-        const response = await api.get("/matchInfo");
+        const response = await axios.get("/matchInfo");
         setMatchInfo(response.data);
         /* Sample response
           {
@@ -99,7 +101,7 @@ const App = () => {
 
     const fetchTeamsInfo = async () => {
       try {
-        const response = await api.get("/matchInfo/teams");
+        const response = await axios.get("/matchInfo/teams");
         setTeamsInfo(response.data);
 
         /* Sample response
@@ -130,10 +132,10 @@ const App = () => {
 
     const fetchTeamPlayersInfo = async () => {
       try {
-        const responseTeamOne = await api.get(
+        const responseTeamOne = await axios.get(
           "/matchInfo/teams/details?teamId=1"
         );
-        const responseTeamTwo = await api.get(
+        const responseTeamTwo = await axios.get(
           "/matchInfo/teams/details?teamId=2"
         );
         /*
@@ -168,7 +170,7 @@ const App = () => {
 
     const fetchPastCommentary = async () => {
       try {
-        const response = await api.get("/commentry");
+        const response = await axios.get("/commentry");
 
         setComments(
           response.data
