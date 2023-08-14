@@ -40,7 +40,6 @@ server.listen(PORT, () => {
 // trigger and send data
 function intervalFunc() {
   mainController(io);
-  // console.log("Sending data...");
 }
 setInterval(intervalFunc, 2000);
 
