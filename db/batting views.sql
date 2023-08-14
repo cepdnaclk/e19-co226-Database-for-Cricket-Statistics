@@ -76,7 +76,7 @@ INNER JOIN (
     FROM (
         SELECT CurrentBowlerID, SUM(RunsScored) AS TotalRuns FROM INNINGS1 GROUP BY CurrentBowlerID
         UNION ALL
-        SELECT I1.CurrentBowlerID, SUM(ExtraRuns) AS TotalRuns
+        SELECT I1.CurrentBowlerID, SUM(CASE WHEN Type = 'wide' or Type = 'noBall' THEN ExtraRuns ELSE NULL END) AS TotalRuns
         FROM EXTRAINNINGS1 E1
         INNER JOIN INNINGS1 I1 ON E1.Ball_ID = I1.Ball_ID 
         GROUP BY I1.CurrentBowlerID
@@ -96,7 +96,7 @@ LEFT JOIN (
     SELECT
         CurrentBowlerID,
         COUNT(CASE WHEN Ball_ID NOT IN (SELECT Ball_ID FROM EXTRAINNINGS1 
-                                    WHERE Type = 'byes' OR Type = 'legByes') 
+                                    WHERE Type = 'wide' OR Type = 'noBall') 
                                     THEN Ball_ID 
                                     ELSE NULL END) AS ballsBowled
     FROM INNINGS1
@@ -134,7 +134,7 @@ INNER JOIN (
     FROM (
         SELECT CurrentBowlerID, SUM(RunsScored) AS TotalRuns FROM INNINGS2 GROUP BY CurrentBowlerID
         UNION ALL
-        SELECT I1.CurrentBowlerID, SUM(ExtraRuns) AS TotalRuns
+        SELECT I1.CurrentBowlerID, SUM(CASE WHEN Type = 'wide' or Type = 'noBall' THEN ExtraRuns ELSE NULL END) AS TotalRuns
         FROM EXTRAINNINGS2 E1
         INNER JOIN INNINGS2 I1 ON E1.Ball_ID = I1.Ball_ID
         GROUP BY I1.CurrentBowlerID
@@ -154,7 +154,7 @@ LEFT JOIN (
     SELECT
         CurrentBowlerID,
         COUNT(CASE WHEN Ball_ID NOT IN (SELECT Ball_ID FROM EXTRAINNINGS2 
-                                    WHERE Type = 'byes' OR Type = 'legByes') 
+                                    WHERE Type = 'wide' OR Type = 'noBall') 
                                     THEN Ball_ID 
                                     ELSE NULL END) AS ballsBowled
     FROM INNINGS2
