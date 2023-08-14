@@ -5,7 +5,8 @@ const {
   getTeamInfo,
   getPlayerInfo,
 } = require("../db/matchInfoDb");
-
+const cors = require("cors");
+router.use(cors());
 router.get("/", async (req, res) => {
   getMatchInfo(res);
 });
