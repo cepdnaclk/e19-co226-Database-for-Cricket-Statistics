@@ -6,6 +6,7 @@ const http = require("http");
 const cors = require("cors");
 const createSocket = require("./src/socket/socket");
 const { instrument } = require("@socket.io/admin-ui");
+const corsOptions = require('./src/config/corsOptions');
 
 // config port
 const PORT = process.env.PORT || 5000;
@@ -16,7 +17,7 @@ const server = http.createServer(app);
 
 // adding middlewears for app
 app.use(bodyParser.json());
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
