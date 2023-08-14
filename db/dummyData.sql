@@ -94,10 +94,20 @@ INSERT INTO DISMISSALINNINGS1 (Ball_ID, DismissType, CaughtBy, FieldedBy, Dismis
 
 -- -- Insert data into INNINGS2 table
 INSERT INTO INNINGS2 (Ball_ID, OverNum, BallNumber, RunsScored, OnStrikeID, NonStrikeID, CurrentBowlerID, Commentary) VALUES
-(1, 0, 1, 4, 1, 2, 10,  "India starts off with a boundary. Kohli's trademark cover drive takes India to a great start. Nothing wrong with the delivery, pure class batting by Kohli"),
+(1, 0, 1, 4, 12, 13, 10,  "India starts off with a boundary. Kohli's trademark cover drive takes India to a great start. Nothing wrong with the delivery, pure class batting by Kohli"),
+(2, 0, 2, 1, 12, 13, 10, "Batsman cross over for a single. Good ball by Madushanka aiming to hit the top of off stump. Rohit Sharma on Strike now."),
+(3, 0, 3, 4, 13, 12, 10, "Pulled! over the mid-wicket fielder one bounce and goes to the boundary. What a start by Rohit Sharma"),
+(4, 0, 4, 0, 13, 12, 10, "Bowled Him! Sharma yorked himself with this one. Down the track but completely missed the ball. One down for India"),
+(5, 0, 5, 0, 14, 12, 10, "Caught in the deep! KL Rahul goes for a golden duck. Great bouncer by Madushanka"),
+(6, 0, 6, 6, 15, 12, 10, "Hatrick ball hit for a humongous six over covers. What a shot by Dhawan. Definiltely the shot of the day. India only needs 17 in the last over"),
 
 
-
+(7, 1, 1, 4, 12, 15, 7, "Four! Swept towards the fine leg boundary for four runs, the target comes down to 13 off 5"),
+(8, 1, 2, 2, 12, 15, 7, "Two runs, well placed into the vacant extra cover boundary, Kohli comes back for two. Sri Lanka under tremendous pressure"),
+(9, 1, 3, 0, 12, 15, 7, "OUT! Bowled him! Wrong'un by Hasaranga cleans up Virat Kohli! Sri Lanka on top. 11 off 3 balls needed for India"),
+(10, 1, 4, 4, 16, 15, 7, "Boundary! What a final this is turning out to be! Straight down the ground by SKY one bounce and over the boundary line"),
+(11, 1, 5, 2, 16, 15, 7, "Two runs. What a save by Asalanka on the mid-wicket boundary. It was definitely going for a boundary, but the dive saved 2 precious runs! Last ball 5 runs to win"),
+(12, 1, 6, 3, 16, 15, 7, "Three runs! Sri Lanka wins!!! Dhawan couldn't manage to cross over the crease as Mendis whips the bails off. Great throw by Shanaka in the deep. Sri Lanka wins the Asia Cup 2023! The celebrations begin for the home team. They've been dominant throughout the tournament, and now holds their nerve to beat the mighty Indians in a thriller of a final. Thank You for joining with CricLive");
 
 
 -- -- Insert data into EXTRAINNINGS2 table
@@ -107,6 +117,8 @@ INSERT INTO INNINGS2 (Ball_ID, OverNum, BallNumber, RunsScored, OnStrikeID, NonS
 
 
 -- -- Insert data into DISMISSALINNINGS2 table
--- INSERT INTO DISMISSALINNINGS2 (Ball_ID, DismissType, CaughtBy, FieldedBy, Dismissed) VALUES
--- (2, 'Caught', 5, NULL, 3),
--- (3, 'Bowled', NULL, NULL, 5);
+INSERT INTO DISMISSALINNINGS2 (Ball_ID, DismissType, CaughtBy, FieldedBy, Dismissed) VALUES
+(4, 'bowled', NULL, NULL, 13),
+(5, 'caught', NULL, 8, 14),
+(9, 'bowled', NULL, NULL, 12),
+(12, 'runOut', 6,6, 15);

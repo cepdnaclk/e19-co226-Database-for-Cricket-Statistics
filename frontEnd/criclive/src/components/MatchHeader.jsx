@@ -154,7 +154,7 @@ const getMatchStatusString = (
   // If second innings started.
   if (isChasing) {
     const requiredRuns =
-      bowlingTeamScoreObj.totalRuns - battingTeamScoreObj.totalRuns;
+      bowlingTeamScoreObj.totalRuns + 1 - battingTeamScoreObj.totalRuns;
     const remainingBalls =
       MATCH_OVERS * 6 -
       (battingTeamScoreObj.overNum * 6 + battingTeamScoreObj.ballNumber);
@@ -179,7 +179,7 @@ const getMatchStatusString = (
     !isChasing &&
     battingTeamScoreObj.ballNumber === 6
   ) {
-    const requiredRuns = battingTeamScoreObj.totalRuns;
+    const requiredRuns = battingTeamScoreObj.totalRuns + 1;
 
     const remainingOvers = MATCH_OVERS;
     const requiredRunRate = (requiredRuns / MATCH_OVERS).toFixed(1);
