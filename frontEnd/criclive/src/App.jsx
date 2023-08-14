@@ -169,8 +169,18 @@ const App = () => {
     const fetchPastCommentary = async () => {
       try {
         const response = await api.get("/commentry");
-        console.log("commentary ", response);
-        setComments(response.data);
+
+        setComments(
+          response.data
+            .sort((a, b) => {
+              if (a.innings !== b.innings) {
+                return a.innings - b.innings;
+              } else {
+                return a.ballId - b.ballId;
+              }
+            })
+            .slice(-20)
+        );
       } catch (err) {
         console.log("Error: fetchPastCommentary");
         console.log(err);
@@ -257,6 +267,7 @@ const App = () => {
       scoresData: scoresData,
       teamOnePlayers: teamOnePlayers,
       teamTwoPlayers: teamTwoPlayers,
+      commentary: comments,
     });
     if (
       Object.keys(teamsInfo[0]).length !== 0 &&

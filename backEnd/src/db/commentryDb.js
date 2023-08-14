@@ -36,8 +36,6 @@ function getCommentry(res) {
       return;
     }
 
-    console.log(comments)
-
     db.query(sql_wickets, (err, wicket) => {
       if (wicket == undefined) {
         console.log(err);
