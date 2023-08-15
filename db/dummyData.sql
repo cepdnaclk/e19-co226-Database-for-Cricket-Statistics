@@ -121,4 +121,22 @@ INSERT INTO DISMISSALINNINGS2 (Ball_ID, DismissType, CaughtBy, FieldedBy, Dismis
 (4, 'bowled', NULL, NULL, 13),
 (5, 'caught', NULL, 8, 14),
 (9, 'bowled', NULL, NULL, 12),
-(12, 'runOut', 6,6, 15);
+(12, 'runOut',1, 1, 15);
+
+
+
+
+-- Demonstration Two Balls
+--ball one
+INSERT INTO INNINGS2 (Ball_ID, OverNum, BallNumber, RunsScored, OnStrikeID, NonStrikeID, CurrentBowlerID, Commentary) VALUES
+(11, 1, 5, 2, 16, 15, 7, "Two runs. What a save by Asalanka on the mid-wicket boundary. It was definitely going for a boundary, but the dive saved 2 precious runs! Last ball 5 runs to win"),
+
+
+
+--ball two
+INSERT INTO INNINGS2 (Ball_ID, OverNum, BallNumber, RunsScored, OnStrikeID, NonStrikeID, CurrentBowlerID, Commentary) VALUES
+(12, 1, 6, 3, 16, 15, 7, "Three runs! Sri Lanka wins!!! Dhawan couldn't manage to cross over the crease as Mendis whips the bails off. Great throw by Shanaka in the deep. Sri Lanka wins the Asia Cup 2023! The celebrations begin for the home team. They've been dominant throughout the tournament, and now holds their nerve to beat the mighty Indians in a thriller of a final. Thank You for joining with CricLive");
+
+
+INSERT INTO DISMISSALINNINGS2 (Ball_ID, DismissType, CaughtBy, FieldedBy, Dismissed) VALUES
+(12, 'runOut',1, 1, 15);
