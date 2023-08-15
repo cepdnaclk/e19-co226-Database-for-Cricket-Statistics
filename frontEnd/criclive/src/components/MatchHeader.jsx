@@ -57,17 +57,22 @@ const MatchHeader = ({
         <div className={styles.summaryItem}>
           <p>
             {onStrikeBatsman !== null &&
-              `${onStrikeBatsman.name}: * ${onStrikeBatsman.runs}(${onStrikeBatsman.balls})`}
+              `${getNameInInitials(onStrikeBatsman.name)}: * ${
+                onStrikeBatsman.runs
+              }(${onStrikeBatsman.balls})`}
           </p>
           <p>
             {nonStrikeBatsman !== null &&
-              `${nonStrikeBatsman.name}: ${nonStrikeBatsman.runs}(${nonStrikeBatsman.balls})`}
+              `${getNameInInitials(nonStrikeBatsman.name)}: ${
+                nonStrikeBatsman.runs
+              }(${nonStrikeBatsman.balls})`}
           </p>
         </div>
         <div className={styles.summaryItem}>
           <p>
-            {currentBowler.name}: {currentBowler.wickets}/{currentBowler.runs} (
-            {currentBowler.overs}.{currentBowler.ballNumber})
+            {getNameInInitials(currentBowler.name)}: {currentBowler.wickets}/
+            {currentBowler.runs} ({currentBowler.overs}.
+            {currentBowler.ballNumber})
           </p>
         </div>
       </div>
@@ -166,11 +171,13 @@ const getMatchStatusString = (
     if (remainingBalls > 100)
       return `${
         teamNameMap[battingTeamScoreObj.teamId]
-      } needs ${requiredRuns} in ${remainingOvers} CRR: ${currentRunRate} RRR: ${requiredRunRate}`;
+      } needs ${requiredRuns} in ${remainingOvers}
+      CRR: ${currentRunRate} RRR: ${requiredRunRate}`;
     else if (remainingBalls <= 100)
       return `${
         teamNameMap[battingTeamScoreObj.teamId]
-      } needs ${requiredRuns} in ${remainingBalls} balls CRR: ${currentRunRate} RRR: ${requiredRunRate}`;
+      } needs ${requiredRuns} in ${remainingBalls} balls
+      CRR: ${currentRunRate} RRR: ${requiredRunRate}`;
   }
 
   //End of 1st Innings
@@ -193,4 +200,10 @@ const getMatchStatusString = (
   else if (!isChasing) {
     return `Current Run Rate: ${currentRunRate}`;
   }
+};
+
+const getNameInInitials = (fullName) => {
+  if (fullName === undefined) return "";
+  const [firstName, LastName] = fullName.split(" ");
+  return `${firstName[0]}. ${LastName}`;
 };
