@@ -8,7 +8,6 @@ const dbConn = mysql.createConnection({
   database: "criclive",
 });
 
-
 // const dbConn = mysql.createConnection({
 //   host: 'gateway01.us-west-2.prod.aws.tidbcloud.com',
 //   port: 4000,
@@ -20,7 +19,6 @@ const dbConn = mysql.createConnection({
 //     rejectUnauthorized: true
 //   }
 // });
-
 
 // const dbConn = mysql.createConnection({
 //   host: 'gateway01.us-west-2.prod.aws.tidbcloud.com',
