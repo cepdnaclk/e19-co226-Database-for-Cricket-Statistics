@@ -6,6 +6,9 @@ const dbConn = mysql.createConnection({
   user: "root",
   password: "",
   database: "criclive",
+  // database: "cricliveslbateo1",
+  //database: "cricliveslbateo2",
+  // database: "cricliveindbate01",
 });
 
 // const dbConn = mysql.createConnection({
